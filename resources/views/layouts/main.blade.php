@@ -8,6 +8,7 @@
   <meta name="description" content="universal admin is super flexible, powerful, clean & modern responsive bootstrap 4 admin template with unlimited possibilities.">
   <meta name="keywords" content="admin template, universal admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="pixelstrap">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon" />
   <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
   <title>@yield('title') | Sistem Rekonsiliasi</title>
@@ -91,6 +92,7 @@
   <!--page-wrapper Ends-->
 
   <!-- latest jquery-->
+  <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
 <!-- Timeline js-->
 <script src="{{asset('assets/js/timeline-v-2/jquery.timeliny.min.js')}}"></script>
@@ -140,6 +142,34 @@
 
   <script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
   <script src="{{asset('assets/js/notify/index.js')}}"></script>
+  <script>
+    const BASE_URL = `{{ url('/') }}`
+    const URL_NOW = `{{ request()->url() }}`
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+  </script>
+  <script>
+    const refresh_table = url => {
+            new Promise((resolve, reject) => {
+            $("#table_data").LoadingOverlay('show')
+            $axios.get(url)
+            .then(({
+            data
+            }) => {
+            $("#table_data").LoadingOverlay('hide')
+            $('#table_data').html(data)
+            })
+            .catch(err => {
+            console.log(err)
+            $("#table_data").LoadingOverlay('hide')
+            $swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            })
+            })
+            })
+            }
+  </script>
 @yield('script')
 </body>
 

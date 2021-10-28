@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('welcome');
     });
+
+    Route::post('projects/importProject', [ProjectController::class, 'importProject'])->name('importProject');
+
+    Route::resource('projects', ProjectController::class);
     // return view('welcome');
 });
