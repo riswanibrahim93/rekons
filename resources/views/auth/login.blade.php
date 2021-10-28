@@ -1,127 +1,63 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Animated Login Form</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-</head>
-<style>
-  .i {
-    color: #d9d9d9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .i i {
-    transition: .3s;
-  }
-
-  .input-div>div {
-    position: relative;
-    height: 45px;
-  }
-
-  .input-div>div>h5 {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 18px;
-    transition: .3s;
-  }
-
-  .input-div:before,
-  .input-div:after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    width: 0%;
-    height: 2px;
-    background-color: #38d39f;
-    transition: .4s;
-  }
-
-  .input-div:before {
-    right: 50%;
-  }
-
-  .input-div:after {
-    left: 50%;
-  }
-
-  .input-div.focus:before,
-  .input-div.focus:after {
-    width: 50%;
-  }
-
-  .input-div.focus>div>h5 {
-    top: -5px;
-    font-size: 15px;
-  }
-
-  .input-div.focus>.i>i {
-    color: #38d39f;
-  }
-</style>
-
-<body class="bg-gray-300" style="font-family: Roboto;">
-  <div class="h-screen flex justify-center items-center">
-    <div class="bg-white rounded-lg w-2/5 px-16 py-16">
-      <form>
-        <div class="flex font-bold justify-center">
-          <img class="h-20 w-20" src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg">
-        </div>
-        <h2 class="text-3xl text-center text-gray-700 mb-4">Login Form</h2>
-        <div class="input-div border-b-2 relative grid my-5 py-1 focus:outline-none" style="grid-template-columns: 7% 93%;">
-          <div class="i">
-            <i class="fas fa-user"></i>
-          </div>
-          <div class="div">
-            <h5>Username</h5>
-            <input type="text" class="absolute w-full h-full py-2 px-3 outline-none inset-0 text-gray-700" style="background:none;">
+@extends('layouts.auth')
+@section('title', 'Login')
+@section('content')
+    <!--login page start-->
+    <div class="authentication-main">
+      <div class="row">
+        <div class="col-md-4 p-0">
+          <div class="auth-innerleft">
+            <div class="text-center">
+              <img src="../assets/images/logo-login.png" class="logo-login" alt="">
+              <hr>
+              <div class="social-media">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><i class="fa fa-facebook txt-fb" aria-hidden="true"></i></li>
+                  <li class="list-inline-item"><i class="fa fa-google-plus txt-google-plus" aria-hidden="true"></i></li>
+                  <li class="list-inline-item"><i class="fa fa-twitter txt-twitter" aria-hidden="true"></i></li>
+                  <li class="list-inline-item"><i class="fa fa-linkedin txt-linkedin" aria-hidden="true"></i></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="input-div border-b-2 relative grid my-5 py-1 focus:outline-none" style="grid-template-columns: 7% 93%;">
-          <div class="i">
-            <i class="fas fa-lock"></i>
-          </div>
-          <div class="div">
-            <h5>Password</h5>
-            <input type="password" class="absolute w-full h-full py-2 px-3 outline-none inset-0 text-gray-700" style="background:none;">
+        <div class="col-md-8 p-0">
+          <div class="auth-innerright">
+            <div class="authentication-box">
+              <h4>LOGIN</h4>
+              @forelse ($errors->all() as $message)
+              <p class="text-danger">{{$message}}</p>
+              @empty
+              <h6>Enter your Email and Password For Login</h6>
+              @endforelse
+              <div class="card mt-4 p-4 mb-0">
+                <form class="theme-form" method="POST" action="{{route('login')}}">
+                  @csrf
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">Email</label>
+                    <input type="text" class="form-control form-control-lg" required name="email" value="{{old('email')}}">
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Password</label>
+                    <input type="password" class="form-control form-control-lg" required name="password">
+                  </div>
+                  <div class="checkbox p-0">
+                    <input id="checkbox1" type="checkbox">
+                    <label for="checkbox1">Remember me</label>
+                  </div>
+                  <div class="form-group form-row mt-3 mb-0">
+                    <div class="col-md-3">
+                      <button type="submit" class="btn btn-secondary">LOGIN</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-        <a href="#" class="text-xs text-green-400 hover:text-green-500 float-right mb-4">Forgot Password?</a>
-        <button type="submit" class="w-full py-2 rounded-full bg-green-600 text-gray-100  focus:outline-none">Button</button>
-      </form>
+      </div>
     </div>
-  </div>
-  <script>
-    const inputs = document.querySelectorAll("input");
-
-
-    function addcl() {
-      let parent = this.parentNode.parentNode;
-      parent.classList.add("focus");
-    }
-
-    function remcl() {
-      let parent = this.parentNode.parentNode;
-      if (this.value == "") {
-        parent.classList.remove("focus");
-      }
-    }
-
-
-    inputs.forEach(input => {
-      input.addEventListener("focus", addcl);
-      input.addEventListener("blur", remcl);
-    });
-  </script>
-</body>
-
-</html>
+    <!--login page end-->
+@endsection
+@section('script')
+    
+@endsection
