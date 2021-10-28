@@ -17,31 +17,31 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/fontawesome.css')}}">
 
   <!-- ico-font -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/icofont.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/icofont.css')}}">
 
   <!-- Themify icon -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/themify.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/themify.css')}}">
 
   <!-- Flag icon -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/flag-icon.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/flag-icon.css')}}">
 
   <!-- prism css -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/prism.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/prism.css')}}">
 
   <!-- Owl css -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/owlcarousel.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/owlcarousel.css')}}">
 
   <!-- Bootstrap css -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
 
   <!-- App css -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
   <!-- Responsive css -->
-  <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}">
 
 </head>
 
@@ -91,54 +91,56 @@
   <!--page-wrapper Ends-->
 
   <!-- latest jquery-->
-  <script src="../assets/js/jquery-3.2.1.min.js"></script>
-
+  <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
+<!-- Timeline js-->
+<script src="{{asset('assets/js/timeline-v-2/jquery.timeliny.min.js')}}"></script>
+<script src="{{asset('assets/js/timeline-v-2/timeline-v-2-custom.js')}}"></script>
   <!-- Bootstrap js-->
-  <script src="../assets/js/bootstrap/popper.min.js"></script>
-  <script src="../assets/js/bootstrap/bootstrap.js"></script>
+  <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
+  <script src="{{asset('assets/js/bootstrap/bootstrap.js')}}"></script>
 
   <!-- Chart JS-->
-  <script src="../assets/js/chart/Chart.min.js"></script>
+  <script src="{{asset('assets/js/chart/Chart.min.js')}}"></script>
 
   <!-- Morris Chart JS-->
-  <script src="../assets/js/morris-chart/raphael.js"></script>
-  <script src="../assets/js/morris-chart/morris.js"></script>
+  <script src="{{asset('assets/js/morris-chart/raphael.js')}}"></script>
+  <script src="{{asset('assets/js/morris-chart/morris.js')}}"></script>
 
   <!-- owlcarousel js-->
-  <script src="../assets/js/owlcarousel/owl.carousel.js"></script>
+  <script src="{{asset('assets/js/owlcarousel/owl.carousel.js')}}"></script>
 
   <!-- Sidebar jquery-->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="{{asset('assets/js/sidebar-menu.js')}}"></script>
 
   <!--Sparkline  Chart JS-->
-  <script src="../assets/js/sparkline/sparkline.js"></script>
+  <script src="{{asset('assets/js/sparkline/sparkline.js')}}"></script>
 
   <!--Height Equal Js-->
-  <script src="../assets/js/height-equal.js"></script>
+  <script src="{{asset('assets/js/height-equal.js')}}"></script>
 
   <!-- prism js -->
-  <script src="../assets/js/prism/prism.min.js"></script>
+  <script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
 
   <!-- clipboard js -->
-  <script src="../assets/js/clipboard/clipboard.min.js"></script>
+  <script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
 
   <!-- custom card js  -->
-  <script src="../assets/js/custom-card/custom-card.js"></script>
+  <script src="{{asset('assets/js/custom-card/custom-card.js')}}"></script>
 
   <!-- Theme js-->
-  <script src="../assets/js/script.js"></script>
-  <script src="../assets/js/theme-customizer/customizer.js"></script>
-  <script src="../assets/js/chat-sidebar/chat.js"></script>
-  <script src="../assets/js/dashboard-default.js"></script>
+  <script src="{{asset('assets/js/script.js')}}"></script>
+  <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
+  <script src="{{asset('assets/js/chat-sidebar/chat.js')}}"></script>
+  <script src="{{asset('assets/js/dashboard-default.js')}}"></script>
 
   <!-- Counter js-->
-  <script src="../assets/js/counter/jquery.waypoints.min.js"></script>
-  <script src="../assets/js/counter/jquery.counterup.min.js"></script>
-  <script src="../assets/js/counter/counter-custom.js"></script>
+  <script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
+  <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
+  <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 
-  <script src="../assets/js/notify/bootstrap-notify.min.js"></script>
-  <script src="../assets/js/notify/index.js"></script>
-
+  <script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
+  <script src="{{asset('assets/js/notify/index.js')}}"></script>
+@yield('script')
 </body>
 
 </html>

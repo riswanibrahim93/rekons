@@ -12,6 +12,24 @@ $('.loader-wrapper').fadeOut('slow', function() {
     $(this).remove();
 });
 
+const myLoader = (element, action) => {
+    if (action === 'show') {
+        $(element).addClass('position-relative')
+        $(element).append(`<div class="loader-wrapper-mine">
+        <div class="loader ">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>`);
+    } else {
+        $('.loader-wrapper-mine').fadeOut('slow', function () {
+            $(this).remove();
+        });
+    }
+}
+
 $(window).on('scroll', function() {
     if ($(this).scrollTop() > 600) {
         $('.tap-top').fadeIn();

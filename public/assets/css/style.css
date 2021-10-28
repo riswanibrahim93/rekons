@@ -2696,6 +2696,40 @@ table tbody .border-bottom-warning td {
   z-index: 11;
   top: 0;
 }
+.loader-wrapper-mine {
+  height: 100%;
+  width: 100%;
+  display: block;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+
+  z-index: 11;
+  top: 0;
+}
+.loader-wrapper-mine .loader {
+  position: absolute;
+    height: 100%;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  top: 20%;
+  left: 0;
+  text-align: center;
+  right: 0;
+  margin: 0 auto;
+}
+.loader-wrapper-mine .loader h4 {
+  margin-top: 50px;
+  margin-bottom: 0;
+}
+.loader-wrapper-mine .loader h4 span {
+  font-size: 34px;
+  color: #FFC107;
+}
 .loader-wrapper .loader {
   position: absolute;
   top: 50%;
