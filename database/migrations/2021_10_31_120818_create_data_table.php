@@ -15,6 +15,15 @@ class CreateDataTable extends Migration
     {
         Schema::create('data', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('reconciled_data_id')->nullable();
+            $table->string('ld');
+            $table->string('full_name');
+            $table->string('branch_code');
+            $table->string('product');
+            $table->string('plafond');
+            $table->string('atr');
+            $table->string('outstanding');
+            $table->integer('owner')->comment('1 = bsi, 2 = eka');
             $table->timestamps();
         });
     }

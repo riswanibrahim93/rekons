@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/h', function(){
+    return view('pages.data.index');
+});
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('welcome');

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ProjectsImport;
+use App\Imports\ImportData;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-// use Maatwebsite\Excel\Excel;
-
-class ProjectController extends Controller
+class DataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -85,11 +83,11 @@ class ProjectController extends Controller
     {
         //
     }
-    public function importProject()
+    public function importData()
     {
         // $excel = Excel::class;
-       $result =  Excel::import(new ProjectsImport, request()->file('file'));
-    //    dd($result);
+        $result =  Excel::import(new ImportData, request()->file('file'));
+        //    dd($result);
         return back()->with('success', 'Project created successfully');
         # code...
     }
