@@ -6,7 +6,7 @@
      <div>
        <img class="img-50 rounded-circle" src="../assets/images/user/1.jpg" alt="#">
      </div>
-     <h6 class="mt-3 f-12">Johan Deo</h6>
+     <h6 class="mt-3 f-12">{{Auth::user()->name}}</h6>
    </div>
    <ul class="sidebar-menu">
      <li>
@@ -15,12 +15,12 @@
        </a>
      </li>
      <li>
-       <a href="{{route('proses')}}" class="sidebar-header">
+       <a href="{{route('proses')}}" class="sidebar-header @if($paths=='process-recons'||$paths=='admin') active @endif">
          <i class="icon-settings"></i><span>Proses Rekon</span>
        </a>
      </li>
    </ul>
-   <div class="sidebar-widget text-center">
+   {{-- <div class="sidebar-widget text-center">
      <div class="sidebar-widget-top">
        <h6 class="mb-2 fs-14">Need Help</h6>
        <i class="icon-bell"></i>
@@ -31,5 +31,5 @@
          <br><a href="#">Visit FAQ</a>
        </p>
      </div>
-   </div>
+   </div> --}}
  </div>

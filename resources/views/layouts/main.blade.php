@@ -9,8 +9,8 @@
   <meta name="keywords" content="admin template, universal admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="pixelstrap">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon" />
-  <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
+  <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon" />
   <title>@yield('title') | Sistem Rekonsiliasi</title>
 
   <!--Google font-->
@@ -42,6 +42,8 @@
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
   <!-- Responsive css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatable-extension.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}">
 
 </head>
@@ -131,8 +133,8 @@
 
   <!-- Theme js-->
   <script src="{{asset('assets/js/script.js')}}"></script>
-  <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
-  <script src="{{asset('assets/js/chat-sidebar/chat.js')}}"></script>
+  {{-- <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script> --}}
+  {{-- <script src="{{asset('assets/js/chat-sidebar/chat.js')}}"></script> --}}
   <script src="{{asset('assets/js/dashboard-default.js')}}"></script>
 
   <!-- Counter js-->
@@ -181,8 +183,28 @@
         toast.addEventListener('mouseenter', $swal.stopTimer)
         toast.addEventListener('mouseleave', $swal.resumeTimer)
       }
+    });
+  </script>
+  @if (Session::has('success'))
+  <script>
+    $(document).ready(function() {
+      $toastr.fire({
+        icon: 'success',
+        title: "{{session('success')}}"
+      });
     })
   </script>
+  @endif
+  @if (Session::has('error'))
+  <script>
+    $(document).ready(function() {
+      $toastr.fire({
+        icon: 'error',
+        title: "{{session('error')}}"
+      });
+    })
+  </script>
+  @endif
   @yield('script')
 </body>
 

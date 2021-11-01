@@ -96,7 +96,7 @@ class DataController extends Controller
         foreach ($result as $key => $value) {
             ReconciledData::create($value);
         }
-        $data = ReconciledData::all();
+        $data = ReconciledData::paginate(10);
         $returnHTML= view('pages.rekons.pagination', compact('data'))->render();
         return  response()->json(array('success' => true, 'html' => $returnHTML));
         // dd($result);
@@ -234,7 +234,7 @@ class DataController extends Controller
     {
         // $excel = Excel::class;
         $today = Carbon::now()->format('Y-m-d') . '%';
-        $data = ReconciledData::where('created_at', 'like', $today)->get();
+        $data = ReconciledData::where('created_at', 'like', $today)->paginate(10);
         return view('pages.rekons.index', compact('data'));
         // try {
         //     $result =  Excel::import(new ImportData, request()->file('file'));

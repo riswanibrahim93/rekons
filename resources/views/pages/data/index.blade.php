@@ -61,18 +61,5 @@
 </div>
 @endsection
 @section('script')
-@if (Session::has('success'))
-<script>
-  $(document).ready(function(){
-    $toastr.fire({icon: 'success', title:"{{session('success')}}"});
-  })
-</script>
-@endif
-@if (Session::has('error'))
-<script>
-  $(document).ready(function(){
-    $toastr.fire({icon: 'error', title:"{{session('error')}}"});
-  })
-</script>
-@endif
+
 @endsection

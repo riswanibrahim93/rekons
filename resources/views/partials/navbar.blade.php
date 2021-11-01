@@ -33,86 +33,19 @@
                 <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/browser.png" alt="header-browser">
               </a>
             </li>
-            <li class="onhover-dropdown">
-              <a href="#!" class="txt-dark">
-                <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/translate.png" alt="header-translate">
-              </a>
-              <ul class="language-dropdown onhover-show-div p-20">
-                <li>
-                  <a href="#" data-lng="en">
-                    <i class="flag-icon flag-icon-ws"></i> English
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-lng="es">
-                    <i class="flag-icon flag-icon-va"></i> Spanish
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-lng="pt">
-                    <i class="flag-icon flag-icon-id"></i> Portuguese
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-lng="fr">
-                    <i class="flag-icon flag-icon-fr"></i> French
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="onhover-dropdown">
-              <a href="#!" class="txt-dark">
-                <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/notification.png" alt="header-notification">
-                <span class="badge badge-pill badge-primary notification">3</span>
-              </a>
-              <ul class="notification-dropdown onhover-show-div">
-                <li>Notification <span class="badge badge-pill badge-secondary text-white text-uppercase pull-right">3 New</span></li>
-                <li>
-                  <div class="media">
-                    <i class="align-self-center notification-icon icofont icofont-shopping-cart bg-primary"></i>
-                    <div class="media-body">
-                      <h6 class="mt-0">Your order ready for Ship..!</h6>
-                      <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                      <span><i class="icofont icofont-clock-time p-r-5"></i>Just Now</span>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media">
-                    <i class="align-self-center notification-icon icofont icofont-download-alt bg-success"></i>
-                    <div class="media-body">
-                      <h6 class="mt-0 txt-success">Download Complete</h6>
-                      <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                      <span><i class="icofont icofont-clock-time p-r-5"></i>5 minutes ago</span>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media">
-                    <i class="align-self-center notification-icon icofont icofont-recycle bg-danger"></i>
-                    <div class="media-body">
-                      <h6 class="mt-0 txt-danger">250 MB trush files</h6>
-                      <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                      <span><i class="icofont icofont-clock-time p-r-5"></i>25 minutes ago</span>
-                    </div>
-                  </div>
-                </li>
-                <li class="text-center">You have Check <a href="#">all</a> notification </li>
-              </ul>
-
-            </li>
+  
             <li class="onhover-dropdown">
               <div class="media  align-items-center">
                 <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/user.png" alt="header-user" />
                 <div class="media-body">
                   <h6 class="m-0 txt-dark f-16">
-                    My Account
+                    {{Auth::user()->name}}
                     <i class="fa fa-angle-down pull-right ml-2"></i>
                   </h6>
                 </div>
               </div>
               <ul class="profile-dropdown onhover-show-div p-20">
-                <li>
+                <!-- <li>
                   <a href="#">
                     <i class="icon-user"></i>
                     Edit Profile
@@ -135,7 +68,7 @@
                     <i class="icon-comments"></i>
                     Chat
                   </a>
-                </li>
+                </li> -->
                 <li>
                   <a href="#" onclick="$(document).ready(()=>{$('#logoutForm').submit()})">
                     <i class="icon-power-off"></i>
@@ -145,7 +78,7 @@
               </ul>
             </li>
           </ul>
-          <form action="{{route('logout')}}"  method="post" class="d-none" id="logoutForm">
+          <form action="{{route('logout')}}" method="post" class="d-none" id="logoutForm">
             @csrf
           </form>
           <div class="d-lg-none mobile-toggle">
