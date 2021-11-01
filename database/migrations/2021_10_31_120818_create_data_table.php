@@ -20,9 +20,10 @@ class CreateDataTable extends Migration
             $table->string('full_name');
             $table->string('branch_code');
             $table->string('product');
-            $table->string('plafond');
+            $table->date('date');
+            $table->bigInteger('plafond');
             $table->string('atr');
-            $table->string('outstanding');
+            $table->bigInteger('outstanding');
             $table->integer('owner')->comment('1 = bsi, 2 = eka');
             $table->timestamps();
         });

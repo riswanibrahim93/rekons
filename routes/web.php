@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +20,11 @@ Route::get('/h', function(){
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
-        return view('welcome');
+        return redirect('/data');
     });
+    Route::resource('data', DataController::class);
 
-    Route::post('projects/importProject', [ProjectController::class, 'importProject'])->name('importProject');
-
-    Route::resource('projects', ProjectController::class);
+    Route::post('data/import_data', [DataController::class, 'importData'])->name('import_datas');
+    Route::get('process-recons',[DataController::class,'process'])->name('proses');
     // return view('welcome');
 });

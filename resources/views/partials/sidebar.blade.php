@@ -1,3 +1,6 @@
+ @php
+ $paths = Request::path();
+ @endphp
  <div class="page-sidebar custom-scrollbar">
    <div class="sidebar-user text-center">
      <div>
@@ -7,12 +10,12 @@
    </div>
    <ul class="sidebar-menu">
      <li>
-       <a href="../starter-kit/layout-light.html" class="sidebar-header">
+       <a href="{{route('data.index')}}" class="sidebar-header @if($paths=='data'||$paths=='admin') active @endif">
          <i class="icon-book"></i><span>Data Rekon</span>
        </a>
      </li>
      <li>
-       <a href="../starter-kit/layout-light.html" class="sidebar-header">
+       <a href="{{route('proses')}}" class="sidebar-header">
          <i class="icon-settings"></i><span>Proses Rekon</span>
        </a>
      </li>

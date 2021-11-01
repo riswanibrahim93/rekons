@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Data extends Model
 {
     use HasFactory;
-    protected $fillable = ['reconciled_data_id','ld', 'full_name', 'branch_code','product', 'plafond', 'atr', 'outstanding', 'owner'];
+    protected $fillable = ['ld', 'full_name', 'branch_code','product', 'plafond', 'atr', 'outstanding', 'owner', 'reconciled_data_id','date'];
 
     public function renconciledDatas()
     {

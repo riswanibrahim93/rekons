@@ -70,7 +70,7 @@
     <!--Page Body Start-->
     <div class="page-body-wrapper">
       <!--Page Sidebar Start-->
-     @include('partials.sidebar')
+      @include('partials.sidebar')
       <!--Page Sidebar Ends-->
 
       <div class="page-body">
@@ -94,9 +94,9 @@
   <!-- latest jquery-->
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
-<!-- Timeline js-->
-<script src="{{asset('assets/js/timeline-v-2/jquery.timeliny.min.js')}}"></script>
-<script src="{{asset('assets/js/timeline-v-2/timeline-v-2-custom.js')}}"></script>
+  <!-- Timeline js-->
+  <script src="{{asset('assets/js/timeline-v-2/jquery.timeliny.min.js')}}"></script>
+  <script src="{{asset('assets/js/timeline-v-2/timeline-v-2-custom.js')}}"></script>
   <!-- Bootstrap js-->
   <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
   <script src="{{asset('assets/js/bootstrap/bootstrap.js')}}"></script>
@@ -149,28 +149,41 @@
   </script>
   <script>
     const refresh_table = url => {
-            new Promise((resolve, reject) => {
-            $("#table_data").LoadingOverlay('show')
-            $axios.get(url)
-            .then(({
+      new Promise((resolve, reject) => {
+        $("#table_data").LoadingOverlay('show')
+        $axios.get(url)
+          .then(({
             data
-            }) => {
+          }) => {
             $("#table_data").LoadingOverlay('hide')
             $('#table_data').html(data)
-            })
-            .catch(err => {
+          })
+          .catch(err => {
             console.log(err)
             $("#table_data").LoadingOverlay('hide')
             $swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
             })
-            })
-            })
-            }
+          })
+      })
+    }
+
+
+    const $toastr = $swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', $swal.stopTimer)
+        toast.addEventListener('mouseleave', $swal.resumeTimer)
+      }
+    })
   </script>
-@yield('script')
+  @yield('script')
 </body>
 
 </html>

@@ -1,14 +1,18 @@
 @extends('layouts.main')
-@section('title', 'Home')
+@section('title', 'Data Rekons')
 @section('content')
 <div class="row">
   <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
         <div class="col-xl-6 col-sm-12">
-          <h5 class="pull-left mb-4">Form upload data rekon PT EKA AKAR JATI</h5>
+          <h5 class="pull-left mb-4">Form upload data rekon @if (Auth::user()->role==1)
+            PT BSI  
+          @else
+              PT EKA AKAR JATI
+          @endif </h5>
           {{-- <div class="col"> --}}
-            <form action="{{route('importProject')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('import_datas')}}" method="post" enctype="multipart/form-data">
               @csrf
               <!-- <button type="button" class="btn btn-outline-light txt-dark" data-original-title="btn btn-outline-light txt-dark" title="">Light Button</button> -->
               <input type="file" name="file" id="">
@@ -57,12 +61,18 @@
 </div>
 @endsection
 @section('script')
-{{-- <script>
-    $('#aha').on('click',function () {
-            myLoader('#aha','show');
-            setTimeout(() => {
-                myLoader('#aha','hide');
-            }, 2000);
-        })
-</script> --}}
+@if (Session::has('success'))
+<script>
+  $(document).ready(function(){
+    $toastr.fire({icon: 'success', title:"{{session('success')}}"});
+  })
+</script>
+@endif
+@if (Session::has('error'))
+<script>
+  $(document).ready(function(){
+    $toastr.fire({icon: 'error', title:"{{session('error')}}"});
+  })
+</script>
+@endif
 @endsection
