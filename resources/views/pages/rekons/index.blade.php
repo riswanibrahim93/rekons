@@ -78,26 +78,70 @@
   <script src="{{asset('assets/js/datatable-extension/dataTables.bootstrap4.min.js')}}"></script>
   <script src="{{asset('assets/js/datatable-extension/dataTables.responsive.min.js')}}"></script>
   <script src="{{asset('assets/js/datatable-extension/responsive.bootstrap4.min.js')}}"></script>
-  <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 <script>
-  $(document).ready(function() {
-    $("#proses").on('click', function() {
-      // $("#table_data").LoadingOverlay('hide')
-      myLoader('#export-button', 'show');
-      $axios.get("{{route('data.create')}}").then((data) => {
-        // conso
-        $('#table_data').html(data.data.html)
-        // myLoader('#table_data', 'hide');
-      }).catch(() => {
-        // myLoader('#table_data', 'hide');
-        $swal.fire({
+
+function rekonsss() {
+          myLoader('#export-button', 'show');
+          $axios.get("{{route('data.create')}}").then((data) => {
+          // conso
+          let timerInterval
+          
+          $swal.fire({
+          title: 'Sukses',
+          icon:'success',
+          showConfirmButton:false, showCancelButton:false,
+          html:
+          'Rekonsiliasi berhasil dilakukan!<br /></br>'+
+          'Halaman akan direload dalam <strong></strong> detik.'
+          ,
+          timer: 3000,
+          didOpen: () => {
+          
+          timerInterval = setInterval(() => {
+          $swal.getHtmlContainer().querySelector('strong')
+          .textContent = ($swal.getTimerLeft() / 1000)
+          .toFixed(0)
+          }, 100)
+          },
+          willClose: () => {
+          clearInterval(timerInterval)
+          }
+          }).then(()=>{
+          document.location.reload();
+          })
+          // myLoader('#table_data', 'hide');
+          }).catch(() => {
+          // myLoader('#table_data', 'hide');
+          $swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
-        })
+          })
+          })
+}
+  let countData  = parseInt("{{count($data)}}");
+  let timerInterval;
+  function processData() {
+    if (countData>0) {
+      $swal.fire({
+        title:"Yakin?",
+        text:"Anda akan melakukan rekonsiliasi ulang!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Ya!'
+      }).then((res)=>{
+        if (res.isConfirmed) {
+          rekonsss();
+                  }
       })
-    })
-  })
+    }
+  }
+
+  
   // $("#table_data").LoadingOverlay('hide')
 </script>
+  <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection

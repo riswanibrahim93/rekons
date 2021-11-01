@@ -93,10 +93,17 @@ class DataController extends Controller
                 ]);
             }
         }
+        $prevdata = ReconciledData::where('created_at', 'like', $today)->get();
+        if (count($prevdata)>0) {
+            foreach ($prevdata as $key => $value) {
+               $delete = ReconciledData::find($value->id);
+               $delete->delete();
+            }
+        }
         foreach ($result as $key => $value) {
             ReconciledData::create($value);
         }
-        $data = ReconciledData::paginate(10);
+        $data = ReconciledData::where('created_at', 'like', $today)->get();
         $returnHTML= view('pages.rekons.pagination', compact('data'))->render();
         return  response()->json(array('success' => true, 'html' => $returnHTML));
         // dd($result);
@@ -221,6 +228,14 @@ class DataController extends Controller
     {
         // $excel = Excel::class;
         try {
+            $today = Carbon::now()->format('Y-m-d') . '%';
+
+            $prevdata = Data::where('created_at', 'like', $today)->where('owner',Auth::user()->id)->get();
+            if (count($prevdata)>0) {
+                foreach ($prevdata as $key => $value) {
+                    Data::find($value->id)->delete();
+                }
+            }
             $result =  Excel::import(new ImportData, request()->file('file'));
             //    dd($result);
             return back()->with('success', 'Data berhasil diupload!');
@@ -232,18 +247,8 @@ class DataController extends Controller
     }
     public function process()
     {
-        // $excel = Excel::class;
         $today = Carbon::now()->format('Y-m-d') . '%';
-        $data = ReconciledData::where('created_at', 'like', $today)->paginate(10);
+        $data = ReconciledData::where('created_at', 'like', $today)->get();
         return view('pages.rekons.index', compact('data'));
-        // try {
-        //     $result =  Excel::import(new ImportData, request()->file('file'));
-        //     //    dd($result);
-        //     return back()->with('success', 'Data berhasil diupload!');
-        // } catch (\Throwable $th) {
-        //     dd($th->getMessage());
-        //     return back()->with('error', 'Data gagal diupload!');
-        // }
-        # code...
     }
 }

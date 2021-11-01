@@ -48,14 +48,26 @@ $(document).ready(function(){
             { orderable: true, className: 'reorder', targets: 0 },
             { orderable: false, targets: '_all' }
         ]
-    } );
+    });
+    // $('#export-button').DataTable({
+    //     dom: 'Bfrtip',
+    //     buttons: [
+            
+    //     ]
+    // });
     $('#export-button').DataTable( {
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
             'excelHtml5',
             'csvHtml5',
-            'pdfHtml5'
+            'pdfHtml5',
+            {
+                text: 'Proses Rekonsiliasi',
+                action: function (e, dt, node, config) {
+                    processData();
+                }
+            }
         ]
     } );
     $('#column-selector').DataTable( {
