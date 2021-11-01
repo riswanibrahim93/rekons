@@ -4,7 +4,7 @@
  <div class="page-sidebar custom-scrollbar">
    <div class="sidebar-user text-center">
      <div>
-       <img class="img-50 rounded-circle" src="../assets/images/user/1.jpg" alt="#">
+       <img class="img-50 rounded-circle" src="{{asset('assets/images/user/1.jpg')}}" alt="#">
      </div>
      <h6 class="mt-3 f-12">{{Auth::user()->name}}</h6>
    </div>
