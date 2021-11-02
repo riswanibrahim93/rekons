@@ -18,9 +18,9 @@
             @elseif($item->status==1)
             badge badge-warning
             @elseif($item->status==2)
-            Beda Fasilitas
+            badge badge-warning
             @else
-            Valid
+           badge badge-success
             @endif">
               @if ($item->status==1)
               No Atribusi
