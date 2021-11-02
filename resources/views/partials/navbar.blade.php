@@ -2,8 +2,8 @@
       <div class="main-header-left">
         <div class="logo-wrapper">
           <a href="index.html">
-            <img src="{{asset('assets/images/logo-light.png" class="image-dark" alt="" />
-            <img src="{{asset('assets/images/logo-light-dark-layout.png" class="image-light" alt="" />
+            <img src="{{asset('assets/images/logo-light.png')}}" class="image-dark" alt="" />
+            <img src="{{asset('assets/images/logo-light-dark-layout.png')}}" class="image-light" alt="" />
           </a>
         </div>
       </div>
