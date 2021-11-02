@@ -26,8 +26,10 @@
               No Atribusi
               @elseif($item->status==2)
               Beda Fasilitas
-              @else
+              @elseif($item->status==3)
               Valid
+              @else
+              No Data
               @endif
             </span>
           </td>
