@@ -137,6 +137,8 @@ function rekonsss() {
           rekonsss();
                   }
       })
+    }else{
+      rekonsss();
     }
   }
 
