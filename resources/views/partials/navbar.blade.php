@@ -2,8 +2,8 @@
       <div class="main-header-left">
         <div class="logo-wrapper">
           <a href="index.html">
-            <img src="../assets/images/logo-light.png" class="image-dark" alt="" />
-            <img src="../assets/images/logo-light-dark-layout.png" class="image-light" alt="" />
+            <img src="{{asset('assets/images/logo-light.png" class="image-dark" alt="" />
+            <img src="{{asset('assets/images/logo-light-dark-layout.png" class="image-light" alt="" />
           </a>
         </div>
       </div>
@@ -30,13 +30,13 @@
             </li>
             <li>
               <a href="#!" onclick="javascript:toggleFullScreen()" class="text-dark">
-                <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/browser.png" alt="header-browser">
+                <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/browser.png')}}" alt="header-browser">
               </a>
             </li>
   
             <li class="onhover-dropdown">
               <div class="media  align-items-center">
-                <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/user.png" alt="header-user" />
+                <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/user.png')}}" alt="header-user" />
                 <div class="media-body">
                   <h6 class="m-0 txt-dark f-16">
                     {{Auth::user()->name}}
