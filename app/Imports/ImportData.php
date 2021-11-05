@@ -26,6 +26,8 @@ class ImportData implements ToModel, WithHeadingRow
             'plafond'    => $row['plafond'],
             'date'    => $row['tgllpencairan'],
             'atr'    => $row['atribus'],
+            'payment_status'=>$row['keteranganlengkap'],
+            'product_code'=>$row['kodeproduk'],
             'owner'=> Auth::user()->role
 
         ]);

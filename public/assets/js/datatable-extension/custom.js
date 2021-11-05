@@ -1,5 +1,28 @@
 "use strict";
-$(document).ready(function(){
+var minDate = $('#min'), maxDate=$('#max');
+function replaceTheShit(string) {
+    return string.replace(/-/g, '/');
+}
+$.fn.dataTable.ext.search.push(
+    function (settings, data, dataIndex) {
+        var iFini = moment(replaceTheShit(minDate.val()), "YYYY/MM/DD").format("X");
+        var iFfin = moment(replaceTheShit(maxDate.val()), "YYYY/MM/DD").format("X");
+        var evalDate = moment(replaceTheShit(data[1]), "YYYY/MM/DD").format("X");
+        if (
+            (iFini === 'Invalid date' && iFfin === 'Invalid date') ||
+            (iFini === 'Invalid date' && evalDate <= iFfin) ||
+            (iFini <= evalDate && iFfin === 'Invalid date') ||
+            (iFini <= evalDate && evalDate <= iFfin)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+);
+jQuery(function () { 
+
     $('#auto-fill').DataTable( {
         autoFill: true
     } );
@@ -55,7 +78,7 @@ $(document).ready(function(){
             
     //     ]
     // });
-    $('#export-button').DataTable( {
+    var oTable = $('#export-button').DataTable( {
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
@@ -69,7 +92,13 @@ $(document).ready(function(){
                 }
             }
         ]
-    } );
+    });
+
+    $('#min, #max').on('change', function () {
+        oTable.draw()
+        // table.draw();
+    });
+
     $('#column-selector').DataTable( {
         dom: 'Bfrtip',
         buttons: [

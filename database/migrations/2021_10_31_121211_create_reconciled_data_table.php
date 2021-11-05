@@ -16,7 +16,7 @@ class CreateReconciledDataTable extends Migration
         Schema::create('reconciled_data', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('data_id');
-            $table->bigInteger('status')->comment('1 = atribusi, 2 = facility, 3 = valid');
+            $table->smallInteger('status')->comment('0 = invalid, 1 = valid');
             $table->string('description')->nullable();
             $table->timestamps();
         });

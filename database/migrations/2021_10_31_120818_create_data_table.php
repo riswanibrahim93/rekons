@@ -19,10 +19,13 @@ class CreateDataTable extends Migration
             $table->string('ld');
             $table->string('full_name');
             $table->string('branch_code');
+            $table->string('branch_name');
             $table->string('product');
+            $table->string('product_code');
             $table->date('date');
+            $table->string('payment_status')->comment('/keterangan lengkap');
             $table->bigInteger('plafond');
-            $table->string('atr');
+            $table->string('atr')->nullable();
             $table->bigInteger('outstanding');
             $table->integer('owner')->comment('1 = bsi, 2 = eka');
             $table->timestamps();
