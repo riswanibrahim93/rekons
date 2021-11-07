@@ -27,7 +27,7 @@ class ImportData implements ToModel, WithHeadingRow
 
         $prevData = Data::where('ld', $row['noloan'])->where('owner' , Auth::user()->role)->get();
         if (count($prevData)>0) {
-            return throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");
+            throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");
         }
         return new Data([
             'ld'     => $row['noloan'],
