@@ -48,11 +48,12 @@
                 <th>LD</th>
                 <th>Nama</th>
                 <th>Produk</th>
-                <th>Plafond</th>
+                <th>Cabang</th>
                 <th>Atribusi</th>
                 <th>Pembiayaan</th>
                 <th>Detail</th>
                 <th>Status</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody id="table_data">
@@ -63,6 +64,22 @@
             </div> --}}
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_tambah">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-12">
+          <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
+          <p class="small" id="modalTitle"></p>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -113,7 +130,7 @@
       })
       // myLoader('#table_data', 'hide');
     }).catch(() => {
-      // myLoader('#table_data', 'hide');
+      myLoader('#table_data', 'hide');
       $swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -124,7 +141,6 @@
   let timerInterval;
 
   function processData() {
-    // var minDate = $('#min'), maxDate=$('#max');
     console.log({
       start_date: minDate.val(),
       end_date: maxDate.val()
@@ -133,8 +149,6 @@
       start_date: minDate.val(),
       end_date: maxDate.val()
     }).then((data) => {
-      // console.log(data.data.length)
-      // return;
       if (data.data.length > 0) {
         $swal.fire({
           title: "Yakin?",
@@ -147,9 +161,12 @@
           confirmButtonText: 'Ya!'
         }).then(async (res) => {
           if (res.isConfirmed) {
-            await new Promise.all(data.data).then((values) => {
+            console.log(data.data);
+            await Promise.all(data.data).then((values) => {
+              var urlHere = "{{route('data.destroy', ": id ")}}";
               values.forEach(element => {
-                $axios.delete(`${URL_NOW}/${element.reconciled_data_id}`)
+                urlHere = urlHere.replace(':id', element.id);
+                $axios.delete(`${urlHere}`)
               });
             })
             rekonsss();
@@ -162,6 +179,11 @@
     })
   }
 
+  function showModal(id1, id2, name, ld) {
+    $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
+    // $("#formTambah")[0].reset()
+    $('#modal_tambah').modal('show')
+  }
 
   // $("#table_data").LoadingOverlay('hide')
 </script>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReconciledData extends Model
 {
     use HasFactory;
-    protected $fillable = ['data_id','atr','status', 'description'];
+    protected $fillable = ['data_id', 'bsi_id','atr','status', 'description'];
     public function data(){
         return $this->hasOne(Data::class, 'id', 'data_id');
     }

@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Data;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -12,17 +13,22 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportData implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailure
+class ImportData implements ToModel, WithHeadingRow
+// SkipsOnFailure
 {
-    use  SkipsErrors, SkipsFailures;
+    // use  SkipsErrors, SkipsFailures;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
-        // dd($row);
+
+        $prevData = Data::where('ld', $row['noloan'])->where('owner' , Auth::user()->role)->get();
+        if (count($prevData)>0) {
+            return throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");
+        }
         return new Data([
             'ld'     => $row['noloan'],
             'full_name'    => $row['namalengkap'],
@@ -32,18 +38,10 @@ class ImportData implements ToModel, WithHeadingRow, WithValidation, SkipsOnFail
             'outstanding'    => $row['outstanding'],
             'plafond'    => $row['plafond'],
             'date'    => $row['tgllpencairan'],
-            'atr'    => Auth::user()->role==2?null:$row['atribus'],
-            'payment_status'=>$row['keterangan_lengkap'],
-            'product_code'=>$row['kode_produk'],
-            'owner'=> Auth::user()->role
+            'atr'    => Auth::user()->role == 2 ? null : $row['atribus'],
+            'payment_status' => $row['keterangan_lengkap'],
+            'product_code' => $row['kode_produk'],
+            'owner' => Auth::user()->role
         ]);
-    }
-    public function rules():array{
-        return [
-            '1' =>
-           [ 'required', 
-            Rule::unique('data')->where('ld', '1')
-                ->where('role', Auth::user()->role)]
-        ];
     }
 }

@@ -71,6 +71,7 @@ class DataController extends Controller
                     }
                     array_push($result, [
                         'data_id' => $eka_data[$i]->id,
+                        'bsi_id' => $bsi_data[$i]->id,
                         'atr'=> $bsi_data[$i]->atr,
                         'status' => $stat,
                         'description' => $description
@@ -82,6 +83,7 @@ class DataController extends Controller
             if (!in_array(true, $checker)) {
                 array_push($result, [
                     'data_id' => $eka_data[$i]->id,
+                    'bsi_id' => $bsi_data[$i]->id,
                     'atr' => 0,
                     'status' => 0,
                     'description' => 'Data tidak ada'
@@ -218,7 +220,8 @@ class DataController extends Controller
     public function destroy($id)
     {
         try {
-            ReconciledData::find($id)->delete();
+            
+            ReconciledData::where('data_id', $id)->delete();
             return response()->json([],200);
         } catch (\Throwable $th) {
             return response()->json([],500);
@@ -227,34 +230,18 @@ class DataController extends Controller
     }
     public function importData()
     {
-        // $excel = Excel::class;
-        try {
-            // $today = Carbon::now()->format('Y-m-d') . '%';
-
-            // $prevdata = Data::where('created_at', 'like', $today)->where('owner', Auth::user()->id)->get();
-            // if (count($prevdata) > 0) {
-            //     foreach ($prevdata as $key => $value) {
-            //         Data::find($value->id)->delete();
-            //     }
-            // }
-            $result =  Excel::import(new ImportData, request()->file('file'));
-               dd($result);
+            try {
+                $result =  Excel::import(new ImportData, request()->file('file'));
+            } catch(\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+            }
          
             return back()->with('success', 'Data berhasil diupload!');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            $messag  = '';
-            foreach ($failures as $key => $value) {
-                $messag  =
-                $value->errors();
-            }
-            return back()->with('error', $messag);
-        }
-        # code...
+      
     }
     public function process()
     {
-        $today = Carbon::now()->format('Y-m-d') . '%';
+        // $today = Carbon::now()->format('Y-m-d') . '%';
         $data = ReconciledData::OrderBy('created_at','desc')->get();
         return view('pages.rekons.index', compact('data'));
     }
@@ -268,12 +255,10 @@ class DataController extends Controller
         } else if ($request->start_date && !$request->end_date) {
             $start_date = Carbon::parse($request->start_date)->startOfDay()->toDateTimeString();
             $data = Data::where('date', '>=' ,$start_date)->where('reconciled_data_id', '!=', null)->get();
-            // dd($start_date, $end_date, $data);
             return response()->json($data, 200);
         } else if (!$request->start_date && $request->end_date) {
             $end_date = Carbon::parse($request->end_date)->endOfDay()->toDateTimeString();
             $data = Data::where('date', '<=', $end_date)->where('reconciled_data_id', '!=', null)->get();
-            // dd($start_date, $end_date, $data);
             return response()->json($data, 200);
         } else {
             $start_date = Carbon::parse($request->start_date)->startOfDay()
@@ -283,7 +268,6 @@ class DataController extends Controller
                 ->toDateTimeString();
         }
         $data = Data::whereBetween('date', [$start_date, $end_date])->where('reconciled_data_id', '!=', null)->get();
-        // dd($start_date, $end_date, $data);
         return response()->json($data, 200);
     }
 
