@@ -101,90 +101,93 @@
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
 <script>
-        function rekonsss() {
-          myLoader('#export-button', 'show');
-          $axios.get("{{route('data.create')}}").then((data) => {
-            let timerInterval
+  var minDate = $('#min'),
+    maxDate = $('#max');
 
-            $swal.fire({
-              title: 'Sukses',
-              icon: 'success',
-              showConfirmButton: false,
-              showCancelButton: false,
-              html: 'Rekonsiliasi berhasil dilakukan!<br /></br>' +
-                'Halaman akan direload dalam <strong></strong> detik.',
-              timer: 3000,
-              didOpen: () => {
+  function rekonsss() {
+    myLoader('#export-button', 'show');
+    $axios.get("{{route('data.create')}}").then((data) => {
+      let timerInterval
 
-                timerInterval = setInterval(() => {
-                  $swal.getHtmlContainer().querySelector('strong')
-                    .textContent = ($swal.getTimerLeft() / 1000)
-                    .toFixed(0)
-                }, 100)
-              },
-              willClose: () => {
-                clearInterval(timerInterval)
-              }
-            }).then(() => {
-              document.location.reload();
+      $swal.fire({
+        title: 'Sukses',
+        icon: 'success',
+        showConfirmButton: false,
+        showCancelButton: false,
+        html: 'Rekonsiliasi berhasil dilakukan!<br /></br>' +
+          'Halaman akan direload dalam <strong></strong> detik.',
+        timer: 3000,
+        didOpen: () => {
+
+          timerInterval = setInterval(() => {
+            $swal.getHtmlContainer().querySelector('strong')
+              .textContent = ($swal.getTimerLeft() / 1000)
+              .toFixed(0)
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then(() => {
+        document.location.reload();
+      })
+      // myLoader('#table_data', 'hide');
+    }).catch(() => {
+      myLoader('#table_data', 'hide');
+      $swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    })
+  }
+  let timerInterval;
+
+  function processData() {
+    console.log({
+      start_date: minDate.val(),
+      end_date: maxDate.val()
+    })
+    $axios.post("{{route('check.data')}}", {
+      start_date: minDate.val(),
+      end_date: maxDate.val()
+    }).then((data) => {
+      if (data.data.length > 0) {
+        $swal.fire({
+          title: "Yakin?",
+          text: "Anda akan melakukan rekonsiliasi ulang!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Tidak',
+          confirmButtonText: 'Ya!'
+        }).then(async (res) => {
+          if (res.isConfirmed) {
+            console.log(data.data);
+            await Promise.all(data.data).then((values) => {
+              var urlHere = "{{route('data.destroy', ":id ")}}";
+              values.forEach(element => {
+                urlHere = urlHere.replace(':id', element.id);
+                $axios.delete(`${urlHere}`)
+              });
             })
-            // myLoader('#table_data', 'hide');
-          }).catch(() => {
-            myLoader('#table_data', 'hide');
-            $swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            })
-          })
-        }
-        let timerInterval;
+            rekonsss();
+          }
+        })
 
-        function processData() {
-          console.log({
-            start_date: minDate.val(),
-            end_date: maxDate.val()
-          })
-          $axios.post("{{route('check.data')}}", {
-            start_date: minDate.val(),
-            end_date: maxDate.val()
-          }).then((data) => {
-            if (data.data.length > 0) {
-              $swal.fire({
-                title: "Yakin?",
-                text: "Anda akan melakukan rekonsiliasi ulang!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Tidak',
-                confirmButtonText: 'Ya!'
-              }).then(async (res) => {
-                if (res.isConfirmed) {
-                  console.log(data.data);
-                  await Promise.all(data.data).then((values) => {
-                    var urlHere = "{{route('data.destroy', ":id ")}}";
-                    values.forEach(element => {
-                      urlHere = urlHere.replace(':id', element.id);
-                      $axios.delete(`${urlHere}`)
-                    });
-                  })
-                  rekonsss();
-                }
-              })
+      } else {
+        rekonsss();
+      }
+    })
+  }
 
-            } else {
-              rekonsss();
-            }
-          })
-        }
-
-        function showModal(id1, id2, name, ld) {
-          $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
-          // $("#formTambah")[0].reset()
-          $('#modal_tambah').modal('show')
-        }
-        // $("#table_data").LoadingOverlay('hide')
+  function showModal(id1, id2, name, ld) {
+    $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
+    // $("#formTambah")[0].reset()
+    $('#modal_tambah').modal('show')
+  }
+  // $("#table_data").LoadingOverlay('hide')
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection
