@@ -101,7 +101,6 @@
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
 <script>
-  $(document).ready(function() {
         function rekonsss() {
           myLoader('#export-button', 'show');
           $axios.get("{{route('data.create')}}").then((data) => {
@@ -185,7 +184,6 @@
           // $("#formTambah")[0].reset()
           $('#modal_tambah').modal('show')
         }
-      })
         // $("#table_data").LoadingOverlay('hide')
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
