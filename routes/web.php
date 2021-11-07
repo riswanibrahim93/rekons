@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\FilingController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('process-recons',[DataController::class,'process'])->name('proses');
     Route::post('checkData', [DataController::class, 'checkData'])->name('check.data');
     // return view('welcome');
+    Route::resource('pemberkasan', FilingController::class);
 });

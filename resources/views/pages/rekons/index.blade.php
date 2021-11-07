@@ -166,7 +166,7 @@
           if (res.isConfirmed) {
             console.log(data.data);
             await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ":id ")}}";
+              var urlHere = "{{route('data.destroy', ": id ")}}";
               values.forEach(element => {
                 urlHere = urlHere.replace(':id', element.id);
                 $axios.delete(`${urlHere}`)
@@ -183,6 +183,10 @@
   }
 
   function showModal(id1, id2, name, ld) {
+    console.log(minDate.val() == "");
+    if (minDate.val() == "" || maxDate.val() == "") {
+alert("asu")
+    }
     $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
     // $("#formTambah")[0].reset()
     $('#modal_tambah').modal('show')
