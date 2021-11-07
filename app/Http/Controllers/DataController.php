@@ -23,8 +23,9 @@ class DataController extends Controller
         // $role = Auth::user()->role;
         $bsi_data = [];
         $eka_data = [];
-        $bsi_data = Data::where('owner', 1)->where('created_at', 'like', $today)->get();
-        $eka_data = Data::where('owner', 2)->where('created_at', 'like', $today)->get();
+        $bsi_data = Data::where('owner', 1)->get();
+        $eka_data = Data::where('owner', 2)->get();
+        // dd($bsi_data);
         return view('pages.data.index', compact('bsi_data', 'eka_data'));
     }
 
@@ -56,27 +57,21 @@ class DataController extends Controller
                     array_push($checker, true);
                     $stat = 0;
                     $description = '';
-                    if ($eka_data[$i]->atr != $bsi_data[$j]->atr) {
-                        $stat = 0;
-                        $description = $description . "No Atribusi";
-                    } elseif ($eka_data[$i]->branch_code != $bsi_data[$j]->branch_code) {
-                        $description = $description . "Kode cabang tidak";
-                        $stat = 0;
-                    } elseif ($eka_data[$i]->product != $bsi_data[$j]->product) {
-                        $description = $description . "produk";
-                        $stat = 0;
-                    } elseif ($eka_data[$i]->plafond != $bsi_data[$j]->plafond) {
-                        $description = $description . "plafond";
-                        $stat = 0;
-                    } elseif ($eka_data[$i]->product_code != $bsi_data[$j]->product_code) {
-                        $description = $description . "Beda fasilitas";
-                        $stat = 0;
-                    } else {
-                        $description = 'valid';
+                    $branch_condition = $eka_data[$i]->branch_code == $bsi_data[$j]->branch_code;
+                    $payment_stat_condition = $eka_data[$i]->payment_status == $bsi_data[$j]->payment_status;
+                    $product_condition = $eka_data[$i]->product_code == $bsi_data[$j]->product_code;
+                    if ($branch_condition && $payment_stat_condition && $product_condition) {
+                        $description = 'Valid';
                         $stat = 1;
+                    }else{
+                        $stat = 0;
+                        $description = $description .(strlen($description)>0?", ":"") .(!$branch_condition?"Kode cabang":"");
+                        $description = $description .(strlen($description)>0?", ":"") .(!$payment_stat_condition ? "Status pembiayaan" : "");
+                        $description = $description .(strlen($description)>0?", ":"") .(!$product_condition ? "Produk" : "");
                     }
                     array_push($result, [
                         'data_id' => $eka_data[$i]->id,
+                        'atr'=> $bsi_data[$i]->atr,
                         'status' => $stat,
                         'description' => $description
                     ]);
@@ -87,18 +82,13 @@ class DataController extends Controller
             if (!in_array(true, $checker)) {
                 array_push($result, [
                     'data_id' => $eka_data[$i]->id,
+                    'atr' => 0,
                     'status' => 0,
                     'description' => 'Data tidak ada'
                 ]);
             }
         }
-        // $prevdata = ReconciledData::where('created_at', 'like', $today)->get();
-        // if (count($prevdata) > 0) {
-        //     foreach ($prevdata as $key => $value) {
-        //         $delete = ReconciledData::find($value->id);
-        //         $delete->delete();
-        //     }
-        // }
+
         $unique_result = array_unique($result);
         foreach ($unique_result as $key => $value) {
             $created_recon =  ReconciledData::create($value);
@@ -135,11 +125,6 @@ class DataController extends Controller
         $end_date = Carbon::parse($request->end_date)
             ->toDateTimeString();
         $data = Data::whereBetween('date', [$start_date, $end_date])->where('reconciled_data_id', '!=', null)->get();
-        // foreach ($data as $key => $value) {
-        //     if($data->date==null){
-        //         unset($value);
-        //     }
-        // }
         return $data;
     }
 
@@ -232,26 +217,38 @@ class DataController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            ReconciledData::find($id)->delete();
+            return response()->json([],200);
+        } catch (\Throwable $th) {
+            return response()->json([],500);
+        }
+        
     }
     public function importData()
     {
         // $excel = Excel::class;
         try {
-            $today = Carbon::now()->format('Y-m-d') . '%';
+            // $today = Carbon::now()->format('Y-m-d') . '%';
 
-            $prevdata = Data::where('created_at', 'like', $today)->where('owner', Auth::user()->id)->get();
-            if (count($prevdata) > 0) {
-                foreach ($prevdata as $key => $value) {
-                    Data::find($value->id)->delete();
-                }
-            }
+            // $prevdata = Data::where('created_at', 'like', $today)->where('owner', Auth::user()->id)->get();
+            // if (count($prevdata) > 0) {
+            //     foreach ($prevdata as $key => $value) {
+            //         Data::find($value->id)->delete();
+            //     }
+            // }
             $result =  Excel::import(new ImportData, request()->file('file'));
-            //    dd($result);
+               dd($result);
+         
             return back()->with('success', 'Data berhasil diupload!');
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-            return back()->with('error', 'Data gagal diupload!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $messag  = '';
+            foreach ($failures as $key => $value) {
+                $messag  =
+                $value->errors();
+            }
+            return back()->with('error', $messag);
         }
         # code...
     }
