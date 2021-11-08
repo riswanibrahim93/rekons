@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Filing extends Model
 {
     use HasFactory;
-    protected $fillable = ['file', 'ld', 'from'];
+    protected $fillable = ['file', 'ld', 'from', 'notification_id'];
 }

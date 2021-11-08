@@ -72,11 +72,11 @@
       opacity: 0;
       display: none; }
     .todo .todo-list-wrapper .todo-list-footer .add-task-btn:hover {
-      background: #ab8ce4; }
+      background: #00A39D; }
       .todo .todo-list-wrapper .todo-list-footer .add-task-btn:hover .icon {
         color: #eeeeee; }
     .todo .todo-list-wrapper .todo-list-footer .add-task-btn .icon {
-      color: #ab8ce4;
+      color: #00A39D;
       font-size: 20px; }
     .todo .todo-list-wrapper .todo-list-footer .new-task-wrapper {
       transition: all 300ms ease;
@@ -168,7 +168,7 @@
             color: #fff; }
       .todo .todo-list-wrapper #todo-list li.completed .task-container .task-label {
         text-decoration: line-through;
-        color: #ab8ce4; }
+        color: #00A39D; }
       .todo .todo-list-wrapper #todo-list li.new .task-container {
         animation: taskHighlighter 2000ms linear 1; }
   .todo .todo-list-wrapper .todo-list-header h5 {
@@ -209,12 +209,12 @@
     visibility: hidden; }
 @-webkit-keyframes taskHighlighter {
   0% {
-    background: #ab8ce44a; }
+    background: #00A39D4a; }
   100% {
     background: #fff; } }
 @keyframes taskHighlighter {
   0% {
-    background: #ab8ce491; }
+    background: #00A39D91; }
   100% {
     background: #fff; } }
 /*====todo css end====*/

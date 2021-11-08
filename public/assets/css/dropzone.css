@@ -458,12 +458,12 @@
   margin-right: auto;
   margin-left: auto;
   padding: 50px;
-  border: 2px dashed #ab8ce4;
+  border: 2px dashed #00A39D;
   border-radius: 15px;
   -webkit-border-image: none;
   -o-border-image: none;
   border-image: none;
-  background: #ab8ce40a;
+  background: #00A39D0a;
   box-sizing: border-box;
   min-height: 150px;
   position: relative; }
@@ -471,7 +471,7 @@
     box-sizing: border-box; }
   .dropzone i {
     font-size: 50px;
-    color: #ab8ce4; }
+    color: #00A39D; }
   .dropzone .dz-message {
     text-align: center;
     margin: 25px 0; }
@@ -484,7 +484,7 @@
     background-color: #eeeeee;
     width: 120px;
     height: 120px;
-    box-shadow: 0px 0px 3px #ab8ce4; }
+    box-shadow: 0px 0px 3px #00A39D; }
     .dropzone .dz-preview .dz-progress {
       display: block;
       height: 10px;

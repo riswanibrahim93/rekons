@@ -94,7 +94,7 @@
     background: rgba(171, 140, 228, 0.1); }
   .pixelstrap ul a, .pixelstrap ul a:hover, .pixelstrap ul a:focus, .pixelstrap ul a:active {
     background: transparent;
-    color: #ab8ce4;
+    color: #00A39D;
     font-size: 14px;
     text-shadow: none; }
   .pixelstrap ul a.current {
@@ -212,10 +212,10 @@
       .pixelstrap ul a:hover, .pixelstrap ul a:focus, .pixelstrap ul a:active, .pixelstrap ul a.highlighted {
         border: 0 !important;
         background: transparent;
-        color: #ab8ce4;
+        color: #00A39D;
         border-radius: 0 !important; }
       .pixelstrap ul a:hover, .pixelstrap ul a:focus, .pixelstrap ul a:active, .pixelstrap ul a.highlighted {
-        color: #ab8ce4; }
+        color: #00A39D; }
         .pixelstrap ul a:hover .sub-arrow, .pixelstrap ul a:focus .sub-arrow, .pixelstrap ul a:active .sub-arrow, .pixelstrap ul a.highlighted .sub-arrow {
           top: 50%;
           right: 15px;
@@ -226,9 +226,9 @@
             right: 5px;
             color: gray; }
       .pixelstrap ul a.current {
-        color: #ab8ce4; }
+        color: #00A39D; }
       .pixelstrap ul a.disabled {
-        color: #ab8ce4; }
+        color: #00A39D; }
       .pixelstrap ul a .sub-arrow {
         top: 50%;
         right: 15px;
@@ -259,11 +259,11 @@
     overflow: hidden;
     border-width: 8px;
     border-style: dashed dashed solid dashed;
-    border-color: transparent transparent #ab8ce4 transparent; }
+    border-color: transparent transparent #00A39D transparent; }
   .pixelstrap .scroll-down-arrow {
     top: 6px;
     border-style: solid dashed dashed dashed;
-    border-color: #ab8ce4 transparent transparent transparent; }
+    border-color: #00A39D transparent transparent transparent; }
   .pixelstrap.sm-rtl.sm-vertical a .sub-arrow {
     right: auto;
     left: 10px;

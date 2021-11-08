@@ -188,7 +188,7 @@
 .clockpicker-canvas {
   transition: opacity 175ms; }
   .clockpicker-canvas line {
-    stroke: #ab8ce4;
+    stroke: #00A39D;
     stroke-width: 1;
     stroke-linecap: round; }
 
@@ -248,11 +248,11 @@
 
 .clockpicker-canvas-bearing {
   stroke: none;
-  fill: #ab8ce4; }
+  fill: #00A39D; }
 
 .clockpicker-canvas-fg {
   stroke: none;
-  fill: #ab8ce4; }
+  fill: #00A39D; }
 
 .clockpicker-canvas-bg {
   stroke: none;

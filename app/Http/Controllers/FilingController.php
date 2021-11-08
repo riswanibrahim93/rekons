@@ -53,13 +53,14 @@ class FilingController extends Controller
                 $descrition = "Admin Eka melakukan pemberkasan pada data $request->ld";
             }
             $filing = Filing::create(['from'=>$from ,'file'=>$fileName, 'ld'=>$request->ld]);
-            Notification::create([
+            $notif = Notification::create([
                 'for' => $for,
                 'from' => $from,
                 'description'=> $descrition,
                 'status' => 0,
                 'filing_id' => $filing->id
             ]);
+            $filing->update(['notification_id'=> $notif->id]);
             return response()->json([
                 'status' => true,
                 'message' => [
@@ -111,7 +112,8 @@ class FilingController extends Controller
      */
     public function edit($id)
     {
-        //
+        Notification::find($id)->update(['status'=>1]);
+        return response()->json([],200);
     }
 
     /**

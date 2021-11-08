@@ -6895,13 +6895,13 @@ span.twitter-typeahead {
           display: inline-block;
           border: solid transparent;
           border-width: 0 0 7px 7px;
-          border-bottom-color: #ab8ce4;
+          border-bottom-color: #00A39D;
           border-top-color: rgba(0, 0, 0, 0.2);
           position: absolute;
           bottom: 4px;
           right: 4px; }
       .bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
-        background-color: #ab8ce4;
+        background-color: #00A39D;
         color: #fff;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
       .bootstrap-datetimepicker-widget table td.active.today:before {
@@ -6921,7 +6921,7 @@ span.twitter-typeahead {
         .bootstrap-datetimepicker-widget table td span:hover {
           background: #e9ecef; }
         .bootstrap-datetimepicker-widget table td span.active {
-          background-color: #ab8ce4;
+          background-color: #00A39D;
           color: #fff;
           text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
         .bootstrap-datetimepicker-widget table td span.old {

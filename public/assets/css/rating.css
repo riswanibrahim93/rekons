@@ -429,9 +429,9 @@
     content: '\f005';
     color: #d2d2d2; }
   .br-theme-fontawesome-stars .br-widget a.br-active:after {
-    color: #ab8ce4; }
+    color: #00A39D; }
   .br-theme-fontawesome-stars .br-widget a.br-selected:after {
-    color: #ab8ce4; }
+    color: #00A39D; }
   .br-theme-fontawesome-stars .br-widget .br-current-rating {
     display: none; }
 .br-theme-fontawesome-stars .br-readonly a {
@@ -458,13 +458,13 @@
     margin: 1px;
     text-align: center; }
     .br-theme-bars-1to10 .br-widget a.br-active, .br-theme-bars-1to10 .br-widget a.br-selected {
-      background-color: #ab8ce4; }
+      background-color: #00A39D; }
   .br-theme-bars-1to10 .br-widget .br-current-rating {
     font-size: 20px;
     line-height: 1.8;
     float: left;
     padding: 0 20px 0 20px;
-    color: #ab8ce4;
+    color: #00A39D;
     font-weight: 400; }
 .br-theme-bars-1to10 .br-readonly a {
   cursor: default; }
@@ -496,14 +496,14 @@
     background-color: #f6f3fc;
     margin: 1px; }
     .br-theme-bars-horizontal .br-widget a.br-active, .br-theme-bars-horizontal .br-widget a.br-selected {
-      background-color: #ab8ce4; }
+      background-color: #00A39D; }
   .br-theme-bars-horizontal .br-widget .br-current-rating {
     width: 120px;
     font-size: 18px;
     font-weight: 600;
     line-height: 2;
     text-align: center;
-    color: #ab8ce4; }
+    color: #00A39D; }
 .br-theme-bars-horizontal .br-readonly a {
   cursor: default; }
   .br-theme-bars-horizontal .br-readonly a.br-active, .br-theme-bars-horizontal .br-readonly a.br-selected {
@@ -534,7 +534,7 @@
     background-color: #f6f3fc;
     margin: 1px; }
     .br-theme-bars-movie .br-widget a.br-active, .br-theme-bars-movie .br-widget a.br-selected {
-      background-color: #ab8ce4; }
+      background-color: #00A39D; }
   .br-theme-bars-movie .br-widget .br-current-rating {
     clear: both;
     width: 240px;
@@ -542,7 +542,7 @@
     font-weight: 600;
     display: block;
     padding: .5em 0;
-    color: #ab8ce4;
+    color: #00A39D;
     font-weight: 400; }
 .br-theme-bars-movie .br-readonly a {
   cursor: default; }
@@ -568,7 +568,7 @@
   .br-theme-bars-pill .br-widget a {
     padding: 7px 15px;
     background-color: #f6f3fc;
-    color: #ab8ce4;
+    color: #00A39D;
     text-decoration: none;
     font-size: 13px;
     line-height: 3;
@@ -589,7 +589,7 @@
       border-top-right-radius: 999px;
       border-bottom-right-radius: 999px; }
     .br-theme-bars-pill .br-widget a.br-active, .br-theme-bars-pill .br-widget a.br-selected {
-      background-color: #ab8ce4;
+      background-color: #00A39D;
       color: white; }
 .br-theme-bars-pill .br-readonly a {
   cursor: default; }
@@ -624,16 +624,16 @@
     font-size: 15px;
     font-weight: 400;
     line-height: 1.4;
-    color: #ab8ce4;
+    color: #00A39D;
     text-align: center; }
     .br-theme-bars-reversed .br-widget a.br-active, .br-theme-bars-reversed .br-widget a.br-selected {
-      background-color: #ab8ce4;
+      background-color: #00A39D;
       color: white; }
   .br-theme-bars-reversed .br-widget .br-current-rating {
     line-height: 1.3;
     float: left;
     padding: 0 20px 0 20px;
-    color: #ab8ce4;
+    color: #00A39D;
     font-size: 17px;
     font-weight: 400; }
 .br-theme-bars-reversed .br-readonly a {
@@ -673,8 +673,8 @@
     color: #e7dff7;
     font-weight: 600; }
     .br-theme-bars-square .br-widget a.br-active, .br-theme-bars-square .br-widget a.br-selected {
-      border: 2px solid #ab8ce4;
-      color: #ab8ce4; }
+      border: 2px solid #00A39D;
+      color: #00A39D; }
   .br-theme-bars-square .br-widget .br-current-rating {
     clear: both;
     width: 330px;
@@ -686,7 +686,7 @@
 .br-theme-bars-square .br-readonly a {
   cursor: default; }
   .br-theme-bars-square .br-readonly a.br-active, .br-theme-bars-square .br-readonly a.br-selected {
-    border: 2px solid #ab8ce4;
+    border: 2px solid #00A39D;
     color: #c9b5ee; }
 
 @media print {
@@ -769,13 +769,13 @@
     color: #d2d2d2; }
   .br-theme-fontawesome-stars-o .br-widget a.br-active:after {
     content: '\f005';
-    color: #ab8ce4; }
+    color: #00A39D; }
   .br-theme-fontawesome-stars-o .br-widget a.br-selected:after {
     content: '\f005';
-    color: #ab8ce4; }
+    color: #00A39D; }
   .br-theme-fontawesome-stars-o .br-widget a.br-fractional:after {
     content: '\f123';
-    color: #ab8ce4; }
+    color: #00A39D; }
   .br-theme-fontawesome-stars-o .br-widget .br-current-rating {
     display: none; }
 .br-theme-fontawesome-stars-o .br-readonly a {

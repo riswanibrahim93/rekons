@@ -94,7 +94,7 @@
 .calendar-wrap .fc-unthemed .fc-row {
   border-color: #eeeeee; }
 .calendar-wrap .fc-unthemed hr {
-  border-color: #ab8ce4;
+  border-color: #00A39D;
   background: #eeeeee;
   margin: 0; }
 .calendar-wrap .fc-unthemed tbody {
@@ -106,7 +106,7 @@
 .calendar-wrap .fc-unthemed thead {
   border-color: #cccccc; }
 .calendar-wrap .fc-unthemed .fc-today {
-  background: #ab8ce4;
+  background: #00A39D;
   opacity: 0.1; }
 .calendar-wrap .fc-highlight {
   background: #00c292;
@@ -119,8 +119,8 @@
 .calendar-wrap .fc-nonbusiness {
   background: #cccccc; }
 .calendar-wrap .fc-state-active {
-  color: #ab8ce4;
-  background-color: #ab8ce4; }
+  color: #00A39D;
+  background-color: #00A39D; }
 .calendar-wrap .fc-state-down {
   color: #444444;
   background-color: #fff; }
@@ -217,8 +217,8 @@
   font-size: 12px;
   line-height: 1;
   border-radius: 4px;
-  border: 1px solid #ab8ce4;
-  background-color: #ab8ce4;
+  border: 1px solid #00A39D;
+  background-color: #00A39D;
   color: #fff !important;
   text-decoration: none;
   text-transform: uppercase;

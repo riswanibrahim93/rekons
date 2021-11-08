@@ -205,6 +205,29 @@
     })
   </script>
   @endif
+  <script>
+    function copyToClipboard(id) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(`#notif${id}`).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+      $toastr.fire({
+        icon: 'success',
+        title: 'Ld berhasil dicopi!, silahkan paste di kolom search'
+      });
+      // setTimeout(() => {
+       var urlHere = "{{route('pemberkasan.edit', ":id ")}}";
+        urlHere = urlHere.replace(':id', id);
+        // url.replace(':id', parseInt(id));
+        $axios.get(urlHere).then(()=>{
+          setTimeout(() => {
+            window.location.replace("{{route('proses')}}");
+          }, 2000);
+        })
+      // }, 500);
+    }
+  </script>
   @yield('script')
 </body>
 
