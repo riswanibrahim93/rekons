@@ -36,7 +36,7 @@
         </li>
         <li class="onhover-dropdown">
           <a href="#!" class="txt-dark">
-            <img class="align-self-center pull-right mr-2" src="../assets/images/dashboard/notification.png"
+            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/notification.png')}}"
               alt="header-notification">
               @if (count($notifications)>0)
               <span class="badge badge-pill badge-primary notification">{{count($notifications)}}</span>

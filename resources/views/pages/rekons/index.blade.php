@@ -92,7 +92,7 @@
               <td><a href="" target="_blank" id="ekaLink" class="btn btn-warning">Lihat</a></td>
             </tr>
             <tr>
-              <th scope="row">1</th>
+              <th scope="row">2</th>
               <td><button class="btn btn-success" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button>
                 <form action="" method="post" enctype="multipart/form-data" id="form1">
                   @csrf
