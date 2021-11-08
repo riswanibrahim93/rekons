@@ -164,7 +164,8 @@
       })
       // myLoader('#table_data', 'hide');
     }).catch((err) => {
-      myLoader('#table_data', 'hide');
+
+console.log(err);      myLoader('#table_data', 'hide');
       $swal.fire({
         icon: 'error',
         title: 'Oops...',
