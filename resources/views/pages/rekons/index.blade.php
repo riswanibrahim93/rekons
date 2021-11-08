@@ -212,7 +212,7 @@
           if (res.isConfirmed) {
             console.log(data.data);
             await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ": id ")}}";
+              var urlHere = "{{route('data.destroy', ":id ")}}";
               values.forEach(element => {
                 urlHere = urlHere.replace(':id', element.id);
                 $axios.delete(`${urlHere}`)
@@ -243,7 +243,7 @@
     // $(`#form${Gtype}`)[0].reset()
     $(".ld").val(ld);
 
-    var urlHere = "{{route('pemberkasan.show', ": id ")}}";
+    var urlHere = "{{route('pemberkasan.show', ":id ")}}";
     urlHere = urlHere.replace(':id', ld);
     $axios.get(`${urlHere}`).then((data) => {
       let results = data.data;
@@ -259,13 +259,13 @@
             $("#bsiLink").attr('onClick', 'noFileErr()');
           }
           if (item.from == 2) {
-            $("#ekaLink").attr('href', "#");
+            $("#ekaLink").attr('href', item.file);
             $("#ekaLink").attr('target', "_blank");
             $("#ekaLink").attr('onClick', null);
           } else {
             $("#bsiLink").attr('href', "#");
             $("#bsiLink").attr('target', null);
-            $("#ekaLink").attr('onClick', 'noFileErr()');
+            $("#bsiLink").attr('onClick', 'noFileErr()');
           }
         })
       } else {
@@ -274,7 +274,7 @@
         $("#ekaLink").attr('onClick', 'noFileErr()');
         $("#bsiLink").attr('href', "#");
         $("#bsiLink").attr('target', null);
-        $("#ekaLink").attr('onClick', 'noFileErr()');
+        $("#bsiLink").attr('onClick', 'noFileErr()');
       }
 
       $('#modal_tambah').modal('show')
