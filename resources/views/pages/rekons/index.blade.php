@@ -74,6 +74,7 @@
         <div class="col-12">
           <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
           <p class="small" id="modalTitle"></p>
+          <a href="#" class="btn btn-success">Update Data Valid</a>
         </div>
       </div>
       <div class="table-responsive">
