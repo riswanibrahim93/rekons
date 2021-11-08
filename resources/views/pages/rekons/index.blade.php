@@ -163,12 +163,12 @@
         document.location.reload();
       })
       // myLoader('#table_data', 'hide');
-    }).catch(() => {
+    }).catch((err) => {
       myLoader('#table_data', 'hide');
       $swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: err.text,
       })
     })
   }
