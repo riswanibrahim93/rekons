@@ -13,11 +13,11 @@
           @endif </h5>
         <div class="d-flex col-md-6 col-sm-12">
           <div>
-            <p>Minimum date:</p>
+            <p>Tanggal awal:</p>
             <span><input type="date" id="min" name="min"></span>
           </div>
           <div>
-            <p>Maximum date:</p>
+            <p>Tanggal akhir:</p>
             <span><input type="date" id="max" name="max"></span>
           </div>
         </div>
@@ -75,11 +75,30 @@
           <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
           <p class="small" id="modalTitle"></p>
         </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">BSI</th>
+              <th scope="col">Eka</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td><a href="" class="btn btn-success">Lihat</a></td>
+              <td><a href="" class="btn btn-warning">Lihat</a></td>
+            </tr>
+            <tr>
+              <th scope="row">1</th>
+              <td><button class="btn btn-success" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button><input type="file" style="overflow:hidden;width:0px;height:0px;"  accept="application/pdf" name="bsi_file" id="bsi_file"></td>
+              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span id="spinner_field2"></span>upload</button><input type="file" style="overflow:hidden;width:0px;height:0px;"  accept="application/pdf" name="eka_file" id="eka_file"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -144,10 +163,20 @@
   let timerInterval;
 
   function processData() {
-    console.log({
-      start_date: minDate.val(),
-      end_date: maxDate.val()
-    })
+    if (minDate.val() == "" || maxDate.val() == "") {
+      $swal.fire({
+        title: "Perhatian!",
+        text: "Minimal tentukan tanggal awal dahulu!",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ya!'
+      }).then((res) => {
+        if (res.isConfirmed) {
+          return;
+        }
+      });
+      return;
+    }
     $axios.post("{{route('check.data')}}", {
       start_date: minDate.val(),
       end_date: maxDate.val()
@@ -184,12 +213,20 @@
 
   function showModal(id1, id2, name, ld) {
     console.log(minDate.val() == "");
-    if (minDate.val() == "" || maxDate.val() == "") {
-alert("asu")
-    }
+
     $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
     // $("#formTambah")[0].reset()
     $('#modal_tambah').modal('show')
+  }
+
+  function uploadButton(type) {
+    console.log(`#spinner_field${type}`);
+    $(`#spinner_field${type}`).html('<i class="fa fa-spin fa-spinner mr-2"></i>');
+    if (type === 1) {
+      $("#bsi_file").click();
+    } else {
+      $("#eka_file").click();
+    }
   }
   // $("#table_data").LoadingOverlay('hide')
 </script>
