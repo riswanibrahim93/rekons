@@ -88,13 +88,25 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td><a href="" class="btn btn-success">Lihat</a></td>
-              <td><a href="" class="btn btn-warning">Lihat</a></td>
+              <td><a href="" target="_blank" id="bsiLink" class="btn btn-success">Lihat</a></td>
+              <td><a href="" target="_blank" id="ekaLink" class="btn btn-warning">Lihat</a></td>
             </tr>
             <tr>
               <th scope="row">1</th>
-              <td><button class="btn btn-success" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button><input type="file" style="overflow:hidden;width:0px;height:0px;"  accept="application/pdf" name="bsi_file" id="bsi_file"></td>
-              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span id="spinner_field2"></span>upload</button><input type="file" style="overflow:hidden;width:0px;height:0px;"  accept="application/pdf" name="eka_file" id="eka_file"></td>
+              <td><button class="btn btn-success" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button>
+                <form action="" method="post" enctype="multipart/form-data" id="form1">
+                  @csrf
+                  <input type="hidden" name="ld" id="ld" class="ld">
+                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file" id="bsi_file">
+                </form>
+              </td>
+              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span id="spinner_field2"></span>upload</button>
+                <form id="form2" action="" method="post" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="ld" id="ld" class="ld">
+                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file" id="eka_file">
+                </form>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -215,20 +227,106 @@
     console.log(minDate.val() == "");
 
     $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
-    // $("#formTambah")[0].reset()
-    $('#modal_tambah').modal('show')
+    // $(`#form${Gtype}`)[0].reset()
+    $(".ld").val(ld);
+    
+    var urlHere = "{{route('pemberkasan.show', ":id ")}}";
+    urlHere = urlHere.replace(':id', ld);
+    $axios.get(`${urlHere}`).then((data)=>{
+      let results = data.data;
+      results.forEach((item)=>{
+        if (item.from==1)$("#bsiLink").attr('href', item.file);
+        if (item.from==2)$("#ekaLink").attr('href', item.file);
+      })
+      
+      // $("#ekaLink").attr('href', data.data);
+       $('#modal_tambah').modal('show')
+    });
   }
+  let Gtype = 0;
 
   function uploadButton(type) {
-    console.log(`#spinner_field${type}`);
-    $(`#spinner_field${type}`).html('<i class="fa fa-spin fa-spinner mr-2"></i>');
+    // $(`#spinner_field${type}`).html('<i class="fa fa-spin fa-spinner mr-2"></i>');
+    Gtype = type;
     if (type === 1) {
       $("#bsi_file").click();
     } else {
       $("#eka_file").click();
     }
   }
-  // $("#table_data").LoadingOverlay('hide')
+  $("#bsi_file").on('change', function() {
+    $("#form1").submit();
+  });
+  $("#eka_file").on('change', function() {
+    $("#form2").submit();
+  });
+  $("#form1").on('submit', async (e) => {
+    e.preventDefault();
+    let FormDataVar = new FormData($(`#form${Gtype}`)[0]);
+    $(`#spinner_field${Gtype}`).html('<i class="fa fa-spin fa-spinner mr-2"></i>');
+    console.log(FormDataVar)
+    for (var pair of FormDataVar.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    await new Promise((resolve, reject) => {
+      $axios.post(`{{ route('pemberkasan.store') }}`, FormDataVar, {
+          headers: {
+            'Content-type': 'multipart/form-data'
+          }
+        })
+        .then(({
+          data
+        }) => {
+          $(`#spinner_field${Gtype}`).html(null);
+
+          $("#bsiLink").attr('href', data.message.link);
+          $toastr.fire({
+            icon: 'success',
+            title: data.message.body
+          });
+        })
+        .catch(err => {
+          $(`#spinner_field${Gtype}`).html(null);
+          $toastr.fire({
+            icon: 'error',
+            title: err.message.body
+          });
+        });
+    });
+  });
+  $("#form2").on('submit', async (e) => {
+    e.preventDefault();
+    let FormDataVar = new FormData($(`#form${Gtype}`)[0]);
+    $(`#spinner_field${Gtype}`).html('<i class="fa fa-spin fa-spinner mr-2"></i>');
+    console.log(FormDataVar)
+    for (var pair of FormDataVar.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    };
+    await new Promise((resolve, reject) => {
+      $axios.post(`{{ route('pemberkasan.store') }}`, FormDataVar, {
+          headers: {
+            'Content-type': 'multipart/form-data'
+          }
+        })
+        .then(({
+          data
+        }) => {
+          $("#ekaLink").attr('href', data.message.link);
+          $(`#spinner_field${Gtype}`).html(null);
+          $toastr.fire({
+            icon: 'success',
+            title: data.message.body
+          });
+        })
+        .catch(err => {
+          $(`#spinner_field${Gtype}`).html(null);
+          $toastr.fire({
+            icon: 'error',
+            title: err.message.body
+          });
+        });
+    });
+  });
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection

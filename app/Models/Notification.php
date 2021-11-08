@@ -11,6 +11,8 @@ class Notification extends Model
     protected $fillable = [
         'for',
         'from',
+        'status',
+        'description',
         'filing_id',
     ];
 

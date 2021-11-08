@@ -11,14 +11,12 @@
           @else
               PT EKA AKAR JATI
           @endif </h5>
-          {{-- <div class="col"> --}}
             <form action="{{route('import_datas')}}" method="post" enctype="multipart/form-data">
               @csrf
               <!-- <button type="button" class="btn btn-outline-light txt-dark" data-original-title="btn btn-outline-light txt-dark" title="">Light Button</button> -->
               <input type="file" name="file" id="">
               <button class="action btn btn-light" type="submit">Upload</button>
             </form>
-          {{-- </div> --}}
         </div>
         <!-- <div class="col-xl-6 ml-auto col-sm-12"> -->
           {{-- <input type="search" class="form-control-plaintext col-xl-3 d-block ml-auto col-sm-12 mt-2" name="keyword" placeholder="Search"
