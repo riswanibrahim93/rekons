@@ -169,7 +169,7 @@ console.log(err);      myLoader('#table_data', 'hide');
       $swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: err.text,
+        text: err.message.text,
       })
     })
   }
