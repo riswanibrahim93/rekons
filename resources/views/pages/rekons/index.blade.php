@@ -137,9 +137,12 @@
 
   function rekonsss() {
     myLoader('#export-button', 'show');
-    $axios.get("{{route('data.create')}}").then((data) => {
+    $axios.post("{{route('process.data')}}", {
+      start_date: minDate.val(),
+      end_date: maxDate.val()
+    }).then((data) => {
       let timerInterval
-
+      console.log(data.data);
       $swal.fire({
         title: 'Sukses',
         icon: 'success',
@@ -160,12 +163,13 @@
           clearInterval(timerInterval)
         }
       }).then(() => {
-        document.location.reload();
+        // document.location.reload();
       })
       // myLoader('#table_data', 'hide');
     }).catch((err) => {
 
-console.log(err);      myLoader('#table_data', 'hide');
+      console.log(err);
+      myLoader('#table_data', 'hide');
       $swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -208,7 +212,7 @@ console.log(err);      myLoader('#table_data', 'hide');
           if (res.isConfirmed) {
             console.log(data.data);
             await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ": id ")}}";
+              var urlHere = "{{route('data.destroy', ":id ")}}";
               values.forEach(element => {
                 urlHere = urlHere.replace(':id', element.id);
                 $axios.delete(`${urlHere}`)
@@ -224,24 +228,47 @@ console.log(err);      myLoader('#table_data', 'hide');
     })
   }
 
+  function noFileErr() {
+    $swal.fire({
+      title: "Opps",
+      icon: "warning",
+      text: "Belum ada file"
+    })
+  }
+
   function showModal(id1, id2, name, ld) {
     console.log(minDate.val() == "");
 
     $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
     // $(`#form${Gtype}`)[0].reset()
     $(".ld").val(ld);
-    
+
     var urlHere = "{{route('pemberkasan.show', ":id ")}}";
     urlHere = urlHere.replace(':id', ld);
-    $axios.get(`${urlHere}`).then((data)=>{
+    $axios.get(`${urlHere}`).then((data) => {
       let results = data.data;
-      results.forEach((item)=>{
-        if (item.from==1)$("#bsiLink").attr('href', item.file);
-        if (item.from==2)$("#ekaLink").attr('href', item.file);
+      results.forEach((item) => {
+        if (item.from == 1) {
+          $("#bsiLink").attr('href', item.file);
+          $("#bsiLink").attr('target', "_blank");
+          $("#ekaLink").attr('onClick', null);
+        } else {
+          $("#bsiLink").attr('href', "#");
+          $("#bsiLink").attr('target', null);
+          $("#bsiLink").attr('onClick', 'noFileErr()');
+        }
+        if (item.from == 2) {
+          $("#ekaLink").attr('href', item.file);
+          $("#ekaLink").attr('target', "_blank");
+          $("#ekaLink").attr('onClick', null);
+        } else {
+          $("#bsiLink").attr('href', "#");
+          $("#bsiLink").attr('target', null);
+          $("#ekaLink").attr('onClick', 'noFileErr()');
+        }
       })
-      
-      // $("#ekaLink").attr('href', data.data);
-       $('#modal_tambah').modal('show')
+
+      $('#modal_tambah').modal('show')
     });
   }
   let Gtype = 0;
