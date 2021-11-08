@@ -175,7 +175,7 @@
   let timerInterval;
 
   function processData() {
-    if (minDate.val() == "" || maxDate.val() == "") {
+    if (minDate.val() != "" || maxDate.val() != "") {
       $swal.fire({
         title: "Perhatian!",
         text: "Minimal tentukan tanggal awal dahulu!",
