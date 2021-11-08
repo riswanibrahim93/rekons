@@ -247,26 +247,35 @@
     urlHere = urlHere.replace(':id', ld);
     $axios.get(`${urlHere}`).then((data) => {
       let results = data.data;
-      results.forEach((item) => {
-        if (item.from == 1) {
-          $("#bsiLink").attr('href', item.file);
-          $("#bsiLink").attr('target', "_blank");
-          $("#ekaLink").attr('onClick', null);
-        } else {
-          $("#bsiLink").attr('href', "#");
-          $("#bsiLink").attr('target', null);
-          $("#bsiLink").attr('onClick', 'noFileErr()');
-        }
-        if (item.from == 2) {
-          $("#ekaLink").attr('href', item.file);
-          $("#ekaLink").attr('target', "_blank");
-          $("#ekaLink").attr('onClick', null);
-        } else {
-          $("#bsiLink").attr('href', "#");
-          $("#bsiLink").attr('target', null);
-          $("#ekaLink").attr('onClick', 'noFileErr()');
-        }
-      })
+      if (results.length > 0) {
+        results.forEach((item) => {
+          if (item.from == 1) {
+            $("#bsiLink").attr('href', item.file);
+            $("#bsiLink").attr('target', "_blank");
+            $("#ekaLink").attr('onClick', null);
+          } else {
+            $("#bsiLink").attr('href', "#");
+            $("#bsiLink").attr('target', null);
+            $("#bsiLink").attr('onClick', 'noFileErr()');
+          }
+          if (item.from == 2) {
+            $("#ekaLink").attr('href', "#");
+            $("#ekaLink").attr('target', "_blank");
+            $("#ekaLink").attr('onClick', null);
+          } else {
+            $("#bsiLink").attr('href', "#");
+            $("#bsiLink").attr('target', null);
+            $("#ekaLink").attr('onClick', 'noFileErr()');
+          }
+        })
+      } else {
+        $("#ekaLink").attr('href', "#");
+        $("#ekaLink").attr('target', "_blank");
+        $("#ekaLink").attr('onClick', null);
+        $("#bsiLink").attr('href', "#");
+        $("#bsiLink").attr('target', null);
+        $("#ekaLink").attr('onClick', 'noFileErr()');
+      }
 
       $('#modal_tambah').modal('show')
     });

@@ -98,8 +98,8 @@ class FilingController extends Controller
             , 200); 
         }else{
             return response()->json(
-                0,
-                500
+                $data,
+                200
             ); 
         }
     }
