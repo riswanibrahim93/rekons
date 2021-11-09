@@ -58,7 +58,8 @@ class FilingController extends Controller
                 'from' => $from,
                 'description'=> $descrition,
                 'status' => 0,
-                'filing_id' => $filing->id
+                'filing_id' => $filing->id,
+                'notification_id' => 0
             ]);
             $filing->update(['notification_id'=> $notif->id]);
             return response()->json([
