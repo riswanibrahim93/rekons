@@ -237,6 +237,10 @@
     })
   }
 
+  function openFile(url) {
+    window.open(url)
+  }
+
   function showModal(id1, id2, name, ld) {
     console.log(minDate.val() == "");
 
@@ -253,7 +257,7 @@
           if (item.from == 1) {
             $("#bsiLink").attr('href', item.file);
             $("#bsiLink").attr('target', "_blank");
-            $("#bsiLink").attr('onClick', window.open(item.file));
+            $("#bsiLink").attr('onClick', `openFile(${item.file})`);
             // download=
             console.log('bsi get')
           } else {
@@ -264,7 +268,7 @@
           if (item.from == 2) {
             $("#ekaLink").attr('href', item.file);
             $("#ekaLink").attr('target', "_blank");
-            $("#ekaLink").attr('onClick', window.open(item.file));
+            $("#ekaLink").attr('onClick', `openFile(${item.file})`);
             console.log('eka get')
           } else {
             $("#ekaLink").attr('href', "#");
