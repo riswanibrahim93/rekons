@@ -253,7 +253,8 @@
           if (item.from == 1) {
             $("#bsiLink").attr('href', item.file);
             $("#bsiLink").attr('target', "_blank");
-            $("#ekaLink").attr('onClick', null);
+            $("#bsiLink").attr('onClick', null);
+            console.log('bsi get')
           } else {
             $("#bsiLink").attr('href', "#");
             $("#bsiLink").attr('target', null);
@@ -263,10 +264,11 @@
             $("#ekaLink").attr('href', item.file);
             $("#ekaLink").attr('target', "_blank");
             $("#ekaLink").attr('onClick', null);
+            console.log('eka get')
           } else {
-            $("#bsiLink").attr('href', "#");
-            $("#bsiLink").attr('target', null);
-            $("#bsiLink").attr('onClick', 'noFileErr()');
+            $("#ekaLink").attr('href', "#");
+            $("#ekaLink").attr('target', null);
+            $("#ekaLink").attr('onClick', 'noFileErr()');
           }
         })
       } else {
