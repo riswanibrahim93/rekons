@@ -52,14 +52,18 @@ class FilingController extends Controller
                 $for  = 1;
                 $descrition = "Admin Eka melakukan pemberkasan pada data $request->ld";
             }
-            $filing = Filing::create(['from'=>$from ,'file'=>$fileName, 'ld'=>$request->ld]);
+            $filing = Filing::create([
+                'from'=>$from ,
+                'file'=>$fileName, 
+                'ld'=>$request->ld, 
+                'notification_id' => 0
+            ]);
             $notif = Notification::create([
                 'for' => $for,
                 'from' => $from,
                 'description'=> $descrition,
                 'status' => 0,
                 'filing_id' => $filing->id,
-                'notification_id' => 0
             ]);
             $filing->update(['notification_id'=> $notif->id]);
             return response()->json([
