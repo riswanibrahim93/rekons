@@ -253,9 +253,7 @@
           if (item.from == 1) {
             $("#bsiLink").attr('href', item.file);
             $("#bsiLink").attr('target', "_blank");
-            $("#bsiLink").attr('download', null);
-            $("#bsiLink").attr('download', `Pemberkasan data ${ld}.xlsx`);
-
+            $("#bsiLink").attr('onClick', window.open(item.file));
             // download=
             console.log('bsi get')
           } else {
@@ -266,9 +264,7 @@
           if (item.from == 2) {
             $("#ekaLink").attr('href', item.file);
             $("#ekaLink").attr('target', "_blank");
-            $("#ekaLink").attr('onClick', null);
-            $("#bsiLink").attr('download', `Pemberkasan data ${ld}.xlsx`);
-
+            $("#ekaLink").attr('onClick', window.open(item.file));
             console.log('eka get')
           } else {
             $("#ekaLink").attr('href', "#");
