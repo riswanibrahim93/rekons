@@ -89,8 +89,8 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td><a href="" target="_blank" id="bsiLink" class="btn btn-success">Lihat</a></td>
-              <td><a href="" target="_blank" id="ekaLink" class="btn btn-warning">Lihat</a></td>
+              <td><a href="" target="_blank" download="" id="bsiLink" class="btn btn-success">Lihat</a></td>
+              <td><a href="" target="_blank" download="" id="ekaLink" class="btn btn-warning">Lihat</a></td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -213,7 +213,7 @@
           if (res.isConfirmed) {
             console.log(data.data);
             await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ":id ")}}";
+              var urlHere = "{{route('data.destroy', ": id ")}}";
               values.forEach(element => {
                 urlHere = urlHere.replace(':id', element.id);
                 $axios.delete(`${urlHere}`)
@@ -244,7 +244,7 @@
     // $(`#form${Gtype}`)[0].reset()
     $(".ld").val(ld);
 
-    var urlHere = "{{route('pemberkasan.show', ":id ")}}";
+    var urlHere = "{{route('pemberkasan.show', ": id ")}}";
     urlHere = urlHere.replace(':id', ld);
     $axios.get(`${urlHere}`).then((data) => {
       let results = data.data;
@@ -253,7 +253,10 @@
           if (item.from == 1) {
             $("#bsiLink").attr('href', item.file);
             $("#bsiLink").attr('target', "_blank");
-            $("#bsiLink").attr('onClick', null);
+            $("#bsiLink").attr('download', null);
+            $("#bsiLink").attr('download', `Pemberkasan data ${ld}.xlsx`);
+
+            // download=
             console.log('bsi get')
           } else {
             $("#bsiLink").attr('href', "#");
@@ -264,6 +267,8 @@
             $("#ekaLink").attr('href', item.file);
             $("#ekaLink").attr('target', "_blank");
             $("#ekaLink").attr('onClick', null);
+            $("#bsiLink").attr('download', `Pemberkasan data ${ld}.xlsx`);
+
             console.log('eka get')
           } else {
             $("#ekaLink").attr('href', "#");
