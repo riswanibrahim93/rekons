@@ -181,7 +181,7 @@
   let timerInterval;
 
   function processData() {
-    if (minDate.val() == "") {
+    if (minDate.val() == "" && maxDate.val() == "") {
       $swal.fire({
         title: "Perhatian!",
         text: "Minimal tentukan tanggal awal dahulu!",
@@ -213,7 +213,7 @@
           if (res.isConfirmed) {
             console.log(data.data);
             await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ":id ")}}";
+              var urlHere = "{{route('data.destroy', ": id ")}}";
               values.forEach(element => {
                 urlHere = urlHere.replace(':id', element.id);
                 $axios.delete(`${urlHere}`)
@@ -248,14 +248,14 @@
     // $(`#form${Gtype}`)[0].reset()
     $(".ld").val(ld);
 
-    var urlHere = "{{route('pemberkasan.show', ":id ")}}";
+    var urlHere = "{{route('pemberkasan.show', ": id ")}}";
     urlHere = urlHere.replace(':id', ld);
     $("#ekaLink").attr('href', "#");
     $("#ekaLink").attr('target', null);
     $("#ekaLink").attr('onClick', 'noFileErr()');
-      $("#bsiLink").attr('href', "#");
-      $("#bsiLink").attr('target', null);
-      $("#bsiLink").attr('onClick', 'noFileErr()');
+    $("#bsiLink").attr('href', "#");
+    $("#bsiLink").attr('target', null);
+    $("#bsiLink").attr('onClick', 'noFileErr()');
     $axios.get(`${urlHere}`).then((data) => {
       let results = data.data;
       if (results.length > 0) {
