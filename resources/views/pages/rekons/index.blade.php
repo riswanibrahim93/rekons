@@ -262,14 +262,14 @@
         results.forEach((item) => {
           if (item.from == 1) {
             $("#bsiLink").attr('href', item.file);
-            $("#bsiLink").attr('target', "_blank");
+            // $("#bsiLink").attr('target', "_blank");
             $("#bsiLink").attr('onClick', null);
             // download=
             console.log('bsi get')
           }
           if (item.from == 2) {
             $("#ekaLink").attr('href', item.file);
-            $("#ekaLink").attr('target', "_blank");
+            // $("#ekaLink").attr('target', "_blank");
             $("#ekaLink").attr('onClick', null);
             console.log('eka get');
           }
@@ -323,6 +323,8 @@
           $(`#spinner_field${Gtype}`).html(null);
 
           $("#bsiLink").attr('href', data.message.link);
+          $("#bsiLink").attr('onClick', null);
+
           $toastr.fire({
             icon: 'success',
             title: data.message.body
@@ -355,6 +357,7 @@
           data
         }) => {
           $("#ekaLink").attr('href', data.message.link);
+          $("#ekaLink").attr('onClick', null);
           $(`#spinner_field${Gtype}`).html(null);
           $toastr.fire({
             icon: 'success',
