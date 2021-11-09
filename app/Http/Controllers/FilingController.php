@@ -70,7 +70,7 @@ class FilingController extends Controller
                 'status' => true,
                 'message' => [
                     'head' => 'Sukses',
-                    'body' => 'Berhasil Tambah Produk',
+                    'body' => 'Pemberkasan berhasil',
                     'link' => asset('upload/pemberkasan/'. $filing->file)
                 ]
             ], 200);
