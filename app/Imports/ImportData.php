@@ -25,9 +25,24 @@ class ImportData implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
-        $prevData = Data::where('ld', $row['noloan'])->where('owner' , Auth::user()->role)->get();
-        if (count($prevData)>0) {
-            throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");
+        $prevData = Data::where('ld', $row['noloan'])->where('owner' , Auth::user()->role)->first();
+        if($prevData) {
+            // throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");
+            $prevData->update([
+                'ld'     => $row['noloan'],
+                'full_name'    => $row['namalengkap'],
+                'branch_code'    => $row['kodecabangbaru'],
+                'branch_name'    => $row['nama_cabang'],
+                'product'    => $row['produk'],
+                'outstanding'    => $row['outstanding'],
+                'plafond'    => $row['plafond'],
+                'date'    => $row['tgllpencairan'],
+                'atr'    => Auth::user()->role == 2 ? null : $row['atribus'],
+                'payment_status' => $row['keterangan_lengkap'],
+                'product_code' => $row['kode_produk'],
+                'owner' => Auth::user()->role
+            ]);
+            return null;
         }
         return new Data([
             'ld'     => $row['noloan'],
