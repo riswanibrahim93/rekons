@@ -80,6 +80,9 @@ jQuery(function () {
     // });
     var oTable = $('#export-button').DataTable( {
         dom: 'Bfrtip',
+        "paging": false,
+        "ordering": false,
+        "info": false,
         buttons: [
             'copyHtml5',
             'excelHtml5',

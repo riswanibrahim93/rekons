@@ -25,13 +25,13 @@ $number = (int)$idx+1;
       @endif
     </span>
   </td>
-  <td>
+  <!-- <td>
     @if ($item->status==0)
     <span class="badge badge-success pointer" style="cursor: pointer;" onclick="showModal(`{{$item->data_id}}`,`{{$item->bsi_id}}`, `{{$item->data->full_name}}`, `{{$item->data->ld}}`)">
       Pemberkasan
     </span>
     @endif
-  </td>
+  </td> -->
 </tr>
 @empty
 

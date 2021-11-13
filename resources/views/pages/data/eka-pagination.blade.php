@@ -1,4 +1,4 @@
- <div class="user-status">
+ <div class="user-status" id="tabled_data">
    <table class="table table-bordernone">
      <thead>
        <tr>
@@ -28,4 +28,5 @@
        @endforelse
      </tbody>
    </table>
+   {{ $eka_data->links() }}
  </div>

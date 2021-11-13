@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Branch;
 use App\Models\Data;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +26,13 @@ class ImportData implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 
+        $branches = Branch::where('code', $row['kodecabangbaru'])->first();
+        if (!$branches) {
+            Branch::create([
+                'code'    => $row['kodecabangbaru'],
+                'name'    => $row['nama_cabang'],
+            ]);
+        }
         $prevData = Data::where('ld', $row['noloan'])->where('owner' , Auth::user()->role)->first();
         if($prevData) {
             // throw new \Exception("Data dengan ld: ".$row["noloan"]."sudah ada!");

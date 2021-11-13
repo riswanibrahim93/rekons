@@ -152,17 +152,20 @@
   <script>
     const refresh_table = url => {
       new Promise((resolve, reject) => {
-        $("#table_data").LoadingOverlay('show')
+        // $("#table_data").LoadingOverlay('show')
+        myLoader('#table_data', 'show');
         $axios.get(url)
           .then(({
             data
           }) => {
-            $("#table_data").LoadingOverlay('hide')
+            // $("#table_data").LoadingOverlay('hide')
+            myLoader('#table_data', 'hide');
             $('#table_data').html(data)
           })
           .catch(err => {
             console.log(err)
-            $("#table_data").LoadingOverlay('hide')
+            // $("#table_data").LoadingOverlay('hide')
+            myLoader('#table_data', 'hide');
             $swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -172,6 +175,27 @@
       })
     }
 
+    $('html').on('click', '.pagination a', function(e) {
+      e.preventDefault();
+      // console.log($(".pagination a"));
+      var url = $(this).attr('href');
+      // $swal.fire({
+      //     title: 'Perhatian!',
+      //     text: "Pastikan anda sudah memilih semua produk yg anda butuhkan di halaman ini terlebih dahulu",
+      //     icon: 'warning',
+      //     showCancelButton: true,
+      //     confirmButtonColor: '#3085d6',
+      //     cancelButtonColor: '#d33',
+      //     cancelButtonText: 'Belum',
+      //     confirmButtonText: 'Sudah!'
+      // }).then((result) => {
+      // if (result.isConfirmed) {
+      $axios.get(url).then(() => {
+        refresh_table(url);
+      });
+      // }
+      // });
+    });
 
     const $toastr = $swal.mixin({
       toast: true,
@@ -217,14 +241,14 @@
         title: 'Ld berhasil dicopi!, silahkan paste di kolom search'
       });
       // setTimeout(() => {
-       var urlHere = "{{route('pemberkasan.edit', ":id ")}}";
-        urlHere = urlHere.replace(':id', id);
-        // url.replace(':id', parseInt(id));
-        $axios.get(urlHere).then(()=>{
-          setTimeout(() => {
-            window.location.replace("{{route('proses')}}");
-          }, 2000);
-        })
+      var urlHere = "{{route('pemberkasan.edit', ":id ")}}";
+      urlHere = urlHere.replace(':id', id);
+      // url.replace(':id', parseInt(id));
+      $axios.get(urlHere).then(() => {
+        setTimeout(() => {
+          window.location.replace("{{route('proses')}}");
+        }, 2000);
+      })
       // }, 500);
     }
   </script>

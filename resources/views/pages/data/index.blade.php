@@ -18,20 +18,20 @@
             <button class="action btn btn-light mt-2" type="submit">Upload</button>
           </form>
         </div>
-        <div class="col-xl-6 col-sm-12 my-2">
-          <a href="@if(Auth::user()->role==1){{asset('templates/Field%20Rekon.xlsx')}}@else {{asset('templates/Field%20Rekon%20Eka.xlsx')}}@endif" download="Template Rekonsiliasi.xlsx" class="btn btn-primary">Download Template</a>
-        </div>
-        <!-- <div class="col-xl-6 ml-auto col-sm-12"> -->
-        {{-- <input type="search" class="form-control-plaintext col-xl-3 d-block ml-auto col-sm-12 mt-2" name="keyword" placeholder="Search"
-            value="{{ request()->keyword ?? '' }}"> --}}
-        <form class="form-inline search-form col-xl-3 d-block ml-auto col-sm-12">
-          <div class="form-group">
-            <label class="sr-only">Email</label>
-            <input type="search" class="form-control-plaintext" placeholder="Search..">
-            <span class="d-sm-none mobile-search">
-            </span>
+        <div class="row">
+          <div class="col-xl-6 col-sm-12 my-2">
+            <a href="@if(Auth::user()->role==1){{asset('templates/Field%20Rekon.xlsx')}}@else {{asset('templates/Field%20Rekon%20Eka.xlsx')}}@endif" download="Template Rekonsiliasi.xlsx" class="btn btn-primary">Download Template</a>
           </div>
-        </form>
+          <!-- <div class="col-xl-6 ml-auto col-sm-12"> -->
+          <form class="form-inline search-form col-xl-3 d-block ml-auto col-sm-12">
+            <div class="form-group">
+              <label class="sr-only">Email</label>
+              <input type="search" class="form-control-plaintext" name="keyword" placeholder="Search" value="{{ request()->keyword ?? '' }}">
+              <span class="d-sm-none mobile-search">
+              </span>
+            </div>
+          </form>
+        </div>
         <!-- </div> -->
       </div>
       <div class="card-body">

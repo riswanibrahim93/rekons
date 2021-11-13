@@ -4,41 +4,49 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="card">
-      <div class="card-header row">
-        {{-- <div class="col-xl-6 col-sm-12"> --}}
-        <h5 class="pull-left mb-4 col-md-6 col-sm-12">Proses rekonsiliasi @if (Auth::user()->role==1)
-          PT BSI
-          @else
-          PT EKA AKAR JATI
-          @endif </h5>
-        <div class="d-flex col-md-6 col-sm-12">
-          <div>
-            <p>Tanggal awal:</p>
-            <span><input type="date" id="min" name="min"></span>
+      <div class="card-header">
+        <div class="row">
+          <h5 class="pull-left mb-4">Proses rekonsiliasi @if (Auth::user()->role==1)
+            PT BSI
+            @else
+            PT EKA AKAR JATI
+            @endif </h5>
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-sm-12 my-2">
+            <div class="row">
+              <div>
+                <p>Tanggal awal:</p>
+                <span><input type="date" id="min" name="min"></span>
+              </div>
+              <div>
+                <p>Tanggal akhir:</p>
+                <span><input type="date" id="max" name="max"></span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mt-2"><strong>Simpan</strong></button>
           </div>
-          <div>
-            <p>Tanggal akhir:</p>
-            <span><input type="date" id="max" name="max"></span>
+          <div class="col-xl-4 col-sm-12 my-2 form-group">
+            <div>
+              <p>Pilih cabang:</p>
+              <select name="parent_id" id="selectCabang" class="form-control">
+                <option value="">== Pilih Cabang==</option>
+               @forelse ($branches as $branch)
+                   <option value="{{$branch->code}},{{$branch->name}}">{{$branch->name}}</option>
+               @empty
+                   <option value="" disabled>Belum ada cabang</option>
+               @endforelse
+              </select>
+              <button type="button" class="btn btn-success btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
+              <!-- <span><input type="text"></span> -->
+            </div>
+            <!-- <label for="selectSubVarian">A</label> -->
           </div>
         </div>
       </div>
       <div class="card-body">
-        <div class="dt-ext table-responsive">
-          {{-- <div id="export-button_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-
-              <div class="dt-buttons"> <button class="dt-button buttons-copy buttons-html5 btn-success" tabindex="0"
-                  aria-controls="export-button" id="proses"><span>Proces</span></button> <button
-                  class="dt-button buttons-excel buttons-html5" tabindex="0"
-                  aria-controls="export-button"><span>Excel</span></button> <button
-                  class="dt-button buttons-csv buttons-html5" tabindex="0"
-                  aria-controls="export-button"><span>CSV</span></button>
-                <button class="dt-button buttons-pdf buttons-html5" tabindex="0"
-                  aria-controls="export-button"><span>PDF</span></button>
-              </div>
-              <div id="export-button_filter" class="dataTables_filter"><label>Search:<input type="search"
-                    class="form-control form-control-sm" placeholder="" aria-controls="export-button"></label></div>
-              --}}
-          <table id="export-button" class="display">
+        <div class="table-responsive" id="tabled_data">
+          <table id="" class="table table-bordernone">
             <thead>
               <tr>
                 <th>
@@ -53,15 +61,14 @@
                 <th>Pembiayaan</th>
                 <th>Detail</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <!-- <th>Aksi</th> -->
               </tr>
             </thead>
             <tbody id="table_data">
               @include('pages.rekons.pagination')
             </tbody>
           </table>
-          {{--
-            </div> --}}
+          {{ $data->links() }}
         </div>
       </div>
     </div>
@@ -142,30 +149,30 @@
       start_date: minDate.val(),
       end_date: maxDate.val()
     }).then((data) => {
-      let timerInterval
-      console.log(data.data);
-      $swal.fire({
-        title: 'Sukses',
-        icon: 'success',
-        showConfirmButton: false,
-        showCancelButton: false,
-        html: 'Rekonsiliasi berhasil dilakukan!<br /></br>' +
-          'Halaman akan direload dalam <strong></strong> detik.',
-        timer: 3000,
-        didOpen: () => {
+      // let timerInterval
+      // console.log(data.data);
+      // $swal.fire({
+      //   title: 'Sukses',
+      //   icon: 'success',
+      //   showConfirmButton: false,
+      //   showCancelButton: false,
+      //   html: 'Rekonsiliasi berhasil dilakukan!<br /></br>' +
+      //     'Halaman akan direload dalam <strong></strong> detik.',
+      //   timer: 3000,
+      //   didOpen: () => {
 
-          timerInterval = setInterval(() => {
-            $swal.getHtmlContainer().querySelector('strong')
-              .textContent = ($swal.getTimerLeft() / 1000)
-              .toFixed(0)
-          }, 100)
-        },
-        willClose: () => {
-          clearInterval(timerInterval)
-        }
-      }).then(() => {
-        document.location.reload();
-      })
+      //     timerInterval = setInterval(() => {
+      //       $swal.getHtmlContainer().querySelector('strong')
+      //         .textContent = ($swal.getTimerLeft() / 1000)
+      //         .toFixed(0)
+      //     }, 100)
+      //   },
+      //   willClose: () => {
+      //     clearInterval(timerInterval)
+      //   }
+      // }).then(() => {
+      refresh_table(URL_NOW);
+      // })
       // myLoader('#table_data', 'hide');
     }).catch((err) => {
 
@@ -240,12 +247,29 @@
   function openFile(url) {
     window.open(url)
   }
+  let ld = "";
+  let branch_name = "";
 
-  function showModal(id1, id2, name, ld) {
-    console.log(minDate.val() == "");
 
-    $("#modalTitle").html(`Atas nama ${name}, nomor ld : ${ld}`)
-    // $(`#form${Gtype}`)[0].reset()
+  $("#selectCabang").on("change", function() {
+    let valueH = $(this).val().split(",");
+    ld = valueH[0];
+    branch_name = valueH[1];
+    console.log(valueH);
+  })
+
+  function showModal() {
+    // console.log(minDate.val() == "");
+    if (ld === "") {
+      $swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Silahkan pilih cabang terlebih dahulu",
+      });
+      return;
+    }
+
+    $("#modalTitle").html(`Data cabang ${branch_name}`)
     $(".ld").val(ld);
 
     var urlHere = "{{route('pemberkasan.show', ":id ")}}";

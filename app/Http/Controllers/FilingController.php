@@ -45,12 +45,12 @@ class FilingController extends Controller
             $for = 0;$from = 0;
             if (Auth::user()->role == 1) {
                 $from = 1;
-                $descrition = "Admin Bsi melakukan pemberkasan pada data $request->ld";
+                $descrition = "Admin Bsi melakukan pemberkasan pada data cabang $request->ld";
                 $for  = 2;
             }else{
                 $from = 2;
                 $for  = 1;
-                $descrition = "Admin Eka melakukan pemberkasan pada data $request->ld";
+                $descrition = "Admin Eka melakukan pemberkasan pada data cabang $request->ld";
             }
             $filing = Filing::create([
                 'from'=>$from ,

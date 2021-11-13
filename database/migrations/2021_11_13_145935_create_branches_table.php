@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLdToFillingsTable extends Migration
+class CreateBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddLdToFillingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('filings', function (Blueprint $table) {
-            $table->string('ld')->after('file')->comment('ld=>branch_code');
-            $table->string('from')->after('ld');
+        Schema::create('branches', function (Blueprint $table) {
+            $table->id();
+            $table->string('code');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +28,6 @@ class AddLdToFillingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('fillings', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('branches');
     }
 }

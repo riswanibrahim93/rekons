@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ImportData;
+use App\Models\Branch;
 use App\Models\Data;
 use App\Models\ReconciledData;
 use Carbon\Carbon;
@@ -17,15 +18,23 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $today = Carbon::now()->format('Y-m-d') . '%';
-        // $role = Auth::user()->role;
         $bsi_data = [];
         $eka_data = [];
-        $bsi_data = Data::where('owner', 1)->get();
-        $eka_data = Data::where('owner', 2)->get();
-        // dd($bsi_data);
+        $query = Data::query();
+        $query->when('keyword', function ($q) use ($request) {
+            $keyword = $request->keyword;
+            $q->where('full_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('product', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
+            ->orWhere('date', 'LIKE', "%" . $keyword . "%")
+                ;
+        });
+        $bsi_data = $query->where('owner', 1)->paginate(10);
+        $eka_data = $query->where('owner', 2)->paginate(10);
         return view('pages.data.index', compact('bsi_data', 'eka_data'));
     }
 
@@ -252,11 +261,15 @@ class DataController extends Controller
             return back()->with('success', 'Data berhasil diupload!');
       
     }
-    public function process()
+    public function process(Request $request)
     {
         // $today = Carbon::now()->format('Y-m-d') . '%';
-        $data = ReconciledData::OrderBy('created_at','desc')->get();
-        return view('pages.rekons.index', compact('data'));
+        $branches = Branch::all();
+        $data = ReconciledData::OrderBy('created_at','desc')->paginate(5);
+        if ($request->ajax()) {
+           return view('pages.rekons.pagination', compact('data', 'branches'))->render();
+        }
+        return view('pages.rekons.index', compact('data', 'branches'));
     }
     public function checkData(Request $request)
     {

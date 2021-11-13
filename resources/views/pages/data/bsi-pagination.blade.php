@@ -1,4 +1,4 @@
- <div class="user-status">
+ <div class="user-status" id="tabled_data">
    <table class="table table-bordernone">
      <thead>
        <tr>
@@ -14,20 +14,21 @@
      </thead>
      <tbody>
        @forelse ($bsi_data as $idx=>$item)
-         <tr>
-            <td>{{$idx+1}}</td>
-            <td>{{$item->date}}</td>
-            <td>{{$item->ld}}</td>
-            <td>{{$item->full_name}}</td>
-            <td>{{$item->branch_name}}</td>
-            <td>{{$item->product}}</td>
-            <td>{{$item->atr}}</td>
-            <td>{{$item->outstanding}}</td>
-            {{-- <td class="font-secondary">Pending</td> --}}
-          </tr>  
+       <tr>
+         <td>{{$idx+1}}</td>
+         <td>{{$item->date}}</td>
+         <td>{{$item->ld}}</td>
+         <td>{{$item->full_name}}</td>
+         <td>{{$item->branch_name}}</td>
+         <td>{{$item->product}}</td>
+         <td>{{$item->atr}}</td>
+         <td>{{$item->outstanding}}</td>
+         {{-- <td class="font-secondary">Pending</td> --}}
+       </tr>
        @empty
-           
+
        @endforelse
      </tbody>
    </table>
+   {{ $bsi_data->links() }}
  </div>
