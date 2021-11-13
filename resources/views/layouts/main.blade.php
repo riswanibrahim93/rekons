@@ -232,10 +232,10 @@
   <script>
     function copyToClipboard(id) {
       var $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val($(`#notif${id}`).text()).select();
-      document.execCommand("copy");
-      $temp.remove();
+      // $("body").append($temp);
+      // let a = $temp.val($(`#notif${id}`).text()).select();
+      // document.execCommand("copy");
+      // $temp.remove();
       $toastr.fire({
         icon: 'success',
         title: 'Ld berhasil dicopi!, silahkan paste di kolom search'
@@ -245,8 +245,14 @@
       urlHere = urlHere.replace(':id', id);
       // url.replace(':id', parseInt(id));
       $axios.get(urlHere).then(() => {
+        let getBranchName = $(`#notif${id}`).text().split(" ");
+        let indexCabang = getBranchName.indexOf("cabang");
+        let tes = getBranchName.slice(indexCabang + 1);
+        let branch_name = tes.join(" ");
+        let url2 = `{{route('proses')}}`+'/?branch='+branch_name;
+        // let asiUrl = url2.replace(':haha', branch_name);
         setTimeout(() => {
-          window.location.replace("{{route('proses')}}");
+          window.location.replace(url2);
         }, 2000);
       })
       // }, 500);

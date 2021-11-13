@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Data;
 use App\Models\Filing;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -39,43 +41,45 @@ class FilingController extends Controller
     public function store(Request $request)
     {
         try {
+            $branch_name = Branch::where("code", $request->ld)->first()->name;
             $file = $request->file('file');
             $fileName = time() . $file->hashName();
             $file->move(public_path($this->pathImage), $fileName);
-            $for = 0;$from = 0;
+            $for = 0;
+            $from = 0;
             if (Auth::user()->role == 1) {
                 $from = 1;
-                $descrition = "Admin Bsi melakukan pemberkasan pada data cabang $request->ld";
+                $descrition = "Admin Bsi melakukan pemberkasan pada data cabang $branch_name";
                 $for  = 2;
-            }else{
+            } else {
                 $from = 2;
                 $for  = 1;
-                $descrition = "Admin Eka melakukan pemberkasan pada data cabang $request->ld";
+                $descrition = "Admin Eka melakukan pemberkasan pada data cabang $branch_name";
             }
             $filing = Filing::create([
-                'from'=>$from ,
-                'file'=>$fileName, 
-                'ld'=>$request->ld, 
+                'from' => $from,
+                'file' => $fileName,
+                'ld' => $request->ld,
                 'notification_id' => 0
             ]);
             $notif = Notification::create([
                 'for' => $for,
                 'from' => $from,
-                'description'=> $descrition,
+                'description' => $descrition,
                 'status' => 0,
                 'filing_id' => $filing->id,
             ]);
-            $filing->update(['notification_id'=> $notif->id]);
+            $filing->update(['notification_id' => $notif->id]);
             return response()->json([
                 'status' => true,
                 'message' => [
                     'head' => 'Sukses',
                     'body' => 'Pemberkasan berhasil',
-                    'link' => asset('upload/pemberkasan/'. $filing->file)
+                    'link' => asset('upload/pemberkasan/' . $filing->file)
                 ]
             ], 200);
         } catch (\Throwable $th) {
-           return response()->json([
+            return response()->json([
                 'status' => false,
                 'message' => [
                     'head' => 'Gagal',
@@ -94,19 +98,15 @@ class FilingController extends Controller
     public function show($id)
     {
         $data = Filing::where('ld', $id)->get();
+        $reconcile_datas = Data::where("branch_code", $id)->where("reconciled_data_id", "!=", null)->get();
         foreach ($data as $key => $value) {
-            $value->file= asset('upload/pemberkasan/' . $value->file);
+            $value->file = asset('upload/pemberkasan/' . $value->file);
         }
-        if (count($data)>0) {
-            return response()->json(
-                $data
-            , 200); 
-        }else{
-            return response()->json(
-                $data,
-                200
-            ); 
-        }
+
+        return response()->json(
+            ['data'=>$data, 'isReconciled'=>count($reconcile_datas)>0],
+            200
+        );
     }
 
     /**
@@ -117,8 +117,8 @@ class FilingController extends Controller
      */
     public function edit($id)
     {
-        Notification::find($id)->update(['status'=>1]);
-        return response()->json([],200);
+        Notification::find($id)->update(['status' => 1]);
+        return response()->json([], 200);
     }
 
     /**

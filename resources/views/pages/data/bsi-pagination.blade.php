@@ -14,6 +14,7 @@
      </thead>
      <tbody>
        @forelse ($bsi_data as $idx=>$item)
+       @if ($item->owner==1)
        <tr>
          <td>{{$idx+1}}</td>
          <td>{{$item->date}}</td>
@@ -25,6 +26,7 @@
          <td>{{$item->outstanding}}</td>
          {{-- <td class="font-secondary">Pending</td> --}}
        </tr>
+       @endif
        @empty
 
        @endforelse

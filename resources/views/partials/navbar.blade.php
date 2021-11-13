@@ -30,30 +30,31 @@
         </li>
         <li>
           <a href="#!" onclick="javascript:toggleFullScreen()" class="text-dark">
-            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/browser.png')}}"
-              alt="header-browser">
+            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/browser.png')}}" alt="header-browser">
           </a>
         </li>
         <li class="onhover-dropdown">
           <a href="#!" class="txt-dark">
-            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/notification.png')}}"
-              alt="header-notification">
-              @if (count($notifications)>0)
-              <span class="badge badge-pill badge-primary notification">{{count($notifications)}}</span>
-              @endif
+            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/notification.png')}}" alt="header-notification">
+            @if (count($notifications)>0)
+            <span class="badge badge-pill badge-primary notification">{{count($notifications)}}</span>
+            @endif
           </a>
           <ul class="notification-dropdown onhover-show-div">
             <li>Notification <span class="badge badge-pill badge-secondary text-white text-uppercase pull-right">{{count($notifications)}}
                 New</span></li>
             @forelse ($notifications as $notification)
-            <p style="overflow: hidden; height:0px;width:0px;" id="notif{{$notification->id}}">{{$notification->filing->ld}}</p>
+            <form action="" method="get">
+              
+            </form>
+            <p style="overflow: hidden; height:0px;width:0px;">{{$notification->filing->ld}}</p>
             <li onclick="copyToClipboard('{{$notification->id}}')">
               <div class="media">
                 <i class="align-self-center notification-icon icofont icofont-history bg-primary"></i>
                 <div class="media-body">
                   <h6 class="mt-0">Pemberkasan baru!</h6>
-                  <p class="mb-0">{{$notification->description}}</p>
-                  <span><i class="icofont icofont-clock-time p-r-5"></i>{{\Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
+                  <p class="mb-0" id="notif{{$notification->id}}">{{$notification->description}}</p>
+                  <span><i class=" icofont icofont-clock-time p-r-5"></i>{{\Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
                 </div>
               </div>
             </li>
@@ -64,8 +65,7 @@
         </li>
         <li class="onhover-dropdown">
           <div class="media  align-items-center">
-            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/user.png')}}"
-              alt="header-user" />
+            <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/user.png')}}" alt="header-user" />
             <div class="media-body">
               <h6 class="m-0 txt-dark f-16">
                 {{Auth::user()->name}}

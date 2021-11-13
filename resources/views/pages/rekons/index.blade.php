@@ -32,7 +32,9 @@
               <select name="parent_id" id="selectCabang" class="form-control">
                 <option value="">== Pilih Cabang==</option>
                @forelse ($branches as $branch)
-                   <option value="{{$branch->code}},{{$branch->name}}">{{$branch->name}}</option>
+                   <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
+                       selected
+                   @endif>{{$branch->name}}</option>
                @empty
                    <option value="" disabled>Belum ada cabang</option>
                @endforelse
@@ -45,30 +47,10 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive" id="tabled_data">
-          <table id="" class="table table-bordernone">
-            <thead>
-              <tr>
-                <th>
-                  No
-                </th>
-                <th>TGL Cair</th>
-                <th>LD</th>
-                <th>Nama</th>
-                <th>Produk</th>
-                <th>Cabang</th>
-                <th>Atribusi</th>
-                <th>Pembiayaan</th>
-                <th>Detail</th>
-                <th>Status</th>
-                <!-- <th>Aksi</th> -->
-              </tr>
-            </thead>
-            <tbody id="table_data">
-              @include('pages.rekons.pagination')
-            </tbody>
-          </table>
-          {{ $data->links() }}
+        <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
+        <div class="table-responsive">
+          @include('pages.rekons.pagination')
+         
         </div>
       </div>
     </div>
@@ -144,7 +126,7 @@
     maxDate = $('#max');
 
   function rekonsss() {
-    myLoader('#export-button', 'show');
+    myLoader('#table_data', 'show');
     $axios.post("{{route('process.data')}}", {
       start_date: minDate.val(),
       end_date: maxDate.val()
@@ -248,8 +230,13 @@
     window.open(url)
   }
   let ld = "";
-  let branch_name = "";
+  let branch_name = "{{$notif}}";
 
+  $(window).ready(()=>{
+    let valueH = $("#selectCabang").val().split(",");
+    ld = valueH[0];
+    branch_name = valueH[1];
+  });
 
   $("#selectCabang").on("change", function() {
     let valueH = $(this).val().split(",");
@@ -281,7 +268,14 @@
     $("#bsiLink").attr('target', null);
     $("#bsiLink").attr('onClick', 'noFileErr()');
     $axios.get(`${urlHere}`).then((data) => {
-      let results = data.data;
+      let results = data.data.data;
+      let isReconciled = data.data.isReconciled;
+      if(!isReconciled)return $swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Belum ada data di cabang ${branch_name} yang sudah direkonsiliasi!`,
+      });
+      console.log(results);
       if (results.length > 0) {
         results.forEach((item) => {
           if (item.from == 1) {
@@ -305,6 +299,7 @@
         $("#bsiLink").attr('href', "#");
         $("#bsiLink").attr('target', null);
         $("#bsiLink").attr('onClick', 'noFileErr()');
+
       }
 
       $('#modal_tambah').modal('show')

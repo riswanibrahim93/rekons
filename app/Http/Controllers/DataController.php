@@ -9,6 +9,7 @@ use App\Models\ReconciledData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DataController extends Controller
@@ -21,20 +22,29 @@ class DataController extends Controller
     public function index(Request $request)
     {
         $today = Carbon::now()->format('Y-m-d') . '%';
-        $bsi_data = [];
-        $eka_data = [];
         $query = Data::query();
+        $query_eka = Data::query();
+        
         $query->when('keyword', function ($q) use ($request) {
             $keyword = $request->keyword;
             $q->where('full_name', 'LIKE', "%" . $keyword . "%")
                 ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
                 ->orWhere('product', 'LIKE', "%" . $keyword . "%")
                 ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
-            ->orWhere('date', 'LIKE', "%" . $keyword . "%")
-                ;
+            ->orWhere('date', 'LIKE', "%" . $keyword . "%");
         });
-        $bsi_data = $query->where('owner', 1)->paginate(10);
-        $eka_data = $query->where('owner', 2)->paginate(10);
+
+        $query_eka->when('keyword', function ($q) use ($request) {
+            $keyword = $request->keyword;
+            $q->where('full_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('product', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('date', 'LIKE', "%" . $keyword . "%");
+        });
+        $bsi_data = $query->paginate(10);
+        $eka_data = $query_eka->paginate(10);
+        // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
         return view('pages.data.index', compact('bsi_data', 'eka_data'));
     }
 
@@ -264,12 +274,16 @@ class DataController extends Controller
     public function process(Request $request)
     {
         // $today = Carbon::now()->format('Y-m-d') . '%';
+        $notif = "";
         $branches = Branch::all();
         $data = ReconciledData::OrderBy('created_at','desc')->paginate(5);
-        if ($request->ajax()) {
-           return view('pages.rekons.pagination', compact('data', 'branches'))->render();
+        if ($request->branch) {
+            $notif= $request->branch;
         }
-        return view('pages.rekons.index', compact('data', 'branches'));
+        if ($request->ajax()) {
+           return view('pages.rekons.pagination', compact('data', 'branches','notif'))->render();
+        }
+        return view('pages.rekons.index', compact('data', 'branches','notif'));
     }
     public function checkData(Request $request)
     {
@@ -390,7 +404,7 @@ class DataController extends Controller
             Data::find($value['data_id'])->update(['reconciled_data_id' => $created_recon->id]);
         }
         $data = [];
-        $returnHTML = view('pages.rekons.pagination', compact('data'))->render();
+        // $returnHTML = view('pages.rekons.pagination', compact('data'))->render();
         return  response()->json([
                $bsi_data,
         $eka_data,

@@ -13,6 +13,8 @@
      </thead>
      <tbody>
        @forelse ($eka_data as $idx=>$item)
+       @if ($item->owner==2)
+      
        <tr>
          <td>{{$idx+1}}</td>
          <td>{{$item->date}}</td>
@@ -23,6 +25,7 @@
          <td>{{$item->outstanding}}</td>
          {{-- <td class="font-secondary">Pending</td> --}}
        </tr>
+       @endif
        @empty
 
        @endforelse
