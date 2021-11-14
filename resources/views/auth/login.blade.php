@@ -7,7 +7,7 @@
     <div class="col-md-4 p-0">
       <div class="auth-innerleft">
         <div class="text-center">
-          <img src="../assets/images/logo-light.png" class="logo-login" alt="">
+          <img src="{{asset('assets/images/logo-light.png')}}" class="logo-login" alt="">
           <p class="text-primary">Sistem Rekonsiliasi</p>
           <hr>
           <div class="social-media">
