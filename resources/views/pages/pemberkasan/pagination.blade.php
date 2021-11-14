@@ -37,7 +37,7 @@
          badge badge-success
          @else
          badge badge-danger
-            @endif" style="cursor: pointer;" onclick="showModal(`{{$item->data->branch_name}}`, `{{$item->data->branch_code}}`)">
+            @endif" style="cursor: pointer;" onclick="showModal(`{{$item->status}}`,`{{$item->data->branch_name}}`, `{{$item->data->branch_code}}`)">
            @if ($item->data->filing)
            Pemberkasan
            @else

@@ -6,11 +6,7 @@
     <div class="card">
       <div class="card-header">
         <div class="row">
-          <h5 class="pull-left mb-4">Proses rekonsiliasi @if (Auth::user()->role==1)
-            PT BSI
-            @else
-            PT EKA AKAR JATI
-            @endif </h5>
+          <h5 class="pull-left mb-4">Data Pemberkasan</h5>
         </div>
         <div class="row">
           <div class="col-xl-8 col-sm-12 my-2">
@@ -31,7 +27,7 @@
         </div>
       </div>
       <div class="card-body">
-        <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
+        {{-- <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button> --}}
         <div class="table-responsive">
           @include('pages.pemberkasan.pagination')
         </div>
@@ -44,9 +40,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="col-12">
-          <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
-          <p class="small" id="modalTitle"></p>
-          <a href="#" class="btn btn-success">Update Data Valid</a>
+          <h5 class="modal-title">Detail Pemberkasan</h5>
+          <div class="d-flex justify-content-between">
+            <p class="" id="modalTitle"></p>
+            <p class="" id="modalDescription"></p>
+          </div>
         </div>
       </div>
       <div class="table-responsive">
@@ -67,7 +65,7 @@
           </tbody>
         </table>
       </div>
-      <div class="row mx-2">
+      <div class="row m-2">
         <ul class="list-group col-12">
          <li class="list-group-item active">Cara Mengupdate Data</li>
          <li class="list-group-item">1. Silahkan upload ulang data di halanan Data Rekon</li>
@@ -80,8 +78,14 @@
 </div>
 @endsection
 @section('script')
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
     <script>
-       function showModal(branch_name, ld) {
+      var minDate = $('#min'), maxDate=$('#max');
+function replaceTheShit(string) {
+    return string.replace(/-/g, '/');
+}
+       function showModal(status,branch_name, ld) {
     // console.log(minDate.val() == "");
     if (ld === "") {
       $swal.fire({
@@ -93,6 +97,13 @@
     }
 
     $("#modalTitle").html(`Data cabang ${branch_name}`)
+    let description = "Status hasil rekonsiliasi ";
+    parseInt(status)==0 ? 
+        description = description + "masih <span class='badge badge-danger'>Invalid</>"
+        :
+        description = description + "sudah <span class='badge badge-danger'>Valid</>"
+    
+      $("#modalDescription").html(description);
     $(".ld").val(ld);
 
     var urlHere = "{{route('pemberkasan.show', ":id ")}}";
@@ -140,6 +151,27 @@
 
       $('#modal_tambah').modal('show')
     });
+  }
+    function filterData() {
+        var iFini = moment(replaceTheShit(minDate.val()), "YYYY/MM/DD").format("X");
+        var iFfin = moment(replaceTheShit(maxDate.val()), "YYYY/MM/DD").format("X");
+        let data = $(".dateData").toArray()
+        for (let index = 0; index < data.length; index++) {
+          var evalDate = moment(replaceTheShit(data[index].textContent), "YYYY/MM/DD").format("X");
+          const element = data[index];
+          if (
+              (iFini === 'Invalid date' && iFfin === 'Invalid date') ||
+              (iFini === 'Invalid date' && evalDate <= iFfin) ||
+              (iFini <= evalDate && iFfin === 'Invalid date') ||
+              (iFini <= evalDate && evalDate <= iFfin)
+          ) {
+             if(element.parentElement.classList.contains('d-none')){
+               element.parentElement.classList.remove('d-none');
+             }
+          } else {
+              element.parentElement.classList.add('d-none');
+          }
+        }
   }
     </script>
 @endsection

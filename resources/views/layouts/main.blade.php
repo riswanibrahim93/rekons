@@ -5,8 +5,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="universal admin is super flexible, powerful, clean & modern responsive bootstrap 4 admin template with unlimited possibilities.">
-  <meta name="keywords" content="admin template, universal admin template, dashboard template, flat admin template, responsive admin template, web app">
+  <meta name="description" content="Sistem Rekonsiliasi">
+  <meta name="keywords" content="web app">
   <meta name="author" content="pixelstrap">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon" />
@@ -177,24 +177,11 @@
 
     $('html').on('click', '.pagination a', function(e) {
       e.preventDefault();
-      // console.log($(".pagination a"));
       var url = $(this).attr('href');
-      // $swal.fire({
-      //     title: 'Perhatian!',
-      //     text: "Pastikan anda sudah memilih semua produk yg anda butuhkan di halaman ini terlebih dahulu",
-      //     icon: 'warning',
-      //     showCancelButton: true,
-      //     confirmButtonColor: '#3085d6',
-      //     cancelButtonColor: '#d33',
-      //     cancelButtonText: 'Belum',
-      //     confirmButtonText: 'Sudah!'
-      // }).then((result) => {
-      // if (result.isConfirmed) {
+
       $axios.get(url).then(() => {
         refresh_table(url);
       });
-      // }
-      // });
     });
 
     const $toastr = $swal.mixin({

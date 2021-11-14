@@ -1,9 +1,9 @@
 <div class="page-main-header">
   <div class="main-header-left">
     <div class="logo-wrapper">
-      <a href="index.html">
+      <a href="/" class="d-flex align-items-center">
         <img src="{{asset('assets/images/logo-light.png')}}" class="image-dark" alt="" />
-        <img src="{{asset('assets/images/logo-light-dark-layout.png')}}" class="image-light" alt="" />
+        <span class="ml-2">Sistem Rekonsiliasi</span>
       </a>
     </div>
   </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="nav-right col">
       <ul class="nav-menus">
-        <li>
+        <!-- <li>
           <form class="form-inline search-form">
             <div class="form-group">
               <label class="sr-only">Email</label>
@@ -27,7 +27,7 @@
               </span>
             </div>
           </form>
-        </li>
+        </li> -->
         <li>
           <a href="#!" onclick="javascript:toggleFullScreen()" class="text-dark">
             <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/browser.png')}}" alt="header-browser">
