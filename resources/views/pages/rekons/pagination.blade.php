@@ -24,7 +24,7 @@
      @endphp
      <tr>
        <td>{{$number}}</td>
-       <td>{{$item->data->date}}</td>
+       <td class="dateData">{{$item->data->date}}</td>
        <td>{{$item->data->ld}}</td>
        <td>{{$item->data->full_name}}</td>
        <td>{{$item->data->product}}</td>

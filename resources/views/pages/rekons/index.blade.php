@@ -24,7 +24,7 @@
                 <span><input type="date" id="max" name="max"></span>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm mt-2"><strong>Simpan</strong></button>
+            <button type="button" class="btn btn-primary btn-sm mt-2" onclick="filterData()"><strong>Filter</strong></button>
           </div>
           <div class="col-xl-4 col-sm-12 my-2 form-group">
             <div>
@@ -392,6 +392,27 @@
         });
     });
   });
+  function filterData() {
+        var iFini = moment(replaceTheShit(minDate.val()), "YYYY/MM/DD").format("X");
+        var iFfin = moment(replaceTheShit(maxDate.val()), "YYYY/MM/DD").format("X");
+        let data = $(".dateData").toArray()
+        for (let index = 0; index < data.length; index++) {
+          var evalDate = moment(replaceTheShit(data[index].textContent), "YYYY/MM/DD").format("X");
+          const element = data[index];
+          if (
+              (iFini === 'Invalid date' && iFfin === 'Invalid date') ||
+              (iFini === 'Invalid date' && evalDate <= iFfin) ||
+              (iFini <= evalDate && iFfin === 'Invalid date') ||
+              (iFini <= evalDate && evalDate <= iFfin)
+          ) {
+             element.parentElement.classList.contains('d-none');
+             element.parentElement.classList.remove('d-none');
+          } else {
+              element.parentElement.classList.add('d-none');
+          }
+        }
+
+  }
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection

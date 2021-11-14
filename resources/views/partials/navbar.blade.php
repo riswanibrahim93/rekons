@@ -44,9 +44,6 @@
             <li>Notification <span class="badge badge-pill badge-secondary text-white text-uppercase pull-right">{{count($notifications)}}
                 New</span></li>
             @forelse ($notifications as $notification)
-            <form action="" method="get">
-              
-            </form>
             <p style="overflow: hidden; height:0px;width:0px;">{{$notification->filing->ld}}</p>
             <li onclick="copyToClipboard('{{$notification->id}}')">
               <div class="media">
