@@ -19,6 +19,11 @@
          <i class="icon-settings"></i><span>Proses Rekon</span>
        </a>
      </li>
+     <li>
+       <a href="{{route('data.pemberkasan')}}" class="sidebar-header @if($paths=='data-pemberkasan'||$paths=='data-pemberkasan') active @endif">
+         <i class="icon-settings"></i><span>Pemberkasan</span>
+       </a>
+     </li>
    </ul>
    {{-- <div class="sidebar-widget text-center">
      <div class="sidebar-widget-top">

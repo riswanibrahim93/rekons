@@ -405,8 +405,9 @@
               (iFini <= evalDate && iFfin === 'Invalid date') ||
               (iFini <= evalDate && evalDate <= iFfin)
           ) {
-             element.parentElement.classList.contains('d-none');
-             element.parentElement.classList.remove('d-none');
+             if(element.parentElement.classList.contains('d-none')){
+               element.parentElement.classList.remove('d-none');
+             }
           } else {
               element.parentElement.classList.add('d-none');
           }

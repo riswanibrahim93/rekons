@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Data;
 use App\Models\Filing;
 use App\Models\Notification;
+use App\Models\ReconciledData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -142,5 +143,9 @@ class FilingController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function pemberkasan(){
+        $data = ReconciledData::with(['data'])->paginate(10);
+        return view('pages.pemberkasan.index', compact('data'));
     }
 }

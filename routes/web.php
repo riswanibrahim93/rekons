@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('process-recons',[DataController::class,'process'])->name('proses');
     Route::post('checkData', [DataController::class, 'checkData'])->name('check.data');
     Route::post('processRecons', [DataController::class, 'processRecons'])->name('process.data');
-
     // return view('welcome');
     Route::resource('pemberkasan', FilingController::class);
+    Route::get('data-pemberkasan', [FilingController::class, 'pemberkasan'])->name('data.pemberkasan');
 });

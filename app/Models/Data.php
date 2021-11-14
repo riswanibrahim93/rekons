@@ -15,4 +15,8 @@ class Data extends Model
         return $this->hasOne(ReconciledData::class, 'reconciled_data_id');
     }
 
+    public function filing(){
+        return $this->hasOne(Filing::class,'ld','branch_code');
+    }
+
 }
