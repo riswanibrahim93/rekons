@@ -21,7 +21,7 @@
      </li>
      <li>
        <a href="{{route('data.pemberkasan')}}" class="sidebar-header @if($paths=='data-pemberkasan'||$paths=='data-pemberkasan') active @endif">
-         <i class="icon-settings"></i><span>Pemberkasan</span>
+         <i class="icon-file"></i><span>Pemberkasan</span>
        </a>
      </li>
    </ul>
