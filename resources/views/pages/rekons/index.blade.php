@@ -15,16 +15,18 @@
         <div class="row">
           <div class="col-xl-8 col-sm-12 my-2">
             <div class="row">
-              <div>
+              <div class="form-group">
                 <p>Tanggal awal:</p>
                 <span><input type="date" id="min" name="min"></span>
               </div>
-              <div>
+              <div class="form-group">
                 <p>Tanggal akhir:</p>
                 <span><input type="date" id="max" name="max"></span>
               </div>
             </div>
+            <div class="row">
             <button type="button" class="btn btn-primary btn-sm mt-2" onclick="filterData()"><strong>Filter</strong></button>
+            </div>
           </div>
           <div class="col-xl-4 col-sm-12 my-2 form-group">
             <div>
