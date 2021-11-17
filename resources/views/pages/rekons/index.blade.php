@@ -41,7 +41,7 @@
                    <option value="" disabled>Belum ada cabang</option>
                @endforelse
               </select>
-              <button type="button" class="btn btn-success btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
+              <button type="button" class="btn btn-primary btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
               <!-- <span><input type="text"></span> -->
             </div>
             <!-- <label for="selectSubVarian">A</label> -->
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="card-body">
-        <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
+        <button class="btn-primary btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
         <div class="table-responsive">
           @include('pages.rekons.pagination')
          
@@ -65,7 +65,7 @@
         <div class="col-12">
           <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
           <p class="small" id="modalTitle"></p>
-          <a href="#" class="btn btn-success">Update Data Valid</a>
+          <a href="#" class="btn btn-primary">Update Data Valid</a>
         </div>
       </div>
       <div class="table-responsive">
@@ -80,12 +80,12 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td><a href="" target="_blank" id="bsiLink" class="btn btn-success">Lihat</a></td>
+              <td><a href="" target="_blank" id="bsiLink" class="btn btn-primary">Lihat</a></td>
               <td><a href="" target="_blank" id="ekaLink" class="btn btn-warning">Lihat</a></td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td><button class="btn btn-success" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button>
+              <td><button class="btn btn-primary" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button>
                 <form action="" method="post" enctype="multipart/form-data" id="form1">
                   @csrf
                   <input type="hidden" name="ld" id="ld" class="ld">
