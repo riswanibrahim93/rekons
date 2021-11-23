@@ -17,11 +17,11 @@
             <div class="row">
               <div>
                 <p>Tanggal awal:</p>
-                <span><input type="date" id="min" name="min"></span>
+                <span><input type="date" class="custom-select" id="min" name="min"></span>
               </div>
               <div>
                 <p>Tanggal akhir:</p>
-                <span><input type="date" id="max" name="max"></span>
+                <span><input type="date" class="custom-select" id="max" name="max"></span>
               </div>
             </div>
             <button type="button" class="btn btn-primary btn-sm mt-2" onclick="filterData()"><strong>Filter</strong></button>
@@ -39,7 +39,7 @@
                    <option value="" disabled>Belum ada cabang</option>
                @endforelse
               </select>
-              <button type="button" class="btn btn-success btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
+              <button type="button" class="btn btn-primary btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
               <!-- <span><input type="text"></span> -->
             </div>
             <!-- <label for="selectSubVarian">A</label> -->
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="card-body">
-        <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
+        <button class="btn-primary btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
         <div class="table-responsive">
           @include('pages.rekons.pagination')
          
