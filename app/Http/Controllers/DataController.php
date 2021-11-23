@@ -38,7 +38,7 @@ class DataController extends Controller
     public function index(Request $request)
     {
         $today = Carbon::now()->format('Y-m-d') . '%';
-        $query = Data::query();
+        $query = Data::query()->where('owner',1);
         // $query_eka = Data::query();
         
         $query->when('keyword', function ($q) use ($request) {
