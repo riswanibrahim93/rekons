@@ -51,9 +51,9 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">No</th>
-              <th scope="col">BSI</th>
-              <th scope="col">Eka</th>
+              <th >No</th>
+              <th >BSI</th>
+              <th >Eka</th>
             </tr>
           </thead>
           <tbody>

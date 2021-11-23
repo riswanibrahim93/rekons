@@ -15,7 +15,7 @@
             @csrf
             <!-- <button type="button" class="btn btn-outline-light txt-dark" data-original-title="btn btn-outline-light txt-dark" title="">Light Button</button> -->
             <input type="file" name="file" id="">
-            <button class="action btn btn-light mt-2" type="submit">Upload</button>
+            <button class="action btn btn-primary mt-2" type="submit">Upload</button>
           </form>
         </div>
         <div class="row">
