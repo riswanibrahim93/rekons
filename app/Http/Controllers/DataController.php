@@ -39,7 +39,7 @@ class DataController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d') . '%';
         $query = Data::query();
-        $query_eka = Data::query();
+        // $query_eka = Data::query();
         
         $query->when('keyword', function ($q) use ($request) {
             $keyword = $request->keyword;
@@ -50,16 +50,16 @@ class DataController extends Controller
             ->orWhere('date', 'LIKE', "%" . $keyword . "%");
         });
 
-        $query_eka->when('keyword', function ($q) use ($request) {
-            $keyword = $request->keyword;
-            $q->where('full_name', 'LIKE', "%" . $keyword . "%")
-                ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
-                ->orWhere('product', 'LIKE', "%" . $keyword . "%")
-                ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
-                ->orWhere('date', 'LIKE', "%" . $keyword . "%");
-        });
+        // $query_eka->when('keyword', function ($q) use ($request) {
+        //     $keyword = $request->keyword;
+        //     $q->where('full_name', 'LIKE', "%" . $keyword . "%")
+        //         ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
+        //         ->orWhere('product', 'LIKE', "%" . $keyword . "%")
+        //         ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
+        //         ->orWhere('date', 'LIKE', "%" . $keyword . "%");
+        // });
         $bsi_data = $query->paginate(5);
-        $eka_data = $query_eka->paginate(5);
+        // $eka_data = $query_eka->paginate(5);
         // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
         if ($request->ajax()) {
             return view('pages.data.index', compact('bsi_data', 'eka_data'));

@@ -14,7 +14,6 @@
   <tbody>
     @forelse ($bsi_data as $idx=>$item)
     @if ($item->owner==2)
-
     <tr>
       <td scope="row">{{$idx}}</td>
       <td>{{$item->date}}</td>
