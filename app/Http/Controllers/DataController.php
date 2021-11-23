@@ -62,9 +62,9 @@ class DataController extends Controller
         // $eka_data = $query_eka->paginate(5);
         // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
         if ($request->ajax()) {
-            return view('pages.data.index', compact('bsi_data', 'eka_data'));
+            return view('pages.data.index', compact('bsi_data'));
         }
-        return view('pages.data.index', compact('bsi_data', 'eka_data'));
+        return view('pages.data.index', compact('bsi_data'));
     }
 
     /**
