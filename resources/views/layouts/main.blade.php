@@ -42,8 +42,8 @@
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
   <!-- Responsive css -->
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatable-extension.css')}}">
+  <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatable-extension.css')}}"> -->
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}">
 
 </head>
