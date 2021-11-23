@@ -46,9 +46,7 @@
             </li>
           </ul>
           <div class="tab-content" id="pills-clrtabContentinfo">
-            <div class="tab-pane fade  @if(Auth::user()->role==2)show active @endif" id="pills-clrhomeinfo" role="tabpanel" aria-labelledby="pills-clrhome-tabinfo">
-              @include('pages.data.eka-pagination')
-            </div>
+        
             <div class="tab-pane fade @if(Auth::user()->role==1)show active @endif" id="pills-clrprofileinfo" role="tabpanel" aria-labelledby="pills-clrprofile-tabinfo">
               @include('pages.data.bsi-pagination')
             </div>

@@ -19,6 +19,22 @@ class DataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function ekaIndex(Request $request){
+        $query = Data::query();
+        $query->when('keyword', function ($q) use ($request) {
+            $keyword = $request->keyword;
+            $q->where('full_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('branch_name', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('product', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
+                ->orWhere('date', 'LIKE', "%" . $keyword . "%");
+        });
+        $datas = $query->paginate(5);
+        // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
+        // if ($request->ajax()) {
+        // }
+        return view('pages.data.index-eka', compact('datas'));
+    }
     public function index(Request $request)
     {
         $today = Carbon::now()->format('Y-m-d') . '%';
@@ -45,6 +61,9 @@ class DataController extends Controller
         $bsi_data = $query->paginate(5);
         $eka_data = $query_eka->paginate(5);
         // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
+        if ($request->ajax()) {
+            return view('pages.data.index', compact('bsi_data', 'eka_data'));
+        }
         return view('pages.data.index', compact('bsi_data', 'eka_data'));
     }
 

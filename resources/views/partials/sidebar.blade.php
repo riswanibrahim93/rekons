@@ -10,10 +10,21 @@
    </div>
    <ul class="sidebar-menu">
      <li>
-       <a href="{{route('data.index')}}" class="sidebar-header @if($paths=='data'||$paths=='admin') active @endif">
-         <i class="icon-book"></i><span>Data Rekon</span>
+       <a href="#" class="sidebar-header">
+         <i class="icon-book"></i> <span>Data Rekon</span>
+         <!-- <i class="icon-book"></i> -->
        </a>
+       <ul class="sidebar-submenu">
+         <li>
+           <a href="{{route('data.index')}}" class="sidebar-header @if($paths=='data'||$paths=='admin') active @endif">
+             <i class="fa fa-angle-right"></i><span>BSI</span>
+           </a>
+         </li>
+         <!-- <li><a href="image-sidebar.html"><i class="fa fa-angle-right"></i>Sidebar With Image</a></li> -->
+         <li><a href="{{route('eka.data')}}"><i class="fa fa-angle-right"></i>Eka</a></li>
+       </ul>
      </li>
+
      <li>
        <a href="{{route('proses')}}" class="sidebar-header @if($paths=='process-recons'||$paths=='admin') active @endif">
          <i class="icon-settings"></i><span>Proses Rekon</span>
@@ -24,6 +35,7 @@
          <i class="icon-file"></i><span>Pemberkasan</span>
        </a>
      </li>
+
    </ul>
    {{-- <div class="sidebar-widget text-center">
      <div class="sidebar-widget-top">

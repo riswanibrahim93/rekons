@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('/data');
     });
     Route::resource('data', DataController::class);
+    Route::get('data-eka', [DataController::class, 'ekaIndex'])->name('eka.data');
 
     Route::post('data/import_data', [DataController::class, 'importData'])->name('import_datas');
     Route::get('process-recons',[DataController::class,'process'])->name('proses');
