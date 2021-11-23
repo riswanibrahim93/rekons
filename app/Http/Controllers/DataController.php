@@ -42,8 +42,8 @@ class DataController extends Controller
                 ->orWhere('ld', 'LIKE', "%" . $keyword . "%")
                 ->orWhere('date', 'LIKE', "%" . $keyword . "%");
         });
-        $bsi_data = $query->paginate(10);
-        $eka_data = $query_eka->paginate(10);
+        $bsi_data = $query->paginate(5);
+        $eka_data = $query_eka->paginate(5);
         // dd(['bsi'=> $bsi_data, 'eka'=>$eka_data]);
         return view('pages.data.index', compact('bsi_data', 'eka_data'));
     }
