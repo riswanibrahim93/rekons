@@ -13,7 +13,6 @@
   </thead>
   <tbody>
     @forelse ($bsi_data as $idx=>$item)
-    @if ($item->owner==2)
     <tr>
       <td scope="row">{{$idx}}</td>
       <td>{{$item->date}}</td>
@@ -24,7 +23,6 @@
       <td>{{$item->outstanding}}</td>
       {{-- <td class="font-secondary">Pending</td> --}}
     </tr>
-    @endif
     @empty
 
     @endforelse
