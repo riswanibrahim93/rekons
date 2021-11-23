@@ -5,25 +5,45 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
-        <div class="row">
-          <h5 class="pull-left mb-4">Data Pemberkasan</h5>
+        <div class="row justify-content-between">
+          <div class="col-sm-12 col-lg-6">
+            <h5 class="pull-left mb-4">Data Pemberkasan</h5>
+          </div>
+          <div class="col-sm-12 col-lg-4">
+            <form action="" method="get">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                  value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-xl-8 col-sm-12 my-2">
-            <div class="row">
-              <div>
-                <p>Tanggal awal:</p>
-                <span><input type="date" id="min" name="min"></span>
+        <div class="row justify-content-start">
+          <div class="col-lg-4 col-sm-12">
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Tanggal Mulai</label>
               </div>
-              <div>
-                <p>Tanggal akhir:</p>
-                <span><input type="date" id="max" name="max"></span>
-              </div>
+              <input type="date" class="form-control" aria-label="Sizing example input" id="min"
+                aria-describedby="inputGroup-sizing-sm">
             </div>
-            <button type="button" class="btn btn-primary btn-sm mt-2" onclick="filterData()"><strong>Filter</strong></button>
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Tanggal Akhir</label>
+              </div>
+              <input type="date" class="form-control" aria-label="Sizing example input" id="max"
+                aria-describedby="inputGroup-sizing-sm">
+            </div>
+            {{-- <div class="row"> --}}
+              <button type="button" class="btn btn-primary btn-sm"
+                onclick="filterData()"><strong>Filter</strong></button>
+              {{--
+            </div> --}}
           </div>
-          <div class="col-xl-4 col-sm-12 my-2 form-group">
-          </div>
+          {{-- <div class="col-lg-6 col-sm-12"></div> --}}
         </div>
       </div>
       <div class="card-body">
@@ -51,9 +71,9 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th >No</th>
-              <th >BSI</th>
-              <th >Eka</th>
+              <th>No</th>
+              <th>BSI</th>
+              <th>Eka</th>
             </tr>
           </thead>
           <tbody>
@@ -67,21 +87,22 @@
       </div>
       <div class="row m-2">
         <ul class="list-group col-12">
-         <li class="list-group-item active">Cara Mengupdate Data</li>
-         <li class="list-group-item">1. Silahkan upload ulang data di halanan Data Rekon</li>
-         <li class="list-group-item">2. Jika "Ld" sama maka sistem akan otomatis mengupdate data</li>
-         <li class="list-group-item">3. Lakukan proses rekonsiliasi ulang di halaman Proses Rekons</li>
-       </ul>
+          <li class="list-group-item active">Cara Mengupdate Data</li>
+          <li class="list-group-item">1. Silahkan upload ulang data di halanan Data Rekon</li>
+          <li class="list-group-item">2. Jika "Ld" sama maka sistem akan otomatis mengupdate data</li>
+          <li class="list-group-item">3. Lakukan proses rekonsiliasi ulang di halaman Proses Rekons</li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 @endsection
 @section('script')
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" charset="utf8"
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-    <script>
-      var minDate = $('#min'), maxDate=$('#max');
+<script>
+  var minDate = $('#min'), maxDate=$('#max');
 function replaceTheShit(string) {
     return string.replace(/-/g, '/');
 }
@@ -173,5 +194,5 @@ function replaceTheShit(string) {
           }
         }
   }
-    </script>
+</script>
 @endsection

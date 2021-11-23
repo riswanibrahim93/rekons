@@ -11,8 +11,8 @@
      <div class="page-header">
        <div class="row">
          <div class="col-lg-6">
-           <h3>default
-             <small>Universal a panel</small>
+           <h3>Sistem
+             <small>Rekonsiliasi</small>
            </h3>
          </div>
          <div class="col-lg-6">

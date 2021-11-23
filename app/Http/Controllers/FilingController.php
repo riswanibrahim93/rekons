@@ -144,8 +144,37 @@ class FilingController extends Controller
     {
         //
     }
-    public function pemberkasan(){
-        $data = ReconciledData::with(['data'])->paginate(10);
+    public function pemberkasan(Request $request){
+        $query = ReconciledData::query();
+        $query->whereHas("data", function ($q) use ($request) {
+            $keyword = $request->keyword;
+
+            if ($keyword == "pemberkasan" || $keyword == "invalid") {
+                $keyword = $keyword == "pemberkasan" ? 1 : 0;
+                // dd($keyword);
+            }
+            $q->where('full_name', 'LIKE', "%$keyword%")
+            ->orWhere('ld', 'LIKE', "%$keyword%")
+            ->orWhere('branch_name', 'LIKE', "%$keyword%")
+            ->orWhere('product', 'LIKE', "%$keyword%")
+            ->orWhere('atr', 'LIKE', "%$keyword%")
+            // ->orWhere('payment_status', 'LIKE', "%$keyword%")
+            ->orWhere('outstanding', 'LIKE', "%$keyword%")
+
+            ;
+        } );
+        // $query->when('keyword', function ($q) use ($request) {
+        //     $keyword = $request->keyword;
+
+        //     if ($keyword == "pemberkasan" || $keyword == "invalid") {
+        //         $keyword = $keyword == "pemberkasan" ? 1 : 0;
+        //         // dd($keyword);
+        //     }
+        //     $q->where('name', 'LIKE', "%$keyword%");
+        // });
+        $query->with('data');
+        // dd($query->get());
+        $data = $query->paginate(10);
         return view('pages.pemberkasan.index', compact('data'));
     }
 }

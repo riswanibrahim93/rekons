@@ -12,44 +12,54 @@
             PT EKA AKAR JATI
             @endif </h5>
         </div>
-        <div class="row">
-          <div class="col-xl-8 col-sm-12 my-2">
-            <div class="row">
-              <div class="form-group">
-                <p>Tanggal awal:</p>
-                <span><input type="date" class="custom-select" id="min" name="min"></span>
+        <div class="row justify-content-between">
+          <div class="col-6-lg col-12-sm">
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Tanggal Mulai</label>
               </div>
-              <div class="form-group">
-                <p>Tanggal akhir:</p>
-                <span><input type="date" class="custom-select" id="max" name="max"></span>
+              <input type="date" class="form-control" aria-label="Sizing example input" id="min" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Tanggal Akhir</label>
               </div>
+              <input type="date" class="form-control" aria-label="Sizing example input" id="max" aria-describedby="inputGroup-sizing-sm">
             </div>
-            <div class="row">
-            <button type="button" class="btn btn-primary btn-sm mt-2" onclick="filterData()"><strong>Filter</strong></button>
-            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="filterData()"><strong>Filter</strong></button>
           </div>
-          <div class="col-xl-4 col-sm-12 my-2 form-group">
-            <div>
-              <p>Pilih cabang:</p>
-              <select name="parent_id" id="selectCabang" class="form-control">
-                <option value="">== Pilih Cabang==</option>
-               @forelse ($branches as $branch)
-                   <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
-                       selected
-                   @endif>{{$branch->name}}</option>
-               @empty
-                   <option value="" disabled>Belum ada cabang</option>
-               @endforelse
-              </select>
-              <button type="button" class="btn btn-primary btn-sm mt-2" onclick="showModal()"><strong>Pemberkasan</strong></button>
-              <!-- <span><input type="text"></span> -->
-            </div>
-            <!-- <label for="selectSubVarian">A</label> -->
+          <div class="col-6-lg col-12-sm mb-2">
+
+            <form action="" method="get">
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                              value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                            </div>
+                          </div>
+                        </form>
+           <div class="input-group mt-2">
+                        <select class="custom-select" id="selectCabang" aria-label="Example select with button addon" name="parent_id">
+                          <option value="" disabled selected>== Pilih Cabang==</option>
+                          @forelse ($branches as $branch)
+                          <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
+                            selected
+                            @endif>{{$branch->name}}</option>
+                          @empty
+                          <option value="" disabled>Belum ada cabang</option>
+                          @endforelse
+                        </select>
+                        </select>
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button" onclick="showModal()"><strong>Pemberkasan</strong></button>
+                        </div>
+                      </div>
+                        <button class="btn btn-primary btn-sm mt-2 pull-right" type="button" onclick="processData()"><strong>Proses Reskonsiliasi</strong></button>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <button class="btn-primary btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button>
         <div class="table-responsive">
           @include('pages.rekons.pagination')
          

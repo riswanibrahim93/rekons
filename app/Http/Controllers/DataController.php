@@ -292,10 +292,26 @@ class DataController extends Controller
     }
     public function process(Request $request)
     {
-        // $today = Carbon::now()->format('Y-m-d') . '%';
+        $query = ReconciledData::query();
+        $query->whereHas("data", function ($q) use ($request) {
+            $keyword = $request->keyword;
+
+            if ($keyword == "pemberkasan" || $keyword == "invalid") {
+                $keyword = $keyword == "pemberkasan" ? 1 : 0;
+                // dd($keyword);
+            }
+            $q->where('full_name', 'LIKE', "%$keyword%")
+            ->orWhere('ld', 'LIKE', "%$keyword%")
+            ->orWhere('branch_name', 'LIKE', "%$keyword%")
+            ->orWhere('product', 'LIKE', "%$keyword%")
+            ->orWhere('atr', 'LIKE', "%$keyword%")
+            // ->orWhere('payment_status', 'LIKE', "%$keyword%")
+            ->orWhere('outstanding', 'LIKE', "%$keyword%");
+        });
+
         $notif = "";
         $branches = Branch::all();
-        $data = ReconciledData::OrderBy('created_at','desc')->paginate(5);
+        $data = $query->OrderBy('created_at','desc')->paginate(5);
         if ($request->branch) {
             $notif= $request->branch;
         }

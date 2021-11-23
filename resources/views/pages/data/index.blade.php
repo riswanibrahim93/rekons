@@ -5,58 +5,47 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
-        <div class="col-xl-6 col-sm-12">
-          <h5 class="pull-left mb-4">Form upload data rekon @if (Auth::user()->role==1)
-            PT BSI
-            @else
-            PT EKA AKAR JATI
-            @endif </h5>
-          <form action="{{route('import_datas')}}" method="post" enctype="multipart/form-data">
-            @csrf
-            <!-- <button type="button" class="btn btn-outline-light txt-dark" data-original-title="btn btn-outline-light txt-dark" title="">Light Button</button> -->
-            <input type="file" name="file" id="">
-            <button class="action btn btn-primary mt-2" type="submit">Upload</button>
-          </form>
-        </div>
-        <div class="row">
-          <div class="col-xl-6 col-sm-12 my-2">
-            <a href="@if(Auth::user()->role==1){{asset('templates/Field%20Rekon.xlsx')}}@else {{asset('templates/Field%20Rekon%20Eka.xlsx')}}@endif" download="Template Rekonsiliasi.xlsx" class="btn btn-primary">Download Template</a>
+        <div class="row justify-content-between">
+          <div class="col-lg-6 col-sm-12">
+            <h5 class="pull-left mb-4">Form upload data rekon
+              PT BSI
+              <!-- PT EKA AKAR JATI -->
+            </h5>
+            <form action="{{route('import_datas')}}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="input-group w-75">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="file">
+                  <label class="custom-file-label" for="inputGroupFile04">Pilih file</label>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="inputGroupFileAddon04">Upload</button>
+                </div>
+              </div>
+            </form>
           </div>
-          <!-- <div class="col-xl-6 ml-auto col-sm-12"> -->
-          <form class="form-inline search-form col-xl-3 d-block ml-auto col-sm-12">
-            <div class="form-group">
-              <label class="sr-only">Email</label>
-              <input type="search" class="form-control-plaintext" name="keyword" placeholder="Search" value="{{ request()->keyword ?? '' }}">
-              <span class="d-sm-none mobile-search">
-              </span>
-            </div>
-          </form>
+          <div class="col-lg-4 col-sm-12">
+            <form action="" method="get" class="mb-3">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword" value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                </div>
+              </div>
+            </form>
+            <a href="@if(Auth::user()->role==1){{asset('templates/Field%20Rekon.xlsx')}}@else {{asset('templates/Field%20Rekon%20Eka.xlsx')}}@endif" download="Template Rekonsiliasi.xlsx" class="btn btn-primary btn-small pull-right">Download Template</a>
+          </div>
         </div>
-        <!-- </div> -->
       </div>
       <div class="card-body">
-        <div class="tabbed-card">
-          <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtabinfo" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link @if(Auth::user()->role==2)active @endif" id="pills-clrhome-tabinfo" data-toggle="pill" href="#pills-clrhomeinfo" role="tab" aria-controls="pills-clrhome" aria-selected="true">PT EKA AKAR JATI</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link @if(Auth::user()->role==1)active @endif" id="pills-clrprofile-tabinfo" data-toggle="pill" href="#pills-clrprofileinfo" role="tab" aria-controls="pills-clrprofile" aria-selected="false">
-                BSI</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="pills-clrtabContentinfo">
-        
-            <div class="tab-pane fade @if(Auth::user()->role==1)show active @endif" id="pills-clrprofileinfo" role="tabpanel" aria-labelledby="pills-clrprofile-tabinfo">
-              @include('pages.data.bsi-pagination')
-            </div>
-
-          </div>
+        <div class="responsive-table table_data">
+          @include('pages.data.bsi-pagination')
         </div>
       </div>
-
     </div>
   </div>
+</div>
+</div>
 </div>
 @endsection
 @section('script')
