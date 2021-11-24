@@ -21,7 +21,7 @@
            </a>
          </li>
          <!-- <li><a href="image-sidebar.html"><i class="fa fa-angle-right"></i>Sidebar With Image</a></li> -->
-         <li><a href="{{route('eka.data')}}"><i class="fa fa-angle-right @if($paths=='data-eka') active @endif"></i>Eka</a></li>
+         <li><a href="{{route('eka.data')}}" class="@if($paths=='data-eka') active @endif"><i class=" fa fa-angle-right></i>Eka</a></li>
        </ul>
      </li>
 
