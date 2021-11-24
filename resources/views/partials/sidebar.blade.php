@@ -10,18 +10,18 @@
    </div>
    <ul class="sidebar-menu">
      <li>
-       <a href="#" class="sidebar-header">
+       <a href="#" class="sidebar-header  @if($paths=='data-eka'||$paths=='data') active @endif">
          <i class="icon-book"></i> <span>Data Rekon</span>
          <!-- <i class="icon-book"></i> -->
        </a>
        <ul class="sidebar-submenu">
          <li>
-           <a href="{{route('data.index')}}" class="sidebar-header @if($paths=='data'||$paths=='admin') active @endif">
+           <a href="{{route('data.index')}}" class="sidebar-header @if($paths=='data') active @endif">
              <i class="fa fa-angle-right"></i><span>BSI</span>
            </a>
          </li>
          <!-- <li><a href="image-sidebar.html"><i class="fa fa-angle-right"></i>Sidebar With Image</a></li> -->
-         <li><a href="{{route('eka.data')}}"><i class="fa fa-angle-right"></i>Eka</a></li>
+         <li><a href="{{route('eka.data')}}"><i class="fa fa-angle-right @if($paths=='data-eka') active @endif"></i>Eka</a></li>
        </ul>
      </li>
 
