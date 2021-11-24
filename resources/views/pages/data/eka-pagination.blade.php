@@ -13,9 +13,8 @@
   </thead>
   <tbody>
     @forelse ($datas as $idx=>$item)
-    @if ($item->owner==2)
     <tr>
-      <td scope="row">{{$idx}}</td>
+      <td scope="row">{{$idx+1}}</td>
       <td>{{$item->date}}</td>
       <td>{{$item->ld}}</td>
       <td>{{$item->full_name}}</td>
@@ -24,7 +23,6 @@
       <td>{{$item->outstanding}}</td>
       {{-- <td class="font-secondary">Pending</td> --}}
     </tr>
-    @endif
     @empty
 
     @endforelse
