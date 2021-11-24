@@ -9,17 +9,7 @@
           <div class="col-sm-12 col-lg-6">
             <h5 class="pull-left mb-4">Data Pemberkasan</h5>
           </div>
-          <div class="col-sm-12 col-lg-4">
-            <form action="" method="get">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
-                  value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
-                </div>
-              </div>
-            </form>
-          </div>
+          
         </div>
         <div class="row justify-content-start">
           <div class="col-lg-4 col-sm-12">
@@ -47,7 +37,17 @@
         </div>
       </div>
       <div class="card-body">
-        {{-- <button class="btn-success btn-sm mb-2" onclick="processData()">Proses Reskonsiliasi</button> --}}
+        <div class="col-sm-12 col-lg-4 pull-right">
+          <form action="" method="get">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
         <div class="table-responsive">
           @include('pages.pemberkasan.pagination')
         </div>

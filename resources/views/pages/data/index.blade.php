@@ -11,13 +11,9 @@
           <!-- PT EKA AKAR JATI -->
         </h5>
       </div>
-      <div class="col-lg-4 col-sm-12">
-        <!-- <a href="@if(Auth::user()->role==1){{asset('templates/Field%20Rekon.xlsx')}}@else {{asset('templates/Field%20Rekon%20Eka.xlsx')}}@endif" download="Template Rekonsiliasi.xlsx" class="btn btn-primary btn-small pull-right">Download Template</a>
-        </div> -->
-      </div>
     </div>
     <div class="row justify-content-between">
-      <div class="col-lg-6 col-sm-12">
+      <div class="col-lg-6 col-sm-12 mb-2">
         <form action="{{route('import_datas')}}" method="post" enctype="multipart/form-data">
           @csrf
           <div class="input-group">

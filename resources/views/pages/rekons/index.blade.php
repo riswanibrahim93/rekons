@@ -18,51 +18,65 @@
               <div class="input-group-prepend">
                 <label class="input-group-text" for="inputGroupSelect01">Tanggal Mulai</label>
               </div>
-              <input type="date" class="form-control" aria-label="Sizing example input" id="min" aria-describedby="inputGroup-sizing-sm">
+              <input type="date" class="form-control" aria-label="Sizing example input" id="min"
+                aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-sm mb-2">
               <div class="input-group-prepend">
                 <label class="input-group-text" for="inputGroupSelect01">Tanggal Akhir</label>
               </div>
-              <input type="date" class="form-control" aria-label="Sizing example input" id="max" aria-describedby="inputGroup-sizing-sm">
+              <input type="date" class="form-control" aria-label="Sizing example input" id="max"
+                aria-describedby="inputGroup-sizing-sm">
             </div>
             <button type="button" class="btn btn-primary btn-sm" onclick="filterData()"><strong>Filter</strong></button>
           </div>
           <div class="col-6-lg col-12-sm mb-2">
-
-            <form action="" method="get">
-                          <div class="input-group">
-                            <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
-                              value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                              <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
-                            </div>
-                          </div>
-                        </form>
-           <div class="input-group mt-2">
-                        <select class="custom-select" id="selectCabang" aria-label="Example select with button addon" name="parent_id">
-                          <option value="" disabled selected>== Pilih Cabang==</option>
-                          @forelse ($branches as $branch)
-                          <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
-                            selected
-                            @endif>{{$branch->name}}</option>
-                          @empty
-                          <option value="" disabled>Belum ada cabang</option>
-                          @endforelse
-                        </select>
-                        </select>
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="button" onclick="showModal()"><strong>Pemberkasan</strong></button>
-                        </div>
-                      </div>
-                        <button class="btn btn-primary btn-sm mt-2 pull-right" type="button" onclick="processData()"><strong>Proses Reskonsiliasi</strong></button>
+            {{-- <form action="" method="get">
+              <div class="input-group">
+                <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                  value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                </div>
+              </div>
+            </form> --}}
+            <div class="input-group mt-2">
+              <select class="custom-select" id="selectCabang" aria-label="Example select with button addon"
+                name="parent_id">
+                <option value="" disabled selected>== Pilih Cabang==</option>
+                @forelse ($branches as $branch)
+                <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
+                  selected
+                  @endif>{{$branch->name}}</option>
+                @empty
+                <option value="" disabled>Belum ada cabang</option>
+                @endforelse
+              </select>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button"
+                  onclick="showModal()"><strong>Pemberkasan</strong></button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm mt-2 pull-right" type="button" onclick="processData()"><strong>Proses
+                Reskonsiliasi</strong></button>
           </div>
         </div>
       </div>
       <div class="card-body">
+        <div class="col-lg-4 col-sm-12 pull-right">
+          <form action="" method="get">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
         <div class="table-responsive">
           @include('pages.rekons.pagination')
-         
         </div>
       </div>
     </div>
@@ -95,18 +109,22 @@
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td><button class="btn btn-primary" onclick="uploadButton(1)"><span id="spinner_field1"></span>upload</button>
+              <td><button class="btn btn-primary" onclick="uploadButton(1)"><span
+                    id="spinner_field1"></span>upload</button>
                 <form action="" method="post" enctype="multipart/form-data" id="form1">
                   @csrf
                   <input type="hidden" name="ld" id="ld" class="ld">
-                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file" id="bsi_file">
+                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file"
+                    id="bsi_file">
                 </form>
               </td>
-              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span id="spinner_field2"></span>upload</button>
+              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span
+                    id="spinner_field2"></span>upload</button>
                 <form id="form2" action="" method="post" enctype="multipart/form-data">
                   @csrf
                   <input type="hidden" name="ld" id="ld" class="ld">
-                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file" id="eka_file">
+                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file"
+                    id="eka_file">
                 </form>
               </td>
             </tr>
@@ -131,8 +149,10 @@
 <script src="{{asset('assets/js/datatable-extension/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable-extension/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable-extension/responsive.bootstrap4.min.js')}}"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+<script type="text/javascript" charset="utf8"
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript" charset="utf8"
+  src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
 <script>
   var minDate = $('#min'),
     maxDate = $('#max');
