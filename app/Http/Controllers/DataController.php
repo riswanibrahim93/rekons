@@ -36,7 +36,9 @@ class DataController extends Controller
             $query = Data::where("owner", 2);
         }
         $datas = $query->paginate(5);
-
+        if ($request->ajax()) {
+            return view('pages.data.eka-pagination', compact('bsi_data'))->render();
+        }
         return view('pages.data.index-eka', compact('datas'));
     }
     public function index(Request $request)
