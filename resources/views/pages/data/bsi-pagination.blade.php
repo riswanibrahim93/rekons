@@ -14,7 +14,7 @@
   <tbody>
     @forelse ($bsi_data as $idx=>$item)
     <tr>
-      <td scope="row">{{$idx+1}}</td>
+      <td scope="row">{{ ($bsi_data->currentpage()-1) * $bsi_data->perpage() + $loop->index + 1 }}</td>
       <td>{{$item->date}}</td>
       <td>{{$item->ld}}</td>
       <td>{{$item->full_name}}</td>
