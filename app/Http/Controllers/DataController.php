@@ -434,7 +434,7 @@ class DataController extends Controller
             }
         }
 
-        $unique_result = array_unique($result);
+        $unique_result = array_unique($result, SORT_REGULAR);
         foreach ($unique_result as $key => $value) {
             $created_recon =  ReconciledData::create($value);
             Data::find($value['data_id'])->update(['reconciled_data_id' => $created_recon->id]);
