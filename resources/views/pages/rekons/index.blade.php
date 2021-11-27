@@ -232,14 +232,21 @@
           confirmButtonText: 'Ya!'
         }).then(async (res) => {
           if (res.isConfirmed) {
-            console.log(data.data);
-            await Promise.all(data.data).then((values) => {
-              var urlHere = "{{route('data.destroy', ":id ")}}";
-              values.forEach(element => {
+            let dataToDelete = data.data;
+            if (dataToDelete.length>0) {
+              dataToDelete.forEach((item)=>{
+                var urlHere = "{{route('data.destroy', ":id ")}}";
                 urlHere = urlHere.replace(':id', element.reconciled_data_id);
                 $axios.delete(`${urlHere}`)
-              });
-            })
+              })
+            }
+            // await Promise.all(data.data).then((values) => {
+            //   var urlHere = "{{route('data.destroy', ":id ")}}";
+            //   values.forEach(element => {
+            //     urlHere = urlHere.replace(':id', element.reconciled_data_id);
+            //     $axios.delete(`${urlHere}`)
+            //   });
+            // })
             rekonsss();
           }
         })
