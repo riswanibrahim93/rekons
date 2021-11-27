@@ -271,9 +271,12 @@ class DataController extends Controller
     public function destroy($id)
     {
         try {
-            
-            ReconciledData::find($id)->delete();
-            Data::where('reconciled_data_id', $id)->update(['reconciled_data_id'=>null]);
+            $prevData = ReconciledData::find($id);
+            if ($prevData) {
+               $prevData->delete();
+                Data::where('reconciled_data_id', $id)->update(['reconciled_data_id'=>null]);
+                # code...
+            }
             return response()->json(
                 [
                     'status'=>true, 
