@@ -236,7 +236,7 @@
             if (dataToDelete.length>0) {
               dataToDelete.forEach((item)=>{
                 var urlHere = "{{route('data.destroy', ":id ")}}";
-                urlHere = urlHere.replace(':id', element.reconciled_data_id);
+                urlHere = urlHere.replace(':id', item.reconciled_data_id);
                 $axios.delete(`${urlHere}`)
               })
             }
