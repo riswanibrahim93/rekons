@@ -5,14 +5,16 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
-        <div class="row">
+        <div class="row justify-content-between">
+          <div class="col-lg-6 col-sm-12">
           <h5 class="pull-left mb-4">Proses rekonsiliasi @if (Auth::user()->role==1)
             PT BSI
             @else
             PT EKA AKAR JATI
             @endif </h5>
+          </div>
         </div>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between px-3">
           <div class="col-6-lg col-12-sm">
             <div class="input-group input-group-sm mb-2">
               <div class="input-group-prepend">
@@ -240,13 +242,6 @@
                 $axios.delete(`${urlHere}`)
               })
             }
-            // await Promise.all(data.data).then((values) => {
-            //   var urlHere = "{{route('data.destroy', ":id ")}}";
-            //   values.forEach(element => {
-            //     urlHere = urlHere.replace(':id', element.reconciled_data_id);
-            //     $axios.delete(`${urlHere}`)
-            //   });
-            // })
             rekonsss();
           }
         })
