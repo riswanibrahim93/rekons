@@ -236,7 +236,7 @@
             await Promise.all(data.data).then((values) => {
               var urlHere = "{{route('data.destroy', ":id ")}}";
               values.forEach(element => {
-                urlHere = urlHere.replace(':id', element.id);
+                urlHere = urlHere.replace(':id', element.reconciled_data_id);
                 $axios.delete(`${urlHere}`)
               });
             })
