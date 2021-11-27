@@ -274,11 +274,19 @@ class DataController extends Controller
             
             ReconciledData::find($id)->delete();
             Data::where('reconciled_data_id', $id)->update(['reconciled_data_id'=>null]);
-            return response()->json(['status'=>true, 'body'=>[
+            return response()->json(
+                [
+                    'status'=>true, 
+                'body'=>[
                 'messege'=>'berhasil'
             ]],200);
         } catch (\Throwable $th) {
-            return response()->json([],500);
+            return response()->json([
+                'status' => false,
+                'body' => [
+                    'messege' => $th->getMessage()
+                ]
+            ],500);
         }
         
     }
