@@ -1,4 +1,4 @@
- <table id="table_data" class="table table-bordernone">
+ <table class="table table-bordernone">
    <thead>
      <tr>
        <th>

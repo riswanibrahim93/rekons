@@ -29,6 +29,8 @@
                 aria-describedby="inputGroup-sizing-sm">
             </div>
             <button type="button" class="btn btn-primary btn-sm" onclick="filterData()"><strong>Filter</strong></button>
+            <button class="btn btn-primary btn-sm ml-2 pull-right" type="button" onclick="processData()"><strong>Proses
+                Reskonsiliasi</strong></button>
           </div>
           <div class="col-6-lg col-12-sm mb-2">
             {{-- <form action="" method="get">
@@ -58,8 +60,6 @@
                   onclick="showModal()"><strong>Pemberkasan</strong></button>
               </div>
             </div>
-            <button class="btn btn-primary btn-sm mt-2 pull-right" type="button" onclick="processData()"><strong>Proses
-                Reskonsiliasi</strong></button>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@
             </div>
           </form>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" id="table_data">
           @include('pages.rekons.pagination')
         </div>
       </div>
