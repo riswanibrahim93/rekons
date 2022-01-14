@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'bsi_admin@gmail.com',
                 'role' =>1,
-                'password' => '123456',
+                'password' => '12345678',
                 'email_verified_at' => now()
             ]
         );
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'role'=>2,
                 'email' => 'eka_admin@gmail.com',
-                'password' => '123456',
+                'password' => '12345678',
                 'email_verified_at' => now()
             ]
         );

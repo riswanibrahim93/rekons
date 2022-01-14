@@ -3,6 +3,7 @@
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\FilingController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('process-recons',[DataController::class,'process'])->name('proses');
     Route::post('checkData', [DataController::class, 'checkData'])->name('check.data');
     Route::post('processRecons', [DataController::class, 'processRecons'])->name('process.data');
+    Route::get('processReconsDetail/{branch}', [DataController::class, 'processReconsDetail'])->name('process.dataDetail');
     // return view('welcome');
     Route::resource('pemberkasan', FilingController::class);
     Route::get('data-pemberkasan', [FilingController::class, 'pemberkasan'])->name('data.pemberkasan');
+
+    Route::get('/bavaPDF/{branch}', [PDFController::class, 'bavaPDF'])->name('bavaPDF');
+    Route::post('uploadBava', [DataController::class, 'uploadBava'])->name('upload.bava');
 });

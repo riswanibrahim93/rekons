@@ -110,6 +110,7 @@ class DataController extends Controller
                     }
                     array_push($result, [
                         'data_id' => $eka_data[$i]->id,
+                        'periode' => $waktu,
                         'bsi_id' => $bsi_data[$i]->id,
                         'atr'=> $bsi_data[$i]->atr,
                         'status' => $stat,
@@ -122,6 +123,7 @@ class DataController extends Controller
             if (!in_array(true, $checker)) {
                 array_push($result, [
                     'data_id' => $eka_data[$i]->id,
+                    'periode' => $waktu,
                     'bsi_id' => $bsi_data[$i]->id,
                     'atr' => 0,
                     'status' => 0,
@@ -306,6 +308,14 @@ class DataController extends Controller
     }
     public function process(Request $request)
     {
+
+        // $query = DB::table('reconciled_data')
+        //  ->leftJoin('data', 'data.reconciled_data_id', '=', 'reconciled_data.id') 
+        //  ->select('*')
+        //  ->groupBy('branch_name')
+        //  ->get();
+
+
         $query = ReconciledData::query();
         $query->whereHas("data", function ($q) use ($request) {
             $keyword = $request->keyword;
@@ -321,11 +331,17 @@ class DataController extends Controller
             ->orWhere('atr', 'LIKE', "%$keyword%")
             // ->orWhere('payment_status', 'LIKE', "%$keyword%")
             ->orWhere('outstanding', 'LIKE', "%$keyword%");
-        });
+
+        })->groupBy('branch_name')->get();
+        // $query->Data()->groupBy('branch_name')->get();
+
+        // $query->groupBy('branch_name')
+        dd($query);
 
         $notif = "";
-        $branches = Branch::all();
-        $data = $query->OrderBy('created_at','desc')->paginate(5);
+        $branches = Branch::get();
+
+        $data = $query->paginate(5);
         if ($request->branch) {
             $notif= $request->branch;
         }
@@ -402,6 +418,16 @@ class DataController extends Controller
                 $eka_data = Data::whereBetween('date', [$start_date, $end_date])->where('owner', 2)->get();
         }
         $result = [];
+
+        $awal = $request->start_date;
+        $arr_awal = explode("-",$awal);
+        $akhir = $request->end_date;
+        $arr_akhir = explode("-",$akhir);
+        $hari_akhir = $arr_akhir[2];
+        $bulan_akhir = $arr_akhir[1];
+        $tahun_akhir = $arr_akhir[0][2].$arr_akhir[0][3];
+        $waktu = $arr_awal[2].'-'.$hari_akhir.$bulan_akhir.$tahun_akhir;
+
      
 
 
@@ -427,6 +453,7 @@ class DataController extends Controller
                     }
                     array_push($result, [
                         'data_id' => $eka_data[$i]->id,
+                        'periode' => $waktu,
                         'bsi_id' => $bsi_data[$i]->id,
                         'atr' => $bsi_data[$i]->atr,
                         'status' => $stat,
@@ -439,6 +466,7 @@ class DataController extends Controller
             if (!in_array(true, $checker)) {
                 array_push($result, [
                     'data_id' => $eka_data[$i]->id,
+                    'periode' => $waktu,
                     'bsi_id' => $bsi_data[$i]->id,
                     'atr' => 0,
                     'status' => 0,
@@ -460,5 +488,26 @@ class DataController extends Controller
         $result
         ],200);
         // dd($result);
+    }
+
+    public function processReconsDetail(Request $request)
+    {
+        $query = ReconciledData::query();
+        $query->whereHas("data", function ($q) use ($request) {
+            $q->where('branch_name', $request->branch);
+        });
+        $data = $query->get();
+        $branch_name = $request->branch;
+        $branches = Branch::get();
+        $notif = "";
+        // dd($data);
+        return view('pages.rekons.detail', compact('data','branch_name','branches','notif'));
+    }
+
+    public function uploadBava(Request $request)
+    {
+        $bava = $request->file('file');
+        // dd($bava);
+        return redirect('process-recons')->with('status', 'Upload File Bava Berhasil');
     }
 }

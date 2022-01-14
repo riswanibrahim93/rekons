@@ -41,6 +41,8 @@
   <!-- App css -->
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <!-- Responsive css -->
   <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatables.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datatable-extension.css')}}"> -->

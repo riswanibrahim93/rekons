@@ -1,11 +1,6 @@
-@extends('layouts.main')
+ @extends('layouts.main')
 @section('title', 'Proses Rekon')
 @section('content')
-@if (session('status'))
-  <div class="alert alert-success">
-      {{ session('status') }}
-  </div>
-@endif
 <div class="row">
   <div class="col-sm-12">
     <div class="card">
@@ -19,58 +14,30 @@
             @endif </h5>
           </div>
         </div>
-        <div class="row justify-content-between px-3">
-          <div class="col-6-lg col-12-sm">
-            <div class="input-group input-group-sm mb-2">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Tanggal Mulai</label>
-              </div>
-              <input type="date" class="form-control" aria-label="Sizing example input" id="min"
-                aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <div class="input-group input-group-sm mb-2">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Tanggal Akhir</label>
-              </div>
-              <input type="date" class="form-control" aria-label="Sizing example input" id="max"
-                aria-describedby="inputGroup-sizing-sm">
-            </div>
-            <button type="button" class="btn btn-primary btn-sm" onclick="filterData()"><strong>Filter</strong></button>
-            <button class="btn btn-primary btn-sm ml-2 pull-right" type="button" onclick="processData()"><strong>Proses
-                Reskonsiliasi</strong></button>
-          </div>
-          <div class="col-6-lg col-12-sm mb-2">
-            {{-- <form action="" method="get">
-              <div class="input-group">
-                <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
-                  value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
-                </div>
-              </div>
-            </form> --}}
-            <!-- <div class="input-group mt-2">
-              <select class="custom-select" id="selectCabang" aria-label="Example select with button addon"
-                name="parent_id">
-                <option value="" disabled selected>== Pilih Cabang==</option>
-                @forelse ($branches as $branch)
-                <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
-                  selected
-                  @endif>{{$branch->name}}</option>
-                @empty
-                <option value="" disabled>Belum ada cabang</option>
-                @endforelse
-              </select>
-              </select>
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button"
-                  onclick="showModal()"><strong>Pemberkasan</strong></button>
-              </div>
-            </div> -->
-          </div>
-        </div>
       </div>
       <div class="card-body">
+        <div class="row  mb-3">
+          <div class="col-lg-4 col-sm-12 pull-right" style="margin-left: auto; margin-right: 15px;">
+            <div class="input-group mt-2">
+                <select class="custom-select" id="selectCabang" aria-label="Example select with button addon"
+                  name="parent_id">
+                  <option value="" disabled selected>== Pilih Cabang==</option>
+                  @forelse ($branches as $branch)
+                  <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
+                    selected
+                    @endif>{{$branch->name}}</option>
+                  @empty
+                  <option value="" disabled>Belum ada cabang</option>
+                  @endforelse
+                </select>
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button"
+                    onclick="showModal()"><strong>Pemberkasan</strong></button>
+                </div>
+              </div>
+          </div>
+        </div>
         <div class="col-lg-4 col-sm-12 pull-right">
           <form action="" method="get">
             <div class="input-group mb-3">
@@ -82,8 +49,67 @@
             </div>
           </form>
         </div>
-        <div class="table-responsive" id="table_data">
-          @include('pages.rekons.pagination')
+
+        <h5>{{ $branch_name }}</h5>
+        <div class="table-responsive tabelcabang" id="table_data">
+          <table class="table table-bordernone">
+             <thead>
+               <tr>
+                 <th>
+                   No
+                 </th>
+                 <th>Periode</th>
+                 <th>LD</th>
+                 <th>Nama</th>
+                 <th>Produk</th>
+                 <th>Atribusi</th>
+                 <th>Pembiayaan</th>
+                 <th>Detail</th>
+                 <th>Status</th>
+                 <!-- <th>Aksi</th> -->
+               </tr>
+             </thead>
+             <tbody>
+
+               @forelse ($data as $idx=>$item)
+               @php
+               $number = (int)$idx+1;
+               @endphp
+               <tr>
+                 <td>{{$number}}</td>
+                 <td class="dateData">{{$item->periode}}</td>
+                 <td>{{$item->data->ld}}</td>
+                 <td>{{$item->data->full_name}}</td>
+                 <td>{{$item->data->product}}</td>
+                 <td>{{$item->atr??''}}</td>
+                 <td>{{$item->data->outstanding??''}}</td>
+                 <td>{{$item->description}}</td>
+                 <td>
+                   <span class="@if ($item->status==0)
+                      badge badge-danger
+                      @else
+                     badge badge-success
+                      @endif">
+                     @if ($item->status==1)
+                     Valid
+                     @else
+                     Invalid
+                     @endif
+                   </span>
+                 </td>
+                 <!-- <td>
+              @if ($item->status==0)
+              <span class="badge badge-success pointer" style="cursor: pointer;" onclick="showModal(`{{$item->data_id}}`,`{{$item->bsi_id}}`, `{{$item->data->full_name}}`, `{{$item->data->ld}}`)">
+                Pemberkasan
+              </span>
+              @endif
+            </td> -->
+               </tr>
+               @empty
+
+               @endforelse
+             </tbody>
+           </table>
         </div>        
       </div>
     </div>
@@ -161,115 +187,7 @@
 <script type="text/javascript" charset="utf8"
   src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  var minDate = $('#min'),
-    maxDate = $('#max');
-
-  function rekonsss() {
-    myLoader('#table_data', 'show');
-    $axios.post("{{route('process.data')}}", {
-      start_date: minDate.val(),
-      end_date: maxDate.val()
-    }).then((data) => {
-      console.log('masuk rekons')
-      // let timerInterval
-      // console.log(data.data);
-      // $swal.fire({
-      //   title: 'Sukses',
-      //   icon: 'success',
-      //   showConfirmButton: false,
-      //   showCancelButton: false,
-      //   html: 'Rekonsiliasi berhasil dilakukan!<br /></br>' +
-      //     'Halaman akan direload dalam <strong></strong> detik.',
-      //   timer: 3000,
-      //   didOpen: () => {
-
-      //     timerInterval = setInterval(() => {
-      //       $swal.getHtmlContainer().querySelector('strong')
-      //         .textContent = ($swal.getTimerLeft() / 1000)
-      //         .toFixed(0)
-      //     }, 100)
-      //   },
-      //   willClose: () => {
-      //     clearInterval(timerInterval)
-      //   }
-      // }).then(() => {
-      refresh_table(URL_NOW);
-      // })
-      // myLoader('#table_data', 'hide');
-    }).catch((err) => {
-
-      console.log(err);
-      myLoader('#table_data', 'hide');
-      $swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message.text,
-      })
-    })
-  }
-  let timerInterval;
-
-  function processData() {
-    if (minDate.val() == "" && maxDate.val() == "") {
-      $swal.fire({
-        title: "Perhatian!",
-        text: "Minimal tentukan tanggal awal dahulu!",
-        icon: 'warning',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Ya!'
-      }).then((res) => {
-        if (res.isConfirmed) {
-          return;
-        }
-      });
-      return;
-    }
-    console.log('cek dulu')
-    // $axios.defaults.baseURL = 'https://reqres.in/api/';
-    // $axios.post('users',{
-    //  'first_name':'Junny',
-    //  'last_name':'Joni'
-    // })
-    // .then((data)=>console.log(data))
-    // .catch((error)=>console.log('Error: '+error))
-
-
-    $axios.post("{{route('check.data')}}", {
-      start_date: minDate.val(),
-      end_date: maxDate.val()
-    }).then((data) => {
-      if (data.data.length > 0) {
-        $swal.fire({
-          title: "Yakin?",
-          text: "Anda akan melakukan rekonsiliasi ulang!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          cancelButtonText: 'Tidak',
-          confirmButtonText: 'Ya!'
-        }).then(async (res) => {
-          if (res.isConfirmed) {
-            let dataToDelete = data.data;
-            if (dataToDelete.length>0) {
-              dataToDelete.forEach((item)=>{
-                var urlHere = "{{route('data.destroy', ":id ")}}";
-                urlHere = urlHere.replace(':id', item.reconciled_data_id);
-                $axios.delete(`${urlHere}`)
-              })
-            }
-            rekonsss();
-          }
-        })
-
-      } else {
-        console.log('rekons')
-        rekonsss();
-      }
-    })
-  }
-
+<script type="text/javascript">
   function noFileErr() {
     $swal.fire({
       title: "Opps",
@@ -444,28 +362,8 @@
         });
     });
   });
-  function filterData() {
-        var iFini = moment(replaceTheShit(minDate.val()), "YYYY/MM/DD").format("X");
-        var iFfin = moment(replaceTheShit(maxDate.val()), "YYYY/MM/DD").format("X");
-        let data = $(".dateData").toArray()
-        for (let index = 0; index < data.length; index++) {
-          var evalDate = moment(replaceTheShit(data[index].textContent), "YYYY/MM/DD").format("X");
-          const element = data[index];
-          if (
-              (iFini === 'Invalid date' && iFfin === 'Invalid date') ||
-              (iFini === 'Invalid date' && evalDate <= iFfin) ||
-              (iFini <= evalDate && iFfin === 'Invalid date') ||
-              (iFini <= evalDate && evalDate <= iFfin)
-          ) {
-             if(element.parentElement.classList.contains('d-none')){
-               element.parentElement.classList.remove('d-none');
-             }
-          } else {
-              element.parentElement.classList.add('d-none');
-          }
-        }
-
-  }
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection
+
+ 

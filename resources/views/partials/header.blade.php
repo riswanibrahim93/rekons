@@ -21,7 +21,15 @@
              {{-- <div class="breadcrumb-item active"><a href="#">Dashboard</a></div> --}}
             @if (Request::path() != "/")
             @foreach ($paths as $key => $path )
-            <li class="breadcrumb-item">{{ucfirst($path)}}</li>
+            <?php 
+                $br = "";
+                $breadcrumb = ucfirst($path);
+                $arr_breadcrumb = explode("%20",$breadcrumb);
+                for ($i=0; $i < count($arr_breadcrumb); $i++) { 
+                  $br = $br.' '.$arr_breadcrumb[$i];
+                }
+             ?>
+            <li class="breadcrumb-item">{{$br}}</li>
             @endforeach
             @endif
            </ol>

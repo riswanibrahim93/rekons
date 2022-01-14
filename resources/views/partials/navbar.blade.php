@@ -28,7 +28,7 @@
             </div>
           </form>
         </li> -->
-        <li>
+        <!-- <li>
           <a href="#!" onclick="javascript:toggleFullScreen()" class="text-dark">
             <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/browser.png')}}" alt="header-browser">
           </a>
@@ -59,7 +59,7 @@
             <li class="text-center">You have Check <a href="#">all</a> notification </li>
             @endforelse
           </ul>
-        </li>
+        </li> -->
         <li class="onhover-dropdown">
           <div class="media  align-items-center">
             <img class="align-self-center pull-right mr-2" src="{{asset('assets/images/dashboard/user.png')}}" alt="header-user" />
