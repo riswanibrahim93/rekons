@@ -38,4 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/bavaPDF/{branch}', [PDFController::class, 'bavaPDF'])->name('bavaPDF');
     Route::post('uploadBava', [DataController::class, 'uploadBava'])->name('upload.bava');
+    Route::post('validasiSelected', [DataController::class, 'validasiSelected'])->name('validasi.selected');
+    Route::post('tolakSelected', [DataController::class, 'tolakSelected'])->name('tolak.selected');
+
+    Route::post('detailCabang', [DataController::class, 'detailCabang'])->name('detail.cabang');
 });

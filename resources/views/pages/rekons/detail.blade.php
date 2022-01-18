@@ -1,4 +1,4 @@
- @extends('layouts.main')
+@extends('layouts.main')
 @section('title', 'Proses Rekon')
 @section('content')
 <div class="row">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="row  mb-3">
+        <!-- <div class="row  mb-3">
           <div class="col-lg-4 col-sm-12 pull-right" style="margin-left: auto; margin-right: 15px;">
             <div class="input-group mt-2">
                 <select class="custom-select" id="selectCabang" aria-label="Example select with button addon"
@@ -37,27 +37,42 @@
                 </div>
               </div>
           </div>
+        </div> -->
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <h5>List data pada cabang {{ $branch_name }}</h5>
+            <p class="text-justify">Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.</p>
+          </div>
         </div>
-        <div class="col-lg-4 col-sm-12 pull-right">
-          <form action="" method="get">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
-                value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
-              </div>
-            </div>
-          </form>
+        <div class="row">
+          <div class="col-sm-6">
+            <a class="badge badge-success px-5 py-2" id="validationAllSelect" style="font-size: 12px;"><i class="fas fa-check-circle pr-1"></i> Validasi</a>
+            <a class="badge badge-danger px-5 py-2" id="tolakAllSelect" style="font-size: 12px;"><i class="fas fa-times-circle pr-1"></i> Tolak</a>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4 text-right">
+              <form action="" method="get">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                    value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                  </div>
+                </div>
+              </form>
+          </div>
         </div>
+        
+        
 
-        <h5>{{ $branch_name }}</h5>
         <div class="table-responsive tabelcabang" id="table_data">
           <table class="table table-bordernone">
              <thead>
                <tr>
-                 <th>
-                   No
-                 </th>
+                <th>
+                  <input type="checkbox" id="selectAll">
+                </th>
+                 <th>No</th>
                  <th>Periode</th>
                  <th>LD</th>
                  <th>Nama</th>
@@ -76,7 +91,11 @@
                $number = (int)$idx+1;
                @endphp
                <tr>
+                <td>
+                  <input type="checkbox" value="{{$item->id}}" id="ids" name="ids" class="selectData">
+                </td>
                  <td>{{$number}}</td>
+                 <!-- <td>{{$item->id}}</td> -->
                  <td class="dateData">{{$item->periode}}</td>
                  <td>{{$item->data->ld}}</td>
                  <td>{{$item->data->full_name}}</td>
@@ -360,6 +379,95 @@
             title: err.message.body
           });
         });
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(function(e){
+    $('#selectAll').click(function(){
+      $(".selectData").prop('checked',$(this).prop('checked'));
+    });
+    $('#validationAllSelect').click(function(e){
+      e.preventDefault();
+      var all_ids = [];
+      $('input:checkbox[name=ids]:checked').each(function(){
+        all_ids.push($(this).val());
+      });
+
+      $axios.post("{{route('validasi.selected')}}", {
+        ids: all_ids
+      })
+      .then((data) => {
+        console.log(data.status);
+        if(data.status == 200)
+        {
+          $swal.fire({
+            icon: 'success',
+            title: 'Validasi Data Berhasil',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        window.location.reload();
+      })
+      .catch((err) => {
+
+        console.log(err);
+        myLoader('#table_data', 'hide');
+        $swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message.text,
+        })
+      })
+    });
+    $('#tolakAllSelect').click(function(e){
+      e.preventDefault();
+      var all_ids = [];
+      $('input:checkbox[name=ids]:checked').each(function(){
+        all_ids.push($(this).val());
+      });
+
+      // action tolak
+      $swal.fire({
+        title: "Yakin?",
+        text: "Anda akan menolak data yang terpilih!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Ya!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $axios.post("{{route('tolak.selected')}}", {
+            ids: all_ids
+          })
+          .then((data) => {
+            console.log(data.status);
+            if(data.status == 200)
+            {
+              $swal.fire({
+                icon: 'success',
+                title: 'Tolak Data Berhasil',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+            window.location.reload();
+          })
+          .catch((err) => {
+
+            console.log(err);
+            myLoader('#table_data', 'hide');
+            $swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message.text,
+            })
+          })
+        }
+      })
     });
   });
 </script>

@@ -71,20 +71,60 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="col-lg-4 col-sm-12 pull-right">
-          <form action="" method="get">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
-                value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
-              </div>
-            </div>
-          </form>
+        <div class="row">
+          <div class="col-sm-6 mt-2">
+            <h6>Rekonsiliasi pada periode : {{ $periode->periode }}</h6>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4 text-right">
+              <form action="" method="get">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="keyword" placeholder="keyword" aria-label="keyword"
+                    value="{{ request()->keyword ?? '' }}" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" id="button-addon2"><i class="icon-search"></i></button>
+                  </div>
+                </div>
+              </form>
+          </div>
         </div>
         <div class="table-responsive" id="table_data">
           @include('pages.rekons.pagination')
-        </div>        
+        </div>
+        <div class="data-detail" hidden="true">
+          <div class="col-sm-6 mb-4 mt-5">
+            <h5>List data pada cabang</h5>
+            <p class="text-justify">Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.</p>
+          </div>
+          <div class="col-sm-6 mb-3">
+              <a class="badge badge-success px-5 py-2" id="validationAllSelect" style="font-size: 12px;"><i class="fas fa-check-circle pr-1"></i> Validasi</a>
+              <a class="badge badge-danger px-5 py-2" id="tolakAllSelect" style="font-size: 12px;"><i class="fas fa-times-circle pr-1"></i> Tolak</a>
+          </div> 
+          <div class="table-responsive" id="table_data_detail">
+            <table class="table table-bordernone">
+               <thead>
+                 <tr>
+                  <th>
+                    <input type="checkbox" id="selectAll">
+                  </th>
+                   <th>No</th>
+                   <th>Periode</th>
+                   <th>LD</th>
+                   <th>Nama</th>
+                   <th>Produk</th>
+                   <th>Atribusi</th>
+                   <th>Plafond</th>
+                   <th>Detail</th>
+                   <th>Status</th>
+                   <!-- <th>Aksi</th> -->
+                 </tr>
+               </thead>
+               <tbody class="tambahTabel">
+                 
+               </tbody>
+             </table>
+          </div>       
+        </div>
       </div>
     </div>
   </div>
@@ -165,6 +205,53 @@
   var minDate = $('#min'),
     maxDate = $('#max');
 
+  function tabelDetail(branch_name){
+    $('.data-detail').removeAttr('hidden');
+    // var branch_name = $('#branch_name').html();
+    console.log(branch_name);
+
+    $axios.post("{{route('detail.cabang')}}", {
+      branch_name: branch_name
+    })
+    .then((data) => {
+      var detail = data.data[0];
+      var html = "";
+      var status = "";
+      var number = 1;
+      console.log(data);
+      detail.forEach(function(element) { 
+        if(element.status == 0)
+        {
+          status = `<span class="badge badge-danger">Valid</span>`
+        }
+        else
+        {
+          status = `<span class="badge badge-success">Invalid</span>`
+        }
+        html += `<tr>
+                  <td>
+                  <input type="checkbox" value="`+element.id+`" id="ids" name="ids" class="selectData">
+                  </td>
+                  <td>`+number+`</td>
+                  <td class="dateData">`+element.periode+`</td>
+                  <td>`+element.data.ld+`</td>
+                  <td>`+element.data.full_name+`</td>
+                  <td>`+element.data.product+`</td>
+                  <td>`+element.atr+`</td>
+                  <td>`+element.data.outstanding+`</td>
+                  <td>`+element.description+`</td>
+                  <td>`+status+`</td>
+                </tr>`;
+        console.log(element.periode);
+        number++;
+      });
+      $('.tambahTabel').html(html);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   function rekonsss() {
     myLoader('#table_data', 'show');
     $axios.post("{{route('process.data')}}", {
@@ -197,7 +284,8 @@
       refresh_table(URL_NOW);
       // })
       // myLoader('#table_data', 'hide');
-    }).catch((err) => {
+    })
+    .catch((err) => {
 
       console.log(err);
       myLoader('#table_data', 'hide');
@@ -225,7 +313,7 @@
       });
       return;
     }
-    console.log('cek dulu')
+    // console.log('cek dulu')
     // $axios.defaults.baseURL = 'https://reqres.in/api/';
     // $axios.post('users',{
     //  'first_name':'Junny',
@@ -444,6 +532,7 @@
         });
     });
   });
+
   function filterData() {
         var iFini = moment(replaceTheShit(minDate.val()), "YYYY/MM/DD").format("X");
         var iFfin = moment(replaceTheShit(maxDate.val()), "YYYY/MM/DD").format("X");
@@ -466,6 +555,95 @@
         }
 
   }
+</script>
+<script type="text/javascript">
+  $(function(e){
+    $('#selectAll').click(function(){
+      $(".selectData").prop('checked',$(this).prop('checked'));
+    });
+    $('#validationAllSelect').click(function(e){
+      e.preventDefault();
+      var all_ids = [];
+      $('input:checkbox[name=ids]:checked').each(function(){
+        all_ids.push($(this).val());
+      });
+
+      $axios.post("{{route('validasi.selected')}}", {
+        ids: all_ids
+      })
+      .then((data) => {
+        console.log(data.status);
+        if(data.status == 200)
+        {
+          $swal.fire({
+            icon: 'success',
+            title: 'Validasi Data Berhasil',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        window.location.reload();
+      })
+      .catch((err) => {
+
+        console.log(err);
+        myLoader('#table_data', 'hide');
+        $swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message.text,
+        })
+      })
+    });
+    $('#tolakAllSelect').click(function(e){
+      e.preventDefault();
+      var all_ids = [];
+      $('input:checkbox[name=ids]:checked').each(function(){
+        all_ids.push($(this).val());
+      });
+
+      // action tolak
+      $swal.fire({
+        title: "Yakin?",
+        text: "Anda akan menolak data yang terpilih!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Ya!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $axios.post("{{route('tolak.selected')}}", {
+            ids: all_ids
+          })
+          .then((data) => {
+            console.log(data.status);
+            if(data.status == 200)
+            {
+              $swal.fire({
+                icon: 'success',
+                title: 'Tolak Data Berhasil',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+            window.location.reload();
+          })
+          .catch((err) => {
+
+            console.log(err);
+            myLoader('#table_data', 'hide');
+            $swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message.text,
+            })
+          })
+        }
+      })
+    });
+  });
 </script>
 <script src="{{asset('assets/js/datatable-extension/custom.js')}}"></script>
 @endsection

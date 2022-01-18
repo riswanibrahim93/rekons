@@ -4,18 +4,32 @@
        <th class="text-center">
          No
        </th>
-       <th class="text-center">Periode</th>
+       <!-- <th>Periode</th> -->
        <th class="text-center">Cabang</th>
        <th class="text-center">Jumlah NOA</th>
-       <th class="text-center">Pembiayaan</th>
+       <th class="text-center">Plafond</th>
        <th class="text-center">Aksi</th>
      </tr>
    </thead>
    <tbody>
 
      @forelse ($data as $idx=>$item)
+     @php
+     $number = (int)$idx+1;
+     @endphp
      <tr>
-       <td class="text-center">{{$item->data->branch_name}}</td>
+       <td class="text-center">{{$number}}</td>
+       <td class="text-center">{{$item->branch_name}}</td>
+       <td class="text-center">{{$item->noa}}</td>
+       <td class="text-center">{{$item->biaya}}</td>
+       <td class="text-center">
+        @if (Auth::user()->role==1)
+        <!-- <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a> -->
+        <button onclick="tabelDetail(`{{$item->branch_name}}`);" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></button>
+        <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
+        @else
+        <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a>
+        <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
         <button type="button" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" data-toggle="modal" data-target="#upload-bava"><strong>Upload Bava</strong></button>
 
         <!-- Button trigger modal -->
@@ -50,6 +64,7 @@
             </div>
           </div>
         </div>
+            @endif
        </td>
      </tr>
      @empty

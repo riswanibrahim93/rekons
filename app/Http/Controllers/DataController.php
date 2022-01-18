@@ -311,13 +311,20 @@ class DataController extends Controller
 
         // $query = DB::table('reconciled_data')
         //  ->leftJoin('data', 'data.reconciled_data_id', '=', 'reconciled_data.id') 
-        //  ->select('*')
-        //  ->groupBy('branch_name')
-        //  ->get();
+        //  ->select('data.branch_name', DB::raw('SUM(data.plafond) AS biaya'), DB::raw('COUNT(*) AS noa'))
+        //  ->groupBy('branch_name');
+
+        // $query = ReconciledData::with('data')->get()->groupBy('data.branch_name');
+
+
 
 
         $query = ReconciledData::query();
-        $query->whereHas("data", function ($q) use ($request) {
+        $query = $query->leftJoin('data', 'data.reconciled_data_id', '=', 'reconciled_data.id') 
+         ->select('data.branch_name', DB::raw('SUM(data.plafond) AS biaya'), DB::raw('COUNT(*) AS noa'))
+         ->groupBy('branch_name');
+
+         $query->whereHas("data", function ($q) use ($request) {
             $keyword = $request->keyword;
 
             if ($keyword == "pemberkasan" || $keyword == "invalid") {
@@ -331,24 +338,33 @@ class DataController extends Controller
             ->orWhere('atr', 'LIKE', "%$keyword%")
             // ->orWhere('payment_status', 'LIKE', "%$keyword%")
             ->orWhere('outstanding', 'LIKE', "%$keyword%");
+        });
 
-        })->groupBy('branch_name')->get();
+
         // $query->Data()->groupBy('branch_name')->get();
 
         // $query->groupBy('branch_name')
-        dd($query);
+
+        // $query = DB::table('reconciled_data')
+        //  ->leftJoin('data', 'data.reconciled_data_id', '=', 'reconciled_data.id') 
+        //  ->select('data.branch_name', DB::raw('SUM(data.plafond) AS biaya'), DB::raw('COUNT(*) AS noa'))
+        //  ->groupBy('branch_name');
+        // dd($query);
+
+        $periode = ReconciledData::select('periode')->first();
 
         $notif = "";
         $branches = Branch::get();
 
         $data = $query->paginate(5);
+        // dd($data);
         if ($request->branch) {
             $notif= $request->branch;
         }
         if ($request->ajax()) {
-           return view('pages.rekons.pagination', compact('data', 'branches','notif'))->render();
+           return view('pages.rekons.pagination', compact('data', 'branches','notif', 'periode'))->render();
         }
-        return view('pages.rekons.index', compact('data', 'branches','notif'));
+        return view('pages.rekons.index', compact('data', 'branches','notif', 'periode'));
     }
     public function checkData(Request $request)
     {
@@ -494,8 +510,25 @@ class DataController extends Controller
     {
         $query = ReconciledData::query();
         $query->whereHas("data", function ($q) use ($request) {
+            $keyword = $request->keyword;
+
+            if ($keyword == "pemberkasan" || $keyword == "invalid") {
+                $keyword = $keyword == "pemberkasan" ? 1 : 0;
+                // dd($keyword);
+            }
+            $q->where('full_name', 'LIKE', "%$keyword%")
+            ->orWhere('ld', 'LIKE', "%$keyword%")
+            ->orWhere('branch_name', 'LIKE', "%$keyword%")
+            ->orWhere('product', 'LIKE', "%$keyword%")
+            ->orWhere('atr', 'LIKE', "%$keyword%")
+            // ->orWhere('payment_status', 'LIKE', "%$keyword%")
+            ->orWhere('outstanding', 'LIKE', "%$keyword%");
+        });
+
+        $query->whereHas("data", function ($q) use ($request) {
             $q->where('branch_name', $request->branch);
         });
+
         $data = $query->get();
         $branch_name = $request->branch;
         $branches = Branch::get();
@@ -509,5 +542,51 @@ class DataController extends Controller
         $bava = $request->file('file');
         // dd($bava);
         return redirect('process-recons')->with('status', 'Upload File Bava Berhasil');
+    }
+
+    public function validasiSelected(Request $request)
+    {
+        // dd('berhasil');
+        // $ids = [57,58];
+        $ids = $request->ids;
+        $data = ReconciledData::whereIn('id', $ids)
+            ->update([
+                'status' => 1,
+                'description' => 'Valid'
+            ]);
+        // dd($data);  
+        // $status = $ids[0];
+        return  response()->json($data,200);
+    }
+    public function tolakSelected(Request $request)
+    {
+        // dd('berhasil');
+        // $ids = [57,58];
+        $ids = $request->ids;
+        $data = ReconciledData::whereIn('id', $ids)
+            ->update([
+                'status' => 0,
+                'description' => 'Ditolak'
+            ]);
+        // dd($data);  
+        // $status = $ids[0];
+        return  response()->json($data,200);
+    }
+
+    public function detailCabang(Request $request)
+    {
+        $query = ReconciledData::query();
+        $query->with('data')->whereHas("data", function ($q) use ($request) {
+            $q->where('branch_name', $request->branch_name);
+        });
+
+
+        $data = $query->get();
+        $branch_name = $request->branch_name;
+        $branches = Branch::get();
+        $notif = "";
+        // dd($data);
+        return  response()->json([$data, $branch_name],200);
+        // return view('pages.rekons.detail', compact('data','branch_name','branches','notif'));
     }
 }
