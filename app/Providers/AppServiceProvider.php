@@ -6,6 +6,7 @@ use App\Models\Notification;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
                 // View::share('notifications', $notifications);
             }
         });
+
+        Schema::defaultStringLength(191);
     }
 }
