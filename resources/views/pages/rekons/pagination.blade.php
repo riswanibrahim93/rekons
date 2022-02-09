@@ -25,10 +25,10 @@
        <td class="text-center">
         @if (Auth::user()->role==1)
         <!-- <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a> -->
-        <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a>
+        <button onclick="tabelDetail(`{{$item->branch_name}}`);" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></button>
         <a href="{{route('bava', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
         @else
-        <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a>
+        <button onclick="tabelDetail(`{{$item->branch_name}}`);" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></button>
         <a href="{{route('bava', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
         <button type="button" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" data-toggle="modal" data-target="#upload-bava"><strong>Upload Bava</strong></button>
         <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>Download Bava</strong></a>
