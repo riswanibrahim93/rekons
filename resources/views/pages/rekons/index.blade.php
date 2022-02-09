@@ -221,11 +221,11 @@
       detail.forEach(function(element) { 
         if(element.status == 0)
         {
-          status = `<span class="badge badge-danger">Valid</span>`
+          status = `<span class="badge badge-danger">Invalid</span>`
         }
         else
         {
-          status = `<span class="badge badge-success">Invalid</span>`
+          status = `<span class="badge badge-success">Valid</span>`
         }
         html += `<tr>
                   <td>
