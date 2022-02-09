@@ -29,8 +29,9 @@
         <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
         @else
         <a href="{{route('process.dataDetail', ['branch' => $item->branch_name])}}" class="btn btn-primary btn-sm px-2" style="font-size: 10px;"><strong>Detail</strong></a>
-        <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
+        <a href="{{route('bava', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
         <button type="button" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" data-toggle="modal" data-target="#upload-bava"><strong>Upload Bava</strong></button>
+        <a href="{{route('bavaPDF', ['branch' => $item->branch_name])}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>Download Bava</strong></a>
 
         <!-- Button trigger modal -->
 <!--         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -48,7 +49,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form action="{{ route('upload.bava') }}" method="post" enctype="multipart/form-data">
+                <form action="/uploadBava/{{$item->branch_name}}" method="post" enctype="multipart/form-data">
                   @csrf
                   <div class="input-group">
                     <div class="custom-file">

@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('data-pemberkasan', [FilingController::class, 'pemberkasan'])->name('data.pemberkasan');
 
     Route::get('/bavaPDF/{branch}', [PDFController::class, 'bavaPDF'])->name('bavaPDF');
-    Route::post('uploadBava', [DataController::class, 'uploadBava'])->name('upload.bava');
+    Route::get('/bava/{branch}', [DataController::class, 'bava'])->name('bava');
+    Route::post('/uploadBava/{branch_name}', [DataController::class, 'uploadBava']);
     Route::post('validasiSelected', [DataController::class, 'validasiSelected'])->name('validasi.selected');
     Route::post('tolakSelected', [DataController::class, 'tolakSelected'])->name('tolak.selected');
 

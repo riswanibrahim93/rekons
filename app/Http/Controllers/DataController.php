@@ -6,6 +6,7 @@ use App\Imports\ImportData;
 use App\Models\Branch;
 use App\Models\Data;
 use App\Models\ReconciledData;
+use App\Models\Bava;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -540,8 +541,30 @@ class DataController extends Controller
     public function uploadBava(Request $request)
     {
         $bava = $request->file('file');
-        // dd($bava);
+        $bava_name = uniqid();
+        $bava_name = $bava_name.'.'.$bava->getClientOriginalExtension();
+        // dd($bava_name);
+        $branch_code = Branch::select('code')->where('name', $request->branch_name)->get()->toArray();
+        $branch_code = $branch_code[0]['code'];
+        $bava->move('pdf-bava', $bava_name);
+
+
+        $bava = new Bava;
+        $bava->branch_code = $branch_code;
+        $bava->file = $bava_name;
+        $bava->save();
+
         return redirect('process-recons')->with('status', 'Upload File Bava Berhasil');
+    }
+
+    public function bava(Request $request){
+        $branch_code = Branch::select('code')->where('name', $request->branch)->get()->toArray();
+        $branch_code = $branch_code[0]['code'];
+
+        $bava = Bava::where('branch_code', $branch_code)->get();
+        $branch_name = $request->branch;
+        // dd($bava);
+        return view('pages.rekons.detail-bava', compact('bava', 'branch_name'));
     }
 
     public function validasiSelected(Request $request)

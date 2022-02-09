@@ -73,7 +73,6 @@
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6 mt-2">
-            <h6>Rekonsiliasi pada periode : {{ $periode->periode }}</h6>
           </div>
           <div class="col-sm-2"></div>
           <div class="col-sm-4 text-right">

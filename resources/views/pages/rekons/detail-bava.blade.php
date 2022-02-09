@@ -7,7 +7,7 @@
       <div class="card-header">
         <div class="row justify-content-between">
           <div class="col-lg-6 col-sm-12">
-          <h5 class="pull-left mb-4">Proses rekonsiliasi @if (Auth::user()->role==1)
+          <h5 class="pull-left mb-4">File Bava @if (Auth::user()->role==1)
             PT BSI
             @else
             PT EKA AKAR JATI
@@ -15,41 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="card-body">
-        <!-- <div class="row  mb-3">
-          <div class="col-lg-4 col-sm-12 pull-right" style="margin-left: auto; margin-right: 15px;">
-            <div class="input-group mt-2">
-                <select class="custom-select" id="selectCabang" aria-label="Example select with button addon"
-                  name="parent_id">
-                  <option value="" disabled selected>== Pilih Cabang==</option>
-                  @forelse ($branches as $branch)
-                  <option value="{{$branch->code}},{{$branch->name}}" @if ($notif==$branch->name)
-                    selected
-                    @endif>{{$branch->name}}</option>
-                  @empty
-                  <option value="" disabled>Belum ada cabang</option>
-                  @endforelse
-                </select>
-                </select>
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button"
-                    onclick="showModal()"><strong>Pemberkasan</strong></button>
-                </div>
-              </div>
-          </div>
-        </div> -->
-        <div class="row">
-          <div class="col-sm-6 mb-4">
-            <h5>List data pada cabang {{ $branch_name }}</h5>
-            <p class="text-justify">Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.</p>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <a class="badge badge-success px-5 py-2" id="validationAllSelect" style="font-size: 12px;"><i class="fas fa-check-circle pr-1"></i> Validasi</a>
-            <a class="badge badge-danger px-5 py-2" id="tolakAllSelect" style="font-size: 12px;"><i class="fas fa-times-circle pr-1"></i> Tolak</a>
-          </div>
-          <div class="col-sm-2"></div>
+      <!-- <div class="card-body">
           <div class="col-sm-4 text-right mt-3">
               <form action="" method="get">
                 <div class="input-group mb-3">
@@ -61,7 +27,7 @@
                 </div>
               </form>
           </div>
-        </div>
+        </div> -->
         
         
 
@@ -69,60 +35,34 @@
           <table class="table table-bordernone">
              <thead>
                <tr>
-                <th>
+                <!-- <th>
                   <input type="checkbox" id="selectAll">
-                </th>
+                </th> -->
                  <th>No</th>
-                 <th>Periode</th>
-                 <th>LD</th>
-                 <th>Nama</th>
-                 <th>Produk</th>
-                 <th>Atribusi</th>
-                 <th>Pembiayaan</th>
-                 <th>Detail</th>
-                 <th>Status</th>
+                 <th>Branch Name</th>
+                 <th>Name File</th>
+                 <th>Created At</th>
+                 <th>View</th>
                  <!-- <th>Aksi</th> -->
                </tr>
              </thead>
              <tbody>
 
-               @forelse ($data as $idx=>$item)
+               @forelse ($bava as $idx=>$item)
                @php
                $number = (int)$idx+1;
                @endphp
                <tr>
-                <td>
+                <!-- <td>
                   <input type="checkbox" value="{{$item->id}}" id="ids" name="ids" class="selectData">
-                </td>
+                </td> -->
                  <td>{{$number}}</td>
-                 <!-- <td>{{$item->id}}</td> -->
-                 <td class="dateData">{{$item->periode}}</td>
-                 <td>{{$item->data->ld}}</td>
-                 <td>{{$item->data->full_name}}</td>
-                 <td>{{$item->data->product}}</td>
-                 <td>{{$item->atr??''}}</td>
-                 <td>{{$item->data->outstanding??''}}</td>
-                 <td>{{$item->description}}</td>
+                 <td>{{$branch_name}}</td>
+                 <td>{{$item->file}}</td>
+                 <td>{{$item->created_at}}</td>
                  <td>
-                   <span class="@if ($item->status==0)
-                      badge badge-danger
-                      @else
-                     badge badge-success
-                      @endif">
-                     @if ($item->status==1)
-                     Valid
-                     @else
-                     Invalid
-                     @endif
-                   </span>
+                   <a href="/pdf-bava/{{$item->file}}" target="_blank" class="btn btn-primary btn-sm px-2" style="font-size: 10px;" onclick="filterData()"><strong>View Bava</strong></a>
                  </td>
-                 <!-- <td>
-              @if ($item->status==0)
-              <span class="badge badge-success pointer" style="cursor: pointer;" onclick="showModal(`{{$item->data_id}}`,`{{$item->bsi_id}}`, `{{$item->data->full_name}}`, `{{$item->data->ld}}`)">
-                Pemberkasan
-              </span>
-              @endif
-            </td> -->
                </tr>
                @empty
 
@@ -134,58 +74,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" id="modal_tambah">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="col-12">
-          <h5 class="modal-title">Pemberkasan Data Pembanding</h5>
-          <p class="small" id="modalTitle"></p>
-          <a href="#" class="btn btn-primary">Update Data Valid</a>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">BSI</th>
-              <th scope="col">Eka</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td><a href="" target="_blank" id="bsiLink" class="btn btn-primary">Lihat</a></td>
-              <td><a href="" target="_blank" id="ekaLink" class="btn btn-warning">Lihat</a></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td><button class="btn btn-primary" onclick="uploadButton(1)"><span
-                    id="spinner_field1"></span>upload</button>
-                <form action="" method="post" enctype="multipart/form-data" id="form1">
-                  @csrf
-                  <input type="hidden" name="ld" id="ld" class="ld">
-                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file"
-                    id="bsi_file">
-                </form>
-              </td>
-              <td><button class="btn btn-warning" onclick="uploadButton(2)"><span
-                    id="spinner_field2"></span>upload</button>
-                <form id="form2" action="" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <input type="hidden" name="ld" id="ld" class="ld">
-                  <input type="file" style="overflow:hidden;width:0px;height:0px;" accept="application/pdf" name="file"
-                    id="eka_file">
-                </form>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+
 @endsection
 @section('script')
 <script src="{{asset('assets/js/datatables/jquery.dataTables.min.js')}}"></script>
@@ -219,7 +108,6 @@
     window.open(url)
   }
   let ld = "";
-  let branch_name = "{{$notif}}";
 
   $(window).ready(()=>{
     let valueH = $("#selectCabang").val().split(",");

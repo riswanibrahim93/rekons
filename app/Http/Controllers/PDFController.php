@@ -26,6 +26,7 @@ class PDFController extends Controller
         ]);
         $html = \View::make('pdf.bava')->with('data',$data);
         $html->render();
+        $stylesheet = file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css');
         $mpdf->WriteHTML($html);
         $mpdf->Output($fileName, 'I');
     }
